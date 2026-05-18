@@ -8,7 +8,7 @@ export function SiteFooter() {
       <div className="bg-gradient-dark">
         {/* Top CTA strip */}
         <div className="border-b border-white/10">
-          <div className="mx-auto max-w-7xl px-6 md:px-10 py-16 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="mx-auto max-w-7xl px-6 md:px-10 py-16 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
             <div>
               <div className="text-[10px] tracking-luxe uppercase text-gold mb-3">
                 Plan Your Event
@@ -17,7 +17,7 @@ export function SiteFooter() {
                 Ready to create something <span className="italic text-gold">unforgettable</span>?
               </h3>
             </div>
-            <Link to="/contact" className="btn-primary">
+            <Link to="/contact" className="btn-primary shrink-0">
               Get in Touch <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -27,7 +27,7 @@ export function SiteFooter() {
         <div className="mx-auto max-w-7xl px-6 md:px-10 py-20 grid gap-12 md:gap-8 md:grid-cols-12">
           {/* Brand */}
           <div className="md:col-span-5">
-            <div className="font-display text-3xl text-white">SAF Celestia</div>
+            <div className="font-display text-3xl text-white">SAF Convention Center</div>
             <div className="mt-1 text-[9px] tracking-[0.4em] uppercase text-white/40">
               International Convention Centre
             </div>
@@ -133,9 +133,9 @@ export function SiteFooter() {
 
         {/* Bottom bar */}
         <div className="border-t border-white/10 py-6">
-          <div className="mx-auto max-w-7xl px-6 md:px-10 flex flex-col md:flex-row items-center justify-between gap-3 text-[11px] text-white/30 tracking-wider uppercase">
-            <span>© {new Date().getFullYear()} SAF Convention Centre · Celestia EventVerse</span>
-            <div className="flex gap-6">
+          <div className="mx-auto max-w-7xl px-6 md:px-10 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-white/30 tracking-wider uppercase text-center md:text-left">
+            <span className="max-w-[280px] md:max-w-none">© {new Date().getFullYear()} SAF Convention Centre · Celestia EventVerse</span>
+            <div className="flex flex-wrap justify-center gap-4 md:gap-6">
               <span className="hover:text-white/60 cursor-pointer transition-colors">Privacy</span>
               <span className="hover:text-white/60 cursor-pointer transition-colors">Terms</span>
               <span className="hover:text-white/60 cursor-pointer transition-colors">Sitemap</span>

@@ -90,7 +90,7 @@ export function SiteHeader() {
             {/* Logo */}
             <Link to="/" className="flex flex-col items-center leading-none group">
               <span className={`font-display text-xl md:text-2xl transition-colors ${logoColor}`}>
-                SAF Celestia
+                SAF Convention Center
               </span>
               <span
                 className={`mt-1 text-[8px] tracking-[0.4em] uppercase transition-colors ${subtitleColor}`}

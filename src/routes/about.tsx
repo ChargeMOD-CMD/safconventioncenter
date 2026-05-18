@@ -156,20 +156,24 @@ function About() {
           </h2>
         </div>
         <div className="relative">
-          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border -translate-x-1/2" />
+          <div className="absolute left-[24px] md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-1/2" />
           {milestones.map((m, i) => (
             <div
               key={m.year}
-              className={`reveal relative flex items-center gap-8 mb-12 ${
-                i % 2 === 0 ? "flex-row" : "flex-row-reverse"
+              className={`reveal relative flex flex-col md:flex-row md:items-center gap-4 md:gap-8 mb-12 ${
+                i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
               }`}
             >
-              <div className={`flex-1 ${i % 2 === 0 ? "text-right" : "text-left"}`}>
+              <div
+                className={`flex-1 pl-16 md:pl-0 ${
+                  i % 2 === 0 ? "md:text-right" : "md:text-left"
+                }`}
+              >
                 <div className="font-display text-3xl crimson-text">{m.year}</div>
                 <p className="mt-1 text-sm text-muted-foreground">{m.event}</p>
               </div>
-              <div className="relative z-10 w-4 h-4 rounded-full bg-gold border-4 border-background shadow-sm" />
-              <div className="flex-1" />
+              <div className="absolute left-[24px] md:static md:left-auto top-2 md:top-auto -translate-x-1/2 md:translate-x-0 z-10 w-4 h-4 rounded-full bg-gold border-4 border-background shadow-sm" />
+              <div className="hidden md:block flex-1" />
             </div>
           ))}
         </div>
