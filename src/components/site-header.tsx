@@ -121,7 +121,7 @@ export function SiteHeader() {
               {/* CTA */}
               <Link
                 to="/contact"
-                className={`hidden sm:inline-flex text-xs tracking-luxe uppercase transition-all ${
+                className={`inline-flex text-[10px] sm:text-xs tracking-widest sm:tracking-luxe uppercase transition-all ${
                   scrolled || !isHome
                     ? "text-crimson border-b border-crimson/50 pb-1 hover:border-crimson"
                     : "text-white border-b border-white/40 pb-1 hover:border-white"
