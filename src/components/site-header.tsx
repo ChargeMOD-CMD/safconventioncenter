@@ -88,12 +88,12 @@ export function SiteHeader() {
             </button>
 
             {/* Logo */}
-            <Link to="/" className="flex flex-col items-center leading-none group">
-              <span className={`font-display text-xl md:text-2xl transition-colors ${logoColor}`}>
+            <Link to="/" className="flex flex-col items-center leading-none group text-center mx-2 max-w-[50%] sm:max-w-none">
+              <span className={`font-display text-lg sm:text-xl md:text-2xl transition-colors ${logoColor}`}>
                 SAF Convention Center
               </span>
               <span
-                className={`mt-1 text-[8px] tracking-[0.4em] uppercase transition-colors ${subtitleColor}`}
+                className={`mt-1 hidden sm:block text-[8px] tracking-[0.4em] uppercase transition-colors ${subtitleColor}`}
               >
                 International Convention Centre
               </span>
@@ -115,7 +115,7 @@ export function SiteHeader() {
             {/* CTA */}
             <Link
               to="/contact"
-              className={`text-xs tracking-luxe uppercase transition-all ${
+              className={`hidden sm:inline-flex text-xs tracking-luxe uppercase transition-all ${
                 scrolled || !isHome
                   ? "text-crimson border-b border-crimson/50 pb-1 hover:border-crimson"
                   : "text-white border-b border-white/40 pb-1 hover:border-white"

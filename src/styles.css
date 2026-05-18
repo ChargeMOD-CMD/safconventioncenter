@@ -496,6 +496,11 @@
   width: 1px;
   background: linear-gradient(180deg, transparent, var(--gold), transparent);
 }
+@media (max-width: 639px) {
+  .stat-item::after {
+    display: none;
+  }
+}
 .stat-item:last-child::after {
   display: none;
 }
