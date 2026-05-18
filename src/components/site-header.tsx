@@ -69,60 +69,67 @@ export function SiteHeader() {
 
         {/* Main navigation */}
         <div className={`transition-all duration-500 ${headerBg}`}>
-          <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 md:px-10">
+          <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 md:px-10 relative">
             {/* Hamburger */}
-            <button
-              onClick={() => setOpen(true)}
-              className={`flex items-center gap-3 text-xs tracking-luxe uppercase ${textColor} hover:opacity-70 transition-opacity`}
-              aria-label="Open menu"
-            >
-              <span className="flex flex-col gap-[5px]">
-                <span
-                  className={`block h-[1.5px] w-7 ${scrolled || !isHome ? "bg-foreground" : "bg-white"} transition-colors`}
-                />
-                <span
-                  className={`block h-[1.5px] w-5 ${scrolled || !isHome ? "bg-foreground" : "bg-white"} transition-colors`}
-                />
-              </span>
-              <span className="hidden sm:inline">Menu</span>
-            </button>
-
-            {/* Logo */}
-            <Link to="/" className="flex flex-col items-center leading-none group text-center mx-2 max-w-[50%] sm:max-w-none">
-              <span className={`font-display text-lg sm:text-xl md:text-2xl transition-colors ${logoColor}`}>
-                SAF Convention Center
-              </span>
-              <span
-                className={`mt-1 hidden sm:block text-[8px] tracking-[0.4em] uppercase transition-colors ${subtitleColor}`}
+            <div className="flex-1 flex justify-start">
+              <button
+                onClick={() => setOpen(true)}
+                className={`flex items-center gap-3 text-xs tracking-luxe uppercase ${textColor} hover:opacity-70 transition-opacity`}
+                aria-label="Open menu"
               >
-                International Convention Centre
-              </span>
-            </Link>
-
-            {/* Desktop nav links */}
-            <div className="hidden lg:flex items-center gap-8">
-              {nav.slice(1, 4).map((n) => (
-                <Link
-                  key={n.to}
-                  to={n.to}
-                  className={`text-[11px] tracking-[0.2em] uppercase ${textColor} hover:text-gold transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px] after:bg-gold after:transition-all hover:after:w-full`}
-                >
-                  {n.label}
-                </Link>
-              ))}
+                <span className="flex flex-col gap-[5px]">
+                  <span
+                    className={`block h-[1.5px] w-7 ${scrolled || !isHome ? "bg-foreground" : "bg-white"} transition-colors`}
+                  />
+                  <span
+                    className={`block h-[1.5px] w-5 ${scrolled || !isHome ? "bg-foreground" : "bg-white"} transition-colors`}
+                  />
+                </span>
+                <span className="hidden sm:inline">Menu</span>
+              </button>
             </div>
 
-            {/* CTA */}
-            <Link
-              to="/contact"
-              className={`hidden sm:inline-flex text-xs tracking-luxe uppercase transition-all ${
-                scrolled || !isHome
-                  ? "text-crimson border-b border-crimson/50 pb-1 hover:border-crimson"
-                  : "text-white border-b border-white/40 pb-1 hover:border-white"
-              }`}
-            >
-              Book Now
-            </Link>
+            {/* Logo */}
+            <div className="absolute left-1/2 -translate-x-1/2 flex justify-center w-max">
+              <Link to="/" className="flex flex-col items-center leading-none group text-center">
+                <span className={`font-display text-lg sm:text-xl md:text-2xl transition-colors ${logoColor}`}>
+                  SAF Convention Center
+                </span>
+                <span
+                  className={`mt-1 hidden sm:block text-[8px] tracking-[0.4em] uppercase transition-colors ${subtitleColor}`}
+                >
+                  International Convention Centre
+                </span>
+              </Link>
+            </div>
+
+            {/* Nav & CTA */}
+            <div className="flex-1 flex justify-end items-center gap-8">
+              {/* Desktop nav links */}
+              <div className="hidden lg:flex items-center gap-8">
+                {nav.slice(1, 4).map((n) => (
+                  <Link
+                    key={n.to}
+                    to={n.to}
+                    className={`text-[11px] tracking-[0.2em] uppercase ${textColor} hover:text-gold transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px] after:bg-gold after:transition-all hover:after:w-full`}
+                  >
+                    {n.label}
+                  </Link>
+                ))}
+              </div>
+
+              {/* CTA */}
+              <Link
+                to="/contact"
+                className={`hidden sm:inline-flex text-xs tracking-luxe uppercase transition-all ${
+                  scrolled || !isHome
+                    ? "text-crimson border-b border-crimson/50 pb-1 hover:border-crimson"
+                    : "text-white border-b border-white/40 pb-1 hover:border-white"
+                }`}
+              >
+                Book Now
+              </Link>
+            </div>
           </div>
         </div>
       </header>
