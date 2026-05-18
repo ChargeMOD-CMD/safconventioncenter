@@ -1,0 +1,564 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
+import { ArrowRight, Play, Star, Users, Calendar, Award, ChevronDown, Quote } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
+import heroImg from "@/assets/hero-convention.png";
+import weddingImg from "@/assets/venue-wedding.png";
+import corporateImg from "@/assets/venue-corporate.png";
+import galaImg from "@/assets/venue-gala.png";
+import outdoorImg from "@/assets/venue-outdoor.png";
+
+export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "SAF Celestia EventVerse — International Convention Centre" },
+      {
+        name: "description",
+        content:
+          "SAF Celestia International Convention Centre — elevating every event with style, space and exceptional service. Weddings, summits, galas and grand celebrations.",
+      },
+    ],
+  }),
+  component: Home,
+});
+
+/* ─── Data ────────────────────────────────────── */
+const venues = [
+  {
+    img: weddingImg,
+    name: "Celestia Luxe",
+    pax: "5,000",
+    note: "Flagship hall for grand weddings, corporate launches and landmark gatherings.",
+  },
+  {
+    img: galaImg,
+    name: "Celestia Grand",
+    pax: "1,500",
+    note: "A premium banquet arena for traditional feasts and modern gala dinners.",
+  },
+  {
+    img: corporateImg,
+    name: "Celestia Crown",
+    pax: "2,000",
+    note: "Mid-size luxury hall for refined weddings and regional summits.",
+  },
+  {
+    img: outdoorImg,
+    name: "Celestia Atrium",
+    pax: "3,500",
+    note: "Our signature outdoor venue — magical moments under the stars.",
+  },
+];
+
+const stats = [
+  { value: "250K+", label: "Sq. Ft. of Space", icon: Award },
+  { value: "11", label: "Premium Venues", icon: Star },
+  { value: "5,000+", label: "Events Hosted", icon: Calendar },
+  { value: "50K+", label: "Happy Guests", icon: Users },
+];
+
+const eventTypes = [
+  { img: weddingImg, label: "Royal Weddings", desc: "Bespoke ceremonies with cinematic grandeur" },
+  {
+    img: galaImg,
+    label: "Cultural Gatherings",
+    desc: "Traditional celebrations with modern elegance",
+  },
+  {
+    img: corporateImg,
+    label: "Corporate Summits",
+    desc: "World-class conferences and exhibitions",
+  },
+  { img: outdoorImg, label: "Grand Galas", desc: "Spectacular events under the stars" },
+];
+
+const testimonials = [
+  {
+    text: "From the moment we arrived, we felt like VIPs. The hall was breathtaking, the orchestration flawless, and the staff went above and beyond. Five stars all the way.",
+    name: "Emma K.",
+    role: "Wedding Host",
+    rating: 5,
+  },
+  {
+    text: "We celebrated our engagement at SAF Celestia and the experience was nothing short of outstanding — beautifully designed venue, seamless management, every little detail handled with care.",
+    name: "Aparna S.",
+    role: "Engagement Ceremony",
+    rating: 5,
+  },
+  {
+    text: "One of the most full-fledged convention centres I have ever visited. Multiple halls, immaculate service and a grandeur you can feel the moment you step in.",
+    name: "Krishna R.",
+    role: "Corporate Event Director",
+    rating: 5,
+  },
+];
+
+const attractions = [
+  { name: "Skyline Observatory", km: "12 Km" },
+  { name: "Royal Heritage Museum", km: "18 Km" },
+  { name: "Aurora Botanical Gardens", km: "9 Km" },
+  { name: "Old Harbour Boardwalk", km: "21 Km" },
+  { name: "Celestia Vineyards", km: "35 Km" },
+];
+
+/* ─── Hero slides (module-level to avoid re-creation each render) ── */
+const heroSlides = [heroImg, weddingImg, galaImg, outdoorImg];
+
+/* ─── Component ───────────────────────────────── */
+function Home() {
+  useScrollReveal();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Auto-rotate hero slides
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div>
+      {/* ═══════ HERO — Full-screen with video/slideshow ═══════ */}
+      <section className="relative isolate h-[100dvh] min-h-[700px] flex items-center justify-center overflow-hidden">
+        {/* Background slideshow */}
+        {heroSlides.map((slide, i) => (
+          <div
+            key={i}
+            className={`absolute inset-0 -z-20 transition-opacity duration-[2000ms] ease-in-out ${
+              i === currentSlide ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <img
+              src={slide}
+              alt=""
+              className="h-full w-full object-cover scale-110"
+              style={{
+                animation: i === currentSlide ? "slowZoom 8s ease-out forwards" : "none",
+              }}
+            />
+          </div>
+        ))}
+
+        {/* Video overlay — ambient motion */}
+        <video
+          ref={videoRef}
+          className="absolute inset-0 z-[-15] h-full w-full object-cover mix-blend-overlay opacity-30"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        >
+          <source src="https://assets.mixkit.co/videos/4881/4881-720.mp4" type="video/mp4" />
+        </video>
+
+        {/* Gradient overlays */}
+        <div className="absolute inset-0 -z-10 hero-video-overlay" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
+
+        {/* Decorative elements */}
+        <div className="absolute top-1/4 left-8 hidden lg:block">
+          <div className="w-px h-24 bg-gradient-to-b from-transparent via-gold/40 to-transparent" />
+        </div>
+        <div className="absolute top-1/4 right-8 hidden lg:block">
+          <div className="w-px h-24 bg-gradient-to-b from-transparent via-gold/40 to-transparent" />
+        </div>
+
+        {/* Hero content */}
+        <div className="relative text-center px-6 max-w-5xl">
+          <div
+            className="inline-flex items-center gap-3 mb-8"
+            style={{ animation: "fadeUp 1s ease-out 0.3s both" }}
+          >
+            <span className="h-px w-8 bg-gold/60" />
+            <span className="text-[10px] tracking-[0.5em] uppercase text-gold/90 font-sans">
+              South India's Premier Convention Centre
+            </span>
+            <span className="h-px w-8 bg-gold/60" />
+          </div>
+
+          <h1
+            className="font-display text-white text-balance text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[1.05]"
+            style={{ animation: "fadeUp 1s ease-out 0.5s both" }}
+          >
+            Elevating Every Event
+            <br />
+            <span className="italic gold-text">with Grandeur</span>
+          </h1>
+
+          <p
+            className="mt-6 text-white/60 text-sm md:text-base max-w-xl mx-auto leading-relaxed font-sans"
+            style={{ animation: "fadeUp 1s ease-out 0.7s both" }}
+          >
+            Where timeless elegance meets world-class hospitality. 250,000 sq.ft. of meticulously
+            designed space for weddings, summits, galas and grand celebrations.
+          </p>
+
+          <div
+            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
+            style={{ animation: "fadeUp 1s ease-out 0.9s both" }}
+          >
+            <Link to="/venues" className="btn-primary">
+              Explore Venues <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link to="/contact" className="btn-outline">
+              <Play className="h-4 w-4" /> Book Your Event
+            </Link>
+          </div>
+
+          {/* Slide indicators */}
+          <div
+            className="mt-12 flex items-center justify-center gap-3"
+            style={{ animation: "fadeUp 1s ease-out 1.1s both" }}
+          >
+            {heroSlides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentSlide(i)}
+                className={`transition-all duration-500 ${
+                  i === currentSlide
+                    ? "w-8 h-[3px] bg-gold"
+                    : "w-3 h-[3px] bg-white/30 hover:bg-white/50"
+                }`}
+                aria-label={`Slide ${i + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Scroll hint */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-scroll-hint">
+          <span className="text-[9px] tracking-[0.4em] uppercase text-white/50">Scroll</span>
+          <ChevronDown className="h-4 w-4 text-white/50" />
+        </div>
+      </section>
+
+      {/* ═══════ STATS BAR ═══════ */}
+      <section className="relative -mt-16 z-10">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="glass-card shadow-royal py-1 grid grid-cols-2 md:grid-cols-4">
+            {stats.map(({ value, label, icon: Icon }) => (
+              <div key={label} className="stat-item reveal">
+                <Icon className="h-5 w-5 text-gold mx-auto mb-2" />
+                <div className="font-display text-3xl md:text-4xl crimson-text">{value}</div>
+                <div className="mt-1 text-[10px] tracking-luxe uppercase text-muted-foreground">
+                  {label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ WELCOME / ABOUT ═══════ */}
+      <section className="mx-auto max-w-7xl px-6 md:px-10 py-32 section-divider">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          <div className="reveal-left">
+            <div className="inline-flex items-center gap-3 mb-4">
+              <span className="h-px w-10 bg-gold" />
+              <span className="text-[10px] tracking-luxe uppercase text-crimson">Who we are</span>
+            </div>
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl leading-[1.1]">
+              About <span className="gold-text italic">SAF Celestia</span>
+            </h2>
+            <div className="mt-6 hairline-gold w-20" />
+            <p className="mt-8 text-base md:text-lg text-muted-foreground leading-relaxed">
+              The SAF Celestia International Convention Centre is one of the region's most
+              distinguished venues for weddings, conventions, award shows, exhibitions, conferences
+              and concerts. Over 250,000 square feet of meticulously designed space is managed by a
+              dedicated team with decades of hospitality experience.
+            </p>
+            <p className="mt-4 text-base text-muted-foreground leading-relaxed">
+              Sophisticated architecture, world-class amenities and impeccable service mark Celestia
+              as the destination for unforgettable celebrations.
+            </p>
+            <Link
+              to="/about"
+              className="mt-10 inline-flex items-center gap-2 text-sm tracking-luxe uppercase crimson-text border-b border-crimson/40 pb-1 hover:border-crimson transition-colors group"
+            >
+              Discover Our Story
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+
+          <div className="reveal-right relative">
+            <div className="absolute -inset-8 bg-gold/5 blur-3xl rounded-full" />
+            <div className="relative">
+              <img
+                src={heroImg}
+                alt="SAF Celestia Convention Centre exterior"
+                className="w-full h-[520px] object-cover shadow-royal"
+                loading="lazy"
+              />
+              <div className="absolute -bottom-6 -left-6 hidden md:block glass-card px-8 py-6 shadow-soft animate-pulse-glow">
+                <div className="font-display text-4xl crimson-text">250K+</div>
+                <div className="text-[10px] tracking-luxe uppercase text-muted-foreground mt-1">
+                  Sq.Ft of Excellence
+                </div>
+              </div>
+              <div className="absolute -top-4 -right-4 hidden md:block glass-card px-6 py-4 shadow-soft">
+                <div className="font-display text-2xl gold-text">15+</div>
+                <div className="text-[10px] tracking-luxe uppercase text-muted-foreground mt-1">
+                  Years of Legacy
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ VENUES SHOWCASE ═══════ */}
+      <section className="bg-secondary/40 py-32 section-divider">
+        <div className="mx-auto max-w-7xl px-6 md:px-10">
+          <div className="flex flex-col items-center text-center mb-16 reveal">
+            <div className="inline-flex items-center gap-3 mb-4">
+              <span className="h-px w-10 bg-gold" />
+              <span className="text-[10px] tracking-luxe uppercase text-crimson">Our Venues</span>
+              <span className="h-px w-10 bg-gold" />
+            </div>
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl">
+              Explore Our <span className="italic gold-text">Venues</span>
+            </h2>
+            <p className="mt-4 text-muted-foreground max-w-2xl">
+              Eleven distinguished halls, each engineered with adaptive lighting, cinematic
+              acoustics and concierge-grade hospitality.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 stagger-children">
+            {venues.map((v) => (
+              <article key={v.name} className="venue-card bg-card border border-border reveal">
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <img
+                    src={v.img}
+                    alt={v.name}
+                    className="h-full w-full object-cover parallax-img"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute top-4 right-4 glass-dark text-[10px] tracking-luxe uppercase text-gold px-3 py-1.5">
+                    {v.pax} Pax
+                  </div>
+                  <div className="absolute bottom-4 left-6">
+                    <h3 className="font-display text-2xl md:text-3xl text-white">{v.name}</h3>
+                  </div>
+                </div>
+                <div className="p-8">
+                  <p className="text-sm text-muted-foreground leading-relaxed">{v.note}</p>
+                  <Link
+                    to="/venues"
+                    className="mt-6 inline-flex items-center gap-2 text-xs tracking-luxe uppercase crimson-text border-b border-crimson/30 pb-1 hover:border-crimson transition-colors group"
+                  >
+                    Explore{" "}
+                    <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div className="text-center mt-12 reveal">
+            <Link to="/venues" className="btn-primary">
+              View All 11 Venues <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ EVENT CATEGORIES — Tall image grid ═══════ */}
+      <section className="mx-auto max-w-7xl px-6 md:px-10 py-32 section-divider">
+        <div className="flex flex-col items-center text-center mb-16 reveal">
+          <div className="inline-flex items-center gap-3 mb-4">
+            <span className="h-px w-10 bg-gold" />
+            <span className="text-[10px] tracking-luxe uppercase text-crimson">Specialised In</span>
+            <span className="h-px w-10 bg-gold" />
+          </div>
+          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl">
+            Events We <span className="italic gold-text">Excel At</span>
+          </h2>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 stagger-children">
+          {eventTypes.map((c) => (
+            <div
+              key={c.label}
+              className="relative overflow-hidden aspect-[3/4] group venue-card reveal"
+            >
+              <img
+                src={c.img}
+                alt={c.label}
+                className="h-full w-full object-cover transition duration-700 group-hover:scale-110"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute inset-0 bg-crimson/0 group-hover:bg-crimson/20 transition-colors duration-500" />
+              <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+                <div className="text-[10px] tracking-luxe uppercase text-gold/80 mb-2">
+                  {c.desc}
+                </div>
+                <div className="font-display text-2xl md:text-3xl">{c.label}</div>
+                <div className="mt-3 h-px w-0 bg-gold group-hover:w-12 transition-all duration-500" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ═══════ MARQUEE TEXT STRIP ═══════ */}
+      <section className="bg-gradient-royal py-6 overflow-hidden">
+        <div className="animate-marquee whitespace-nowrap flex">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <span key={i} className="inline-flex items-center gap-12 mr-12">
+              {[
+                "Weddings",
+                "Conferences",
+                "Exhibitions",
+                "Galas",
+                "Summits",
+                "Concerts",
+                "Awards",
+                "Receptions",
+              ].map((word) => (
+                <span
+                  key={`${i}-${word}`}
+                  className="font-display text-xl md:text-2xl text-white/70 flex items-center gap-12"
+                >
+                  {word}
+                  <span className="inline-block w-2 h-2 rounded-full bg-gold/40" />
+                </span>
+              ))}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* ═══════ DISCOVER NEARBY ═══════ */}
+      <section className="bg-secondary/40 py-32 section-divider">
+        <div className="mx-auto max-w-7xl px-6 md:px-10">
+          <div className="flex flex-col items-center text-center mb-16 reveal">
+            <div className="inline-flex items-center gap-3 mb-4">
+              <span className="h-px w-10 bg-gold" />
+              <span className="text-[10px] tracking-luxe uppercase text-crimson">What to Do</span>
+              <span className="h-px w-10 bg-gold" />
+            </div>
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl">
+              Discover <span className="italic gold-text">Nearby</span> Attractions
+            </h2>
+          </div>
+          <div className="grid sm:grid-cols-3 lg:grid-cols-5 gap-5 stagger-children">
+            {attractions.map((a) => (
+              <div
+                key={a.name}
+                className="reveal bg-card border border-border p-6 text-center hover:border-gold/40 hover:shadow-soft transition-all duration-500 group cursor-pointer"
+              >
+                <div className="w-12 h-12 mx-auto rounded-full border border-gold/20 flex items-center justify-center mb-4 group-hover:border-gold/50 transition-colors">
+                  <MapPinIcon className="h-5 w-5 text-gold/60 group-hover:text-gold transition-colors" />
+                </div>
+                <div className="font-display text-lg">{a.name}</div>
+                <div className="mt-2 text-[10px] tracking-luxe uppercase text-gold">
+                  Only {a.km}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ TESTIMONIALS ═══════ */}
+      <section className="mx-auto max-w-7xl px-6 md:px-10 py-32 section-divider">
+        <div className="flex flex-col items-center text-center mb-16 reveal">
+          <div className="inline-flex items-center gap-3 mb-4">
+            <span className="h-px w-10 bg-gold" />
+            <span className="text-[10px] tracking-luxe uppercase text-crimson">Testimonials</span>
+            <span className="h-px w-10 bg-gold" />
+          </div>
+          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl">
+            What Our <span className="italic gold-text">Clients</span> Say
+          </h2>
+        </div>
+        <div className="grid md:grid-cols-3 gap-8 stagger-children">
+          {testimonials.map((t) => (
+            <figure
+              key={t.name}
+              className="reveal bg-card border border-border p-8 hover:shadow-soft transition-all duration-500 group relative overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+              <Quote className="h-8 w-8 text-gold/20 mb-4" />
+              <div className="flex gap-1 mb-4">
+                {Array.from({ length: t.rating }).map((_, i) => (
+                  <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
+                ))}
+              </div>
+              <blockquote className="text-sm text-foreground/80 leading-relaxed italic font-display text-lg">
+                {t.text}
+              </blockquote>
+              <figcaption className="mt-6 pt-4 border-t border-border">
+                <div className="text-sm font-medium text-foreground">{t.name}</div>
+                <div className="text-xs text-muted-foreground mt-0.5">{t.role}</div>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      {/* ═══════ CTA SECTION ═══════ */}
+      <section className="relative isolate overflow-hidden">
+        <img src={heroImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
+        <div className="absolute inset-0 bg-crimson/80 mix-blend-multiply -z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30 -z-10" />
+        <div className="mx-auto max-w-4xl px-6 md:px-10 py-32 text-center text-white reveal">
+          <div className="inline-flex items-center gap-3 mb-6">
+            <span className="h-px w-8 bg-white/30" />
+            <span className="text-[10px] tracking-[0.5em] uppercase text-white/70">
+              Plan Your Event
+            </span>
+            <span className="h-px w-8 bg-white/30" />
+          </div>
+          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-balance leading-[1.1]">
+            Reserve a night that will be remembered
+            <span className="italic"> for a lifetime.</span>
+          </h2>
+          <p className="mt-6 text-white/60 max-w-xl mx-auto leading-relaxed">
+            Let our dedicated concierge team craft a bespoke experience tailored to your vision.
+          </p>
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link to="/contact" className="btn-gold">
+              Book Now <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link to="/venues" className="btn-outline">
+              Tour Our Venues
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CSS animation for hero zoom */}
+      <style>{`
+        @keyframes slowZoom {
+          from { transform: scale(1.1); }
+          to { transform: scale(1); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+/* Simple MapPin icon to avoid extra import */
+function MapPinIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
+  );
+}
