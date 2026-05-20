@@ -3,6 +3,7 @@ import { Sparkles, Crown, Music, Camera, Utensils, Bot, ArrowRight } from "lucid
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import heroImg from "@/assets/hero-convention.png";
 import galaImg from "@/assets/venue-gala.png";
+import safHallImg from "@/assets/saf-hall-interior.jpg";
 
 export const Route = createFileRoute("/experiences")({
   head: () => ({
@@ -85,7 +86,7 @@ function Experiences() {
     <div>
       {/* Hero */}
       <section className="relative isolate h-[60vh] min-h-[450px] flex items-center justify-center overflow-hidden">
-        <img src={heroImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
+        <img src={safHallImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
         <div className="absolute inset-0 bg-black/55 -z-10" />
         <div className="text-center px-6 max-w-4xl text-white reveal">
           <div className="inline-flex items-center gap-3 mb-4">
@@ -128,15 +129,19 @@ function Experiences() {
       </section>
 
       {/* Process */}
-      <section className="bg-secondary/40 py-28 section-divider">
-        <div className="mx-auto max-w-7xl px-6 md:px-10">
+      <section
+        className="relative py-28 section-divider overflow-hidden"
+        style={{ backgroundImage: `url(${safHallImg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+      >
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-10">
           <div className="flex flex-col items-center text-center mb-16 reveal">
             <div className="inline-flex items-center gap-3 mb-4">
               <span className="h-px w-10 bg-gold" />
               <span className="text-[10px] tracking-luxe uppercase text-crimson">How It Works</span>
               <span className="h-px w-10 bg-gold" />
             </div>
-            <h2 className="font-display text-4xl md:text-5xl">
+            <h2 className="font-display text-4xl md:text-5xl text-white">
               Our <span className="italic gold-text">Process</span>
             </h2>
           </div>
@@ -146,8 +151,8 @@ function Experiences() {
                 <div className="w-16 h-16 mx-auto rounded-full border-2 border-gold/30 flex items-center justify-center mb-6 group-hover:border-gold group-hover:bg-gold/5 transition-all duration-500">
                   <span className="font-display text-2xl gold-text">{step}</span>
                 </div>
-                <h3 className="font-display text-xl">{title}</h3>
-                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                <h3 className="font-display text-xl text-white">{title}</h3>
+                <p className="mt-3 text-sm text-white/60 leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
@@ -156,7 +161,7 @@ function Experiences() {
 
       {/* CTA */}
       <section className="relative isolate overflow-hidden">
-        <img src={galaImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
+        <img src={safHallImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
         <div className="absolute inset-0 bg-crimson/80 mix-blend-multiply -z-10" />
         <div className="mx-auto max-w-4xl px-6 md:px-10 py-28 text-center text-white reveal">
           <h2 className="font-display text-4xl md:text-5xl text-balance">

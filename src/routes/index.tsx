@@ -1,13 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { ArrowRight, Play, Star, Users, Calendar, Award, ChevronDown, Quote } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import heroImg from "@/assets/hero-convention.png";
+import heroVideoMp4 from "@/assets/hero-video.mp4";
 import weddingImg from "@/assets/venue-wedding.png";
 import corporateImg from "@/assets/venue-corporate.png";
 import galaImg from "@/assets/venue-gala.png";
 import outdoorImg from "@/assets/venue-outdoor.png";
-
+import celestiaLuxeImg from "@/assets/venue-celestia-luxe.jpg";
+import celestiaGrandImg from "@/assets/venue-celestia-grand.jpg";
+import celestiaCrownImg from "@/assets/venue-celestia-crown.png";
+import safHallImg from "@/assets/saf-hall-interior.jpg";
+//home page video
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -25,28 +30,22 @@ export const Route = createFileRoute("/")({
 /* ─── Data ────────────────────────────────────── */
 const venues = [
   {
-    img: weddingImg,
+    img: celestiaLuxeImg,
     name: "Celestia Luxe",
     pax: "5,000",
     note: "Flagship hall for grand weddings, corporate launches and landmark gatherings.",
   },
   {
-    img: galaImg,
+    img: celestiaGrandImg,
     name: "Celestia Grand",
     pax: "1,500",
     note: "A premium banquet arena for traditional feasts and modern gala dinners.",
   },
   {
-    img: corporateImg,
+    img: celestiaCrownImg,
     name: "Celestia Crown",
     pax: "2,000",
     note: "Mid-size luxury hall for refined weddings and regional summits.",
-  },
-  {
-    img: outdoorImg,
-    name: "Celestia Atrium",
-    pax: "3,500",
-    note: "Our signature outdoor venue — magical moments under the stars.",
   },
 ];
 
@@ -101,57 +100,27 @@ const attractions = [
   { name: "Celestia Vineyards", km: "35 Km" },
 ];
 
-/* ─── Hero slides (module-level to avoid re-creation each render) ── */
-const heroSlides = [heroImg, weddingImg, galaImg, outdoorImg];
 
 /* ─── Component ───────────────────────────────── */
 function Home() {
   useScrollReveal();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  // Auto-rotate hero slides
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div>
-      {/* ═══════ HERO — Full-screen with video/slideshow ═══════ */}
+      {/* ═══════ HERO — Full-screen with video ═══════ */}
       <section className="relative isolate h-[100dvh] min-h-[700px] flex items-center justify-center overflow-hidden">
-        {/* Background slideshow */}
-        {heroSlides.map((slide, i) => (
-          <div
-            key={i}
-            className={`absolute inset-0 -z-20 transition-opacity duration-[2000ms] ease-in-out ${
-              i === currentSlide ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <img
-              src={slide}
-              alt=""
-              className="h-full w-full object-cover scale-110"
-              style={{
-                animation: i === currentSlide ? "slowZoom 8s ease-out forwards" : "none",
-              }}
-            />
-          </div>
-        ))}
-
-        {/* Video overlay — ambient motion */}
+        {/* Background video */}
         <video
           ref={videoRef}
-          className="absolute inset-0 z-[-15] h-full w-full object-cover mix-blend-overlay opacity-30"
+          className="absolute inset-0 -z-20 h-full w-full object-cover"
           autoPlay
           muted
           loop
           playsInline
           preload="auto"
         >
-          <source src="https://assets.mixkit.co/videos/4881/4881-720.mp4" type="video/mp4" />
+          <source src={heroVideoMp4} type="video/mp4" />
         </video>
 
         {/* Gradient overlays */}
@@ -208,24 +177,6 @@ function Home() {
             </Link>
           </div>
 
-          {/* Slide indicators */}
-          <div
-            className="mt-12 flex items-center justify-center gap-3"
-            style={{ animation: "fadeUp 1s ease-out 1.1s both" }}
-          >
-            {heroSlides.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentSlide(i)}
-                className={`transition-all duration-500 ${
-                  i === currentSlide
-                    ? "w-8 h-[3px] bg-gold"
-                    : "w-3 h-[3px] bg-white/30 hover:bg-white/50"
-                }`}
-                aria-label={`Slide ${i + 1}`}
-              />
-            ))}
-          </div>
         </div>
 
         {/* Scroll hint */}
@@ -310,18 +261,22 @@ function Home() {
       </section>
 
       {/* ═══════ VENUES SHOWCASE ═══════ */}
-      <section className="bg-secondary/40 py-32 section-divider">
-        <div className="mx-auto max-w-7xl px-6 md:px-10">
+      <section
+        className="relative py-32 section-divider overflow-hidden"
+        style={{ backgroundImage: `url(${safHallImg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+      >
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-10">
           <div className="flex flex-col items-center text-center mb-16 reveal">
             <div className="inline-flex items-center gap-3 mb-4">
               <span className="h-px w-10 bg-gold" />
               <span className="text-[10px] tracking-luxe uppercase text-crimson">Our Venues</span>
               <span className="h-px w-10 bg-gold" />
             </div>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl">
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-white">
               Explore Our <span className="italic gold-text">Venues</span>
             </h2>
-            <p className="mt-4 text-muted-foreground max-w-2xl">
+            <p className="mt-4 text-white/60 max-w-2xl">
               Eleven distinguished halls, each engineered with adaptive lighting, cinematic
               acoustics and concierge-grade hospitality.
             </p>
@@ -330,6 +285,12 @@ function Home() {
           <div className="grid md:grid-cols-2 gap-8 stagger-children">
             {venues.map((v) => (
               <article key={v.name} className="venue-card bg-card border border-border reveal">
+                <div className="p-8">
+                  <h3 className="font-display text-2xl md:text-3xl crimson-text">{v.name}</h3>
+                  <div className="mt-4 glass-dark text-[10px] tracking-luxe uppercase text-gold px-3 py-1.5 inline-block">
+                    {v.pax} Pax
+                  </div>
+                </div>
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <img
                     src={v.img}
@@ -337,13 +298,6 @@ function Home() {
                     className="h-full w-full object-cover parallax-img"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute top-4 right-4 glass-dark text-[10px] tracking-luxe uppercase text-gold px-3 py-1.5">
-                    {v.pax} Pax
-                  </div>
-                  <div className="absolute bottom-4 left-6">
-                    <h3 className="font-display text-2xl md:text-3xl text-white">{v.name}</h3>
-                  </div>
                 </div>
                 <div className="p-8">
                   <p className="text-sm text-muted-foreground leading-relaxed">{v.note}</p>
@@ -361,7 +315,7 @@ function Home() {
 
           <div className="text-center mt-12 reveal">
             <Link to="/venues" className="btn-primary">
-              View All 11 Venues <ArrowRight className="h-4 w-4" />
+              View All Venues <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
@@ -505,7 +459,7 @@ function Home() {
 
       {/* ═══════ CTA SECTION ═══════ */}
       <section className="relative isolate overflow-hidden">
-        <img src={heroImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
+        <img src={safHallImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
         <div className="absolute inset-0 bg-crimson/80 mix-blend-multiply -z-10" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30 -z-10" />
         <div className="mx-auto max-w-4xl px-6 md:px-10 py-32 text-center text-white reveal">
@@ -534,13 +488,6 @@ function Home() {
         </div>
       </section>
 
-      {/* CSS animation for hero zoom */}
-      <style>{`
-        @keyframes slowZoom {
-          from { transform: scale(1.1); }
-          to { transform: scale(1); }
-        }
-      `}</style>
     </div>
   );
 }

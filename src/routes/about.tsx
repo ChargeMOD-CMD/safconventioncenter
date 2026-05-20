@@ -4,6 +4,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import heroImg from "@/assets/hero-convention.png";
 import weddingImg from "@/assets/venue-wedding.png";
 import galaImg from "@/assets/venue-gala.png";
+import safHallImg from "@/assets/saf-hall-interior.jpg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -49,7 +50,7 @@ function About() {
     <div>
       {/* Hero Banner */}
       <section className="relative isolate h-[60vh] min-h-[450px] flex items-center justify-center overflow-hidden">
-        <img src={heroImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
+        <img src={safHallImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
         <div className="absolute inset-0 bg-black/55 -z-10" />
         <div className="text-center px-6 max-w-4xl text-white reveal">
           <div className="inline-flex items-center gap-3 mb-4">
@@ -112,8 +113,12 @@ function About() {
       </section>
 
       {/* Our Values */}
-      <section className="bg-secondary/40 py-28 section-divider">
-        <div className="mx-auto max-w-7xl px-6 md:px-10">
+      <section
+        className="relative py-28 section-divider overflow-hidden"
+        style={{ backgroundImage: `url(${safHallImg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+      >
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-10">
           <div className="flex flex-col items-center text-center mb-16 reveal">
             <div className="inline-flex items-center gap-3 mb-4">
               <span className="h-px w-10 bg-gold" />
@@ -122,7 +127,7 @@ function About() {
               </span>
               <span className="h-px w-10 bg-gold" />
             </div>
-            <h2 className="font-display text-4xl md:text-5xl">
+            <h2 className="font-display text-4xl md:text-5xl text-white">
               Values We <span className="italic gold-text">Stand By</span>
             </h2>
           </div>
@@ -181,7 +186,7 @@ function About() {
 
       {/* CTA */}
       <section className="relative isolate overflow-hidden">
-        <img src={galaImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
+        <img src={safHallImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
         <div className="absolute inset-0 bg-crimson/80 mix-blend-multiply -z-10" />
         <div className="mx-auto max-w-4xl px-6 md:px-10 py-28 text-center text-white reveal">
           <h2 className="font-display text-4xl md:text-5xl text-balance">

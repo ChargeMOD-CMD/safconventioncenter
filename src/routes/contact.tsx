@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Mail, Phone, MapPin, Send, Clock, ArrowRight } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import heroImg from "@/assets/hero-convention.png";
+import safHallImg from "@/assets/saf-hall-interior.jpg";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -22,7 +23,7 @@ function Contact() {
     <div>
       {/* Hero */}
       <section className="relative isolate h-[50vh] min-h-[380px] flex items-center justify-center overflow-hidden">
-        <img src={heroImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
+        <img src={safHallImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
         <div className="absolute inset-0 bg-black/55 -z-10" />
         <div className="text-center px-6 max-w-4xl text-white reveal">
           <div className="inline-flex items-center gap-3 mb-4">

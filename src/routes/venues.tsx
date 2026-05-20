@@ -2,10 +2,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import heroImg from "@/assets/hero-convention.png";
-import weddingImg from "@/assets/venue-wedding.png";
-import corporateImg from "@/assets/venue-corporate.png";
-import galaImg from "@/assets/venue-gala.png";
-import outdoorImg from "@/assets/venue-outdoor.png";
+import celestiaLuxeImg from "@/assets/venue-celestia-luxe.jpg";
+import celestiaGrandImg from "@/assets/venue-celestia-grand.jpg";
+import celestiaCrownImg from "@/assets/venue-celestia-crown.png";
+import safHallImg from "@/assets/saf-hall-interior.jpg";
 
 export const Route = createFileRoute("/venues")({
   head: () => ({
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/venues")({
       {
         name: "description",
         content:
-          "Eleven signature halls — from the 5000 PAX Celestia Luxe to intimate boardrooms and open-air terraces.",
+          "Three signature halls — Celestia Luxe, Celestia Grand, and Celestia Crown for grand weddings, corporate events and celebrations.",
       },
     ],
   }),
@@ -23,74 +23,25 @@ export const Route = createFileRoute("/venues")({
 
 const venues = [
   {
-    img: weddingImg,
+    img: celestiaLuxeImg,
     name: "Celestia Luxe",
     pax: "5,000 PAX",
     note: "Our flagship hall — an awe-inspiring setting for grand weddings, corporate launches and cultural events.",
     features: ["Adaptive LED lighting", "360° sound system", "VIP lounge"],
   },
   {
-    img: galaImg,
+    img: celestiaGrandImg,
     name: "Celestia Grand",
     pax: "1,500 PAX",
     note: "Premium dining arena for traditional feasts, gala dinners and multicultural buffets.",
     features: ["Chef's kitchen", "Wine cellar", "Stage setup"],
   },
   {
-    img: corporateImg,
+    img: celestiaCrownImg,
     name: "Celestia Crown",
     pax: "2,000 PAX",
     note: "Our Mini Hall — luxury and professionalism for mid-size weddings and regional summits.",
     features: ["AV equipment", "Breakout rooms", "Green room"],
-  },
-  {
-    img: outdoorImg,
-    name: "Celestia Gala",
-    pax: "1,000 PAX",
-    note: "Sleek, versatile space for chic receptions and stylish corporate gatherings.",
-    features: ["Modular layout", "Natural light", "Bar counter"],
-  },
-  {
-    img: heroImg,
-    name: "Oasis",
-    pax: "300 PAX",
-    note: "Mid-size hall for birthdays, engagements, anniversaries and creative workshops.",
-    features: ["Warm ambiance", "Private entrance", "Custom décor"],
-  },
-  {
-    img: galaImg,
-    name: "Mehfil",
-    pax: "300 PAX",
-    note: "Elegant hall for naming ceremonies, baptisms and intimate weddings.",
-    features: ["Acoustic panels", "Garden view", "Buffet area"],
-  },
-  {
-    img: corporateImg,
-    name: "Miracle",
-    pax: "300 PAX",
-    note: "Versatile mid-size venue doubling as breakout rooms for academic sessions.",
-    features: ["Projector setup", "U-shape layout", "Wi-Fi"],
-  },
-  {
-    img: weddingImg,
-    name: "Celestia Onyx",
-    pax: "150 PAX",
-    note: "A thoughtfully designed boardroom for strategic meetings and high-level negotiations.",
-    features: ["Video conferencing", "Executive seating", "Refreshment bar"],
-  },
-  {
-    img: outdoorImg,
-    name: "Celestia Atrium",
-    pax: "3,500 PAX",
-    note: "Our signature outdoor venue — magical moments under the stars with an elevated stage.",
-    features: ["Open-air canopy", "LED trees", "Fire features"],
-  },
-  {
-    img: heroImg,
-    name: "Moonlight Terrace",
-    pax: "300 PAX",
-    note: "Rooftop venue for pre-wedding events, intimate gatherings and starlit soirées.",
-    features: ["Panoramic views", "Lounge seating", "DJ booth"],
   },
 ];
 
@@ -100,7 +51,7 @@ function Venues() {
     <div>
       {/* Hero */}
       <section className="relative isolate h-[60vh] min-h-[450px] flex items-center justify-center overflow-hidden">
-        <img src={heroImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
+        <img src={safHallImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
         <div className="absolute inset-0 bg-black/55 -z-10" />
         <div className="text-center px-6 max-w-4xl text-white reveal">
           <div className="inline-flex items-center gap-3 mb-4">
@@ -109,7 +60,7 @@ function Venues() {
             <span className="h-px w-8 bg-gold/60" />
           </div>
           <h1 className="font-display text-5xl md:text-7xl">
-            Eleven Halls. <span className="italic gold-text">One Legend.</span>
+            Three Halls. <span className="italic gold-text">One Legend.</span>
           </h1>
           <p className="mt-4 text-white/60 max-w-2xl mx-auto">
             Every SAF Celestia venue is engineered with adaptive light, cinematic acoustics and
@@ -118,36 +69,31 @@ function Venues() {
         </div>
       </section>
 
-      {/* Venues Grid */}
+      {/* Venues Sections */}
       <section className="mx-auto max-w-7xl px-6 md:px-10 py-28">
-        <div className="grid md:grid-cols-2 gap-10 stagger-children">
-          {venues.map((v) => (
-            <article
-              key={v.name}
-              className="reveal venue-card bg-card border border-border overflow-hidden group"
-            >
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <img
-                  src={v.img}
-                  alt={v.name}
-                  className="h-full w-full object-cover parallax-img"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                <div className="absolute top-4 right-4 glass-dark text-[10px] tracking-luxe uppercase text-gold px-3 py-1.5">
-                  {v.pax}
+        {venues.map((v, index) => (
+          <article
+            key={v.name}
+            className={`reveal mb-24 ${index !== venues.length - 1 ? 'section-divider' : ''}`}
+          >
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div className={index % 2 === 0 ? 'order-1' : 'order-2'}>
+                <div className="inline-flex items-center gap-3 mb-4">
+                  <span className="h-px w-10 bg-gold" />
+                  <span className="text-[10px] tracking-luxe uppercase text-crimson">{v.pax}</span>
                 </div>
-                <div className="absolute bottom-4 left-6">
-                  <h2 className="font-display text-3xl text-white">{v.name}</h2>
-                </div>
-              </div>
-              <div className="p-8">
-                <p className="text-sm text-muted-foreground leading-relaxed">{v.note}</p>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <h2 className="font-display text-4xl md:text-5xl lg:text-6xl leading-[1.1]">
+                  {v.name}
+                </h2>
+                <div className="mt-6 hairline-gold w-20" />
+                <p className="mt-8 text-base md:text-lg text-muted-foreground leading-relaxed">
+                  {v.note}
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
                   {v.features.map((f) => (
                     <span
                       key={f}
-                      className="text-[10px] tracking-wider uppercase px-3 py-1 border border-gold/20 text-gold/80 bg-gold/5"
+                      className="text-[11px] tracking-wider uppercase px-4 py-2 border border-gold/30 text-gold/90 bg-gold/10"
                     >
                       {f}
                     </span>
@@ -155,21 +101,37 @@ function Venues() {
                 </div>
                 <Link
                   to="/contact"
-                  className="mt-6 inline-flex items-center gap-2 text-xs tracking-luxe uppercase crimson-text border-b border-crimson/30 pb-1 hover:border-crimson transition-colors group"
+                  className="mt-10 inline-flex items-center gap-2 text-sm tracking-luxe uppercase crimson-text border-b border-crimson/40 pb-1 hover:border-crimson transition-colors group"
                 >
                   Enquire{" "}
-                  <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
-            </article>
-          ))}
-        </div>
+              <div className={index % 2 === 0 ? 'order-2' : 'order-1'}>
+                <div className="relative">
+                  <img
+                    src={v.img}
+                    alt={v.name}
+                    className="w-full h-[500px] object-cover shadow-royal"
+                    loading="lazy"
+                  />
+                  <div className="absolute -bottom-6 -right-6 hidden md:block glass-card px-8 py-6 shadow-soft">
+                    <div className="font-display text-3xl crimson-text">{v.pax}</div>
+                    <div className="text-[10px] tracking-luxe uppercase text-muted-foreground mt-1">
+                      Capacity
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
       </section>
 
       {/* Bottom CTA */}
       <section className="relative isolate overflow-hidden">
         <img
-          src={weddingImg}
+          src={celestiaLuxeImg}
           alt=""
           className="absolute inset-0 h-full w-full object-cover -z-10"
         />
