@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Mail, Phone, MapPin, Send, Clock, ArrowRight } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Clock, ArrowRight, Navigation } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import heroImg from "@/assets/hero-convention.png";
 import safHallImg from "@/assets/saf-hall-interior.jpg";
+import locationMapImg from "@/assets/location-map.jpg";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -196,18 +197,29 @@ function Contact() {
               Our <span className="italic gold-text">Location</span>
             </h2>
           </div>
-          <div className="reveal aspect-[16/6] bg-card border border-border overflow-hidden shadow-soft">
-            <iframe
-              title="SAF Celestia Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.508236407!2d76.3219!3d9.9312!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0612f40e681c6f%3A0x2e5b1e5c1e3f4b0a!2sKochi%2C%20Kerala!5e0!3m2!1sen!2sin!4v1700000000000"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="w-full h-full"
+          <div className="reveal relative bg-card border border-border overflow-hidden shadow-soft rounded-2xl">
+            <img 
+              src={locationMapImg} 
+              alt="SAF Celestia Location Map" 
+              className="w-full h-auto object-cover"
             />
+            
+            <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8">
+              <a 
+                href="https://maps.google.com/?q=SAF+Convention+Centre" 
+                target="_blank" 
+                rel="noreferrer"
+                className="glass-dark px-5 py-3 md:px-6 md:py-4 rounded-xl flex items-center gap-3 md:gap-4 hover:-translate-y-1 hover:shadow-glow transition-all duration-300 border border-gold/30 group"
+              >
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gold/20 flex items-center justify-center shrink-0">
+                  <Navigation className="w-4 h-4 md:w-5 md:h-5 text-gold group-hover:animate-pulse" />
+                </div>
+                <div>
+                  <div className="text-[10px] md:text-xs tracking-widest uppercase text-gold/80 font-medium">Navigate</div>
+                  <div className="text-white font-display text-base md:text-lg">Direction</div>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
       </section>

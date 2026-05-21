@@ -187,14 +187,16 @@ function About() {
       {/* CTA */}
       <section className="relative isolate overflow-hidden">
         <img src={safHallImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
-        <div className="absolute inset-0 bg-crimson/80 mix-blend-multiply -z-10" />
-        <div className="mx-auto max-w-4xl px-6 md:px-10 py-28 text-center text-white reveal">
-          <h2 className="font-display text-4xl md:text-5xl text-balance">
-            Ready to create your <span className="italic">legendary event</span>?
-          </h2>
-          <Link to="/contact" className="mt-10 btn-gold inline-flex">
-            Start Planning <ArrowRight className="h-4 w-4" />
-          </Link>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-black/25 -z-10" />
+        <div className="mx-auto max-w-4xl px-6 md:px-10 py-28 text-center text-white reveal flex flex-col items-center">
+          <div className="bg-black/50 backdrop-blur-md p-10 md:p-14 rounded-3xl border border-white/10 shadow-2xl w-full max-w-3xl">
+            <h2 className="font-display text-4xl md:text-5xl text-balance text-white drop-shadow-md">
+              Ready to create your <span className="italic gold-text">legendary event</span>?
+            </h2>
+            <Link to="/contact" className="mt-10 btn-gold inline-flex">
+              Start Planning <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </section>
     </div>

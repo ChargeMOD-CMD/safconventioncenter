@@ -2,12 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef } from "react";
 import { ArrowRight, Play, Star, Users, Calendar, Award, ChevronDown, Quote } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import heroImg from "@/assets/hero-convention.png";
+import heroImg from "@/assets/bismi-wedding.jpg";
 import heroVideoMp4 from "@/assets/hero-video.mp4";
-import weddingImg from "@/assets/venue-wedding.png";
-import corporateImg from "@/assets/venue-corporate.png";
-import galaImg from "@/assets/venue-gala.png";
-import outdoorImg from "@/assets/venue-outdoor.png";
+import weddingImg from "@/assets/excel-1.jpg";
+import corporateImg from "@/assets/excel-2.jpg";
+import galaImg from "@/assets/excel-3.jpg";
+import outdoorImg from "@/assets/excel-4.jpg";
 import celestiaLuxeImg from "@/assets/venue-celestia-luxe.jpg";
 import celestiaGrandImg from "@/assets/venue-celestia-grand.jpg";
 import celestiaCrownImg from "@/assets/venue-celestia-crown.png";
@@ -31,44 +31,44 @@ export const Route = createFileRoute("/")({
 const venues = [
   {
     img: celestiaLuxeImg,
-    name: "Celestia Luxe",
-    pax: "5,000",
-    note: "Flagship hall for grand weddings, corporate launches and landmark gatherings.",
+    name: "SAF Grand",
+    pax: "1,750",
+    note: "Our flagship venue, SAF Grand, offers an exceptional setting for large-scale weddings, corporate events, cultural programs and prestigious gatherings. Designed with expansive seating, refined interiors, and versatile event spaces, it creates the perfect atmosphere for memorable and successful occasions.",
   },
   {
     img: celestiaGrandImg,
-    name: "Celestia Grand",
-    pax: "1,500",
-    note: "A premium banquet arena for traditional feasts and modern gala dinners.",
+    name: "SAF Aura",
+    pax: "350",
+    note: "SAF Aura is an elegant mid-sized venue, thoughtfully designed for Reception, Haldi Ceremony, mehndi functions, birthdays, engagements, naming ceremonies, baptisms, anniversaries, intimate weddings, and other special celebrations.",
   },
   {
     img: celestiaCrownImg,
-    name: "Celestia Crown",
-    pax: "2,000",
-    note: "Mid-size luxury hall for refined weddings and regional summits.",
+    name: "SAF Crown",
+    pax: "200",
+    note: "Known as our mini hall, SAF Crown upholds the same elegance and professionalism as our larger venues while being perfectly suited for more intimate and focused gatherings. It is an ideal choice for receptions, birthday celebrations, anniversaries, send-off parties, naming ceremonies, community functions, academic discussions, , seminars, and creative workshops.",
   },
 ];
 
 const stats = [
-  { value: "250K+", label: "Sq. Ft. of Space", icon: Award },
-  { value: "11", label: "Premium Venues", icon: Star },
-  { value: "5,000+", label: "Events Hosted", icon: Calendar },
-  { value: "50K+", label: "Happy Guests", icon: Users },
+  { value: "100+", label: "Parking Space", icon: Award },
+  { value: "3", label: "Premium Space", icon: Star },
+  { value: "15,000+", label: "Events Hosted", icon: Calendar },
+  { value: "2M+", label: "Happy Guests", icon: Users },
 ];
 
 const eventTypes = [
-  { img: weddingImg, label: "Royal Weddings", desc: "Bespoke ceremonies with cinematic grandeur" },
+  { img: weddingImg, label: "Event Performances", desc: "Bespoke ceremonies with cinematic grandeur" },
   {
     img: galaImg,
-    label: "Cultural Gatherings",
+    label: "Cultural Experience",
     desc: "Traditional celebrations with modern elegance",
   },
   {
     img: corporateImg,
-    label: "Corporate Summits",
+    label: "Corporate Events",
     desc: "World-class conferences and exhibitions",
   },
-  { img: outdoorImg, label: "Grand Galas", desc: "Spectacular events under the stars" },
+  { img: outdoorImg, label: "Joyous Occassions", desc: "Spectacular events under the stars" },
 ];
 
 const testimonials = [
@@ -212,18 +212,14 @@ function Home() {
               <span className="text-[10px] tracking-luxe uppercase text-crimson">Who we are</span>
             </div>
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl leading-[1.1]">
-              About <span className="gold-text italic">SAF Celestia</span>
+              About <span className="gold-text italic">SAF Convention Centre</span>
             </h2>
             <div className="mt-6 hairline-gold w-20" />
             <p className="mt-8 text-base md:text-lg text-muted-foreground leading-relaxed">
-              The SAF Celestia International Convention Centre is one of the region's most
-              distinguished venues for weddings, conventions, award shows, exhibitions, conferences
-              and concerts. Over 250,000 square feet of meticulously designed space is managed by a
-              dedicated team with decades of hospitality experience.
+              SAF Convention Centre stands as one of the region's premier destinations for weddings, conventions, receptions, ceremonies, school anniversary programs, exhibitions, and corporate conferences. Thoughtfully designed with sophistication and elegance, the venue is supported by a dedicated team backed by decades of hospitality expertise.
             </p>
             <p className="mt-4 text-base text-muted-foreground leading-relaxed">
-              Sophisticated architecture, world-class amenities and impeccable service mark Celestia
-              as the destination for unforgettable celebrations.
+              Combining refined architecture, world-class amenities, and exceptional service, SAF creates the perfect setting for truly memorable and unforgettable occasions.
             </p>
             <Link
               to="/about"
@@ -244,13 +240,13 @@ function Home() {
                 loading="lazy"
               />
               <div className="absolute -bottom-6 -left-6 hidden md:block glass-card px-8 py-6 shadow-soft animate-pulse-glow">
-                <div className="font-display text-4xl crimson-text">250K+</div>
+                <div className="font-display text-4xl crimson-text">15,000+</div>
                 <div className="text-[10px] tracking-luxe uppercase text-muted-foreground mt-1">
-                  Sq.Ft of Excellence
+                  Events Hosted
                 </div>
               </div>
               <div className="absolute -top-4 -right-4 hidden md:block glass-card px-6 py-4 shadow-soft">
-                <div className="font-display text-2xl gold-text">15+</div>
+                <div className="font-display text-2xl gold-text">20+</div>
                 <div className="text-[10px] tracking-luxe uppercase text-muted-foreground mt-1">
                   Years of Legacy
                 </div>
@@ -349,11 +345,19 @@ function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
               <div className="absolute inset-0 bg-crimson/0 group-hover:bg-crimson/20 transition-colors duration-500" />
               <div className="absolute inset-x-0 bottom-0 p-6 text-white">
-                <div className="text-[10px] tracking-luxe uppercase text-gold/80 mb-2">
-                  {c.desc}
+                <div className="transform transition-transform duration-500 group-hover:-translate-y-14">
+                  <div className="text-[10px] tracking-luxe uppercase text-gold/80 mb-2">
+                    {c.desc}
+                  </div>
+                  <div className="font-display text-2xl md:text-3xl">{c.label}</div>
+                  <div className="mt-3 h-px w-0 bg-gold group-hover:w-12 transition-all duration-500" />
                 </div>
-                <div className="font-display text-2xl md:text-3xl">{c.label}</div>
-                <div className="mt-3 h-px w-0 bg-gold group-hover:w-12 transition-all duration-500" />
+
+                <div className="absolute bottom-6 left-6 opacity-0 translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 pointer-events-none group-hover:pointer-events-auto">
+                  <Link to="/contact" className="btn-gold px-5 py-2.5 text-xs inline-flex items-center">
+                    Book Now <ArrowRight className="h-3.5 w-3.5 ml-2" />
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
@@ -367,13 +371,16 @@ function Home() {
             <span key={i} className="inline-flex items-center gap-12 mr-12">
               {[
                 "Weddings",
-                "Conferences",
-                "Exhibitions",
-                "Galas",
-                "Summits",
-                "Concerts",
-                "Awards",
+                "Conventions",
                 "Receptions",
+                "Haldi",
+                "Mehandi",
+                "Birthdays",
+                "Engagements",
+                "Naming Ceremonies",
+                "Baptisms",
+                "Anniverseries",
+                "Seminars",
               ].map((word) => (
                 <span
                   key={`${i}-${word}`}
@@ -460,30 +467,31 @@ function Home() {
       {/* ═══════ CTA SECTION ═══════ */}
       <section className="relative isolate overflow-hidden">
         <img src={safHallImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
-        <div className="absolute inset-0 bg-crimson/80 mix-blend-multiply -z-10" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30 -z-10" />
-        <div className="mx-auto max-w-4xl px-6 md:px-10 py-32 text-center text-white reveal">
-          <div className="inline-flex items-center gap-3 mb-6">
-            <span className="h-px w-8 bg-white/30" />
-            <span className="text-[10px] tracking-[0.5em] uppercase text-white/70">
-              Plan Your Event
-            </span>
-            <span className="h-px w-8 bg-white/30" />
-          </div>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-balance leading-[1.1]">
-            Reserve a night that will be remembered
-            <span className="italic"> for a lifetime.</span>
-          </h2>
-          <p className="mt-6 text-white/60 max-w-xl mx-auto leading-relaxed">
-            Let our dedicated concierge team craft a bespoke experience tailored to your vision.
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/contact" className="btn-gold">
-              Book Now <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link to="/venues" className="btn-outline">
-              Tour Our Venues
-            </Link>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-black/25 -z-10" />
+        <div className="mx-auto max-w-4xl px-6 md:px-10 py-32 text-center text-white reveal flex flex-col items-center">
+          <div className="bg-black/50 backdrop-blur-md p-10 md:p-14 rounded-3xl border border-white/10 shadow-2xl w-full max-w-3xl">
+            <div className="inline-flex items-center gap-3 mb-6">
+              <span className="h-px w-8 bg-white/30" />
+              <span className="text-[10px] tracking-[0.5em] uppercase text-white/70">
+                Plan Your Event
+              </span>
+              <span className="h-px w-8 bg-white/30" />
+            </div>
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-balance leading-[1.1] text-white drop-shadow-md">
+              Reserve a night that will be remembered
+              <span className="italic gold-text"> for a lifetime.</span>
+            </h2>
+            <p className="mt-6 text-white/90 max-w-xl mx-auto leading-relaxed">
+              Let our dedicated concierge team craft a bespoke experience tailored to your vision.
+            </p>
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link to="/contact" className="btn-gold">
+                Book Now <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link to="/venues" className="btn-outline">
+                Tour Our Venues
+              </Link>
+            </div>
           </div>
         </div>
       </section>

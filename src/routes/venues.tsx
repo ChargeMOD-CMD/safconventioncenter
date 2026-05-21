@@ -10,11 +10,11 @@ import safHallImg from "@/assets/saf-hall-interior.jpg";
 export const Route = createFileRoute("/venues")({
   head: () => ({
     meta: [
-      { title: "Venues — SAF Celestia International Convention Centre" },
+      { title: "Venues — SAF Convention Centre" },
       {
         name: "description",
         content:
-          "Three signature halls — Celestia Luxe, Celestia Grand, and Celestia Crown for grand weddings, corporate events and celebrations.",
+          "Three signature halls — SAF Grand, SAF Aura, and SAF Crown for grand weddings, corporate events and celebrations.",
       },
     ],
   }),
@@ -24,23 +24,23 @@ export const Route = createFileRoute("/venues")({
 const venues = [
   {
     img: celestiaLuxeImg,
-    name: "Celestia Luxe",
-    pax: "5,000 PAX",
-    note: "Our flagship hall — an awe-inspiring setting for grand weddings, corporate launches and cultural events.",
+    name: "SAF Grand",
+    pax: "1,750 PAX",
+    note: "Our flagship venue, SAF Grand, offers an exceptional setting for large-scale weddings, corporate events, cultural programs and prestigious gatherings. Designed with expansive seating, refined interiors, and versatile event spaces, it creates the perfect atmosphere for memorable and successful occasions.",
     features: ["Adaptive LED lighting", "360° sound system", "VIP lounge"],
   },
   {
     img: celestiaGrandImg,
-    name: "Celestia Grand",
-    pax: "1,500 PAX",
-    note: "Premium dining arena for traditional feasts, gala dinners and multicultural buffets.",
-    features: ["Chef's kitchen", "Wine cellar", "Stage setup"],
+    name: "SAF Aura",
+    pax: "350 PAX",
+    note: "SAF Aura is an elegant mid-sized venue, thoughtfully designed for Reception, Haldi Ceremony, mehndi functions, birthdays, engagements, naming ceremonies, baptisms, anniversaries, intimate weddings, and other special celebrations.",
+    features: ["Chef's kitchen", "Stage setup"],
   },
   {
     img: celestiaCrownImg,
-    name: "Celestia Crown",
-    pax: "2,000 PAX",
-    note: "Our Mini Hall — luxury and professionalism for mid-size weddings and regional summits.",
+    name: "SAF Crown",
+    pax: "200 PAX",
+    note: "Known as our mini hall, SAF Crown upholds the same elegance and professionalism as our larger venues while being perfectly suited for more intimate and focused gatherings. It is an ideal choice for receptions, birthday celebrations, anniversaries, send-off parties, naming ceremonies, community functions, academic discussions, , seminars, and creative workshops.",
     features: ["AV equipment", "Breakout rooms", "Green room"],
   },
 ];
@@ -135,18 +135,20 @@ function Venues() {
           alt=""
           className="absolute inset-0 h-full w-full object-cover -z-10"
         />
-        <div className="absolute inset-0 bg-crimson/80 mix-blend-multiply -z-10" />
-        <div className="mx-auto max-w-4xl px-6 md:px-10 py-24 text-center text-white reveal">
-          <h2 className="font-display text-4xl md:text-5xl text-balance">
-            Can't decide? Let us <span className="italic">guide you</span>.
-          </h2>
-          <p className="mt-4 text-white/60 max-w-xl mx-auto">
-            Our concierge team will recommend the perfect venue based on your event type, guest
-            count and vision.
-          </p>
-          <Link to="/contact" className="mt-10 btn-gold inline-flex">
-            Get Recommendations <ArrowRight className="h-4 w-4" />
-          </Link>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-black/25 -z-10" />
+        <div className="mx-auto max-w-4xl px-6 md:px-10 py-24 text-center text-white reveal flex flex-col items-center">
+          <div className="bg-black/50 backdrop-blur-md p-10 md:p-14 rounded-3xl border border-white/10 shadow-2xl w-full max-w-3xl">
+            <h2 className="font-display text-4xl md:text-5xl text-balance text-white drop-shadow-md">
+              Can't decide? Let us <span className="italic gold-text">guide you</span>.
+            </h2>
+            <p className="mt-4 text-white/90 max-w-xl mx-auto">
+              Our concierge team will recommend the perfect venue based on your event type, guest
+              count and vision.
+            </p>
+            <Link to="/contact" className="mt-10 btn-gold inline-flex">
+              Get Recommendations <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </section>
     </div>
