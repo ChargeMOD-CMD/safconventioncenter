@@ -3,6 +3,7 @@ import { Outlet, Link, createRootRouteWithContext, useRouter } from "@tanstack/r
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SplashScreen } from "@/components/splash-screen";
+import { FloatingWidgets } from "@/components/floating-widgets";
 
 function NotFoundComponent() {
   return (
@@ -64,6 +65,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <SiteFooter />
+      <FloatingWidgets />
     </QueryClientProvider>
   );
 }
