@@ -83,11 +83,9 @@ export function SiteFooter() {
             <h4 className="text-[10px] tracking-luxe uppercase text-gold mb-6">Venues</h4>
             <ul className="space-y-3">
               {[
-                "Celestia Luxe",
-                "Celestia Grand",
-                "Celestia Crown",
-                "Celestia Gala",
-                "Celestia Atrium",
+                "SAF Grand",
+                "SAF Aura",
+                "SAF Crown",
               ].map((v) => (
                 <li key={v}>
                   <Link
