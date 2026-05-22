@@ -78,7 +78,7 @@ const eventTypes = [
 const testimonials = [
   {
     text: "From the moment we arrived, we felt like VIPs. The hall was breathtaking, the orchestration flawless, and the staff went above and beyond. Five stars all the way.",
-    name: "Emma K.",
+    name: "Zayed M.",
     role: "Wedding Host",
     rating: 5,
   },
