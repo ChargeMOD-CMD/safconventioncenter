@@ -1,9 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Outlet, Link, createRootRouteWithContext, useRouter } from "@tanstack/react-router";
+import { Outlet, Link, createRootRouteWithContext, useRouter, ScrollRestoration } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SplashScreen } from "@/components/splash-screen";
 import { FloatingWidgets } from "@/components/floating-widgets";
+import { CustomCursor } from "@/components/custom-cursor";
 
 function NotFoundComponent() {
   return (
@@ -59,9 +60,11 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
+      <CustomCursor />
       <SplashScreen />
       <SiteHeader />
       <main>
+        <ScrollRestoration />
         <Outlet />
       </main>
       <SiteFooter />

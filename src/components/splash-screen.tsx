@@ -58,7 +58,7 @@ export function SplashScreen() {
         </video>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent" />
-        
+
         {/* Subtle holographic grid / grain overlay for realism */}
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 mix-blend-overlay" />
       </div>
@@ -95,23 +95,23 @@ export function SplashScreen() {
         </h2>
 
         {/* Futuristic Automatic Loading Bar */}
-        <div 
+        <div
           className={`w-full max-w-md h-px bg-white/10 relative overflow-hidden transition-all duration-1000 ease-out delay-1000 ${
             showContent ? "opacity-100" : "opacity-0"
           }`}
         >
-          <div 
+          <div
             className="absolute top-0 left-0 h-full bg-gold transition-all ease-out"
-            style={{ 
-              width: showContent ? '100%' : '0%',
-              transitionDuration: '3.5s' 
+            style={{
+              width: showContent ? "100%" : "0%",
+              transitionDuration: "3.5s",
             }}
           />
           <div className="absolute top-0 left-0 h-full w-20 bg-white/50 blur-[2px] animate-shimmer" />
         </div>
-        
+
         {/* Loading text sequence */}
-        <div 
+        <div
           className={`mt-4 text-[9px] uppercase tracking-[0.3em] text-white/40 transition-all duration-1000 delay-1000 ${
             showContent ? "opacity-100" : "opacity-0"
           }`}

@@ -51,7 +51,11 @@ function Venues() {
     <div>
       {/* Hero */}
       <section className="relative isolate h-[60vh] min-h-[450px] flex items-center justify-center overflow-hidden">
-        <img src={safHallImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
+        <img
+          src={safHallImg}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover -z-10"
+        />
         <div className="absolute inset-0 bg-black/55 -z-10" />
         <div className="text-center px-6 max-w-4xl text-white reveal">
           <div className="inline-flex items-center gap-3 mb-4">
@@ -74,10 +78,10 @@ function Venues() {
         {venues.map((v, index) => (
           <article
             key={v.name}
-            className={`reveal mb-24 ${index !== venues.length - 1 ? 'section-divider' : ''}`}
+            className={`reveal mb-24 ${index !== venues.length - 1 ? "section-divider" : ""}`}
           >
             <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className={index % 2 === 0 ? 'order-1' : 'order-2'}>
+              <div className={index % 2 === 0 ? "order-2 lg:order-1" : "order-2"}>
                 <div className="inline-flex items-center gap-3 mb-4">
                   <span className="h-px w-10 bg-gold" />
                   <span className="text-[10px] tracking-luxe uppercase text-crimson">{v.pax}</span>
@@ -107,7 +111,7 @@ function Venues() {
                   <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
-              <div className={index % 2 === 0 ? 'order-2' : 'order-1'}>
+              <div className={index % 2 === 0 ? "order-1 lg:order-2" : "order-1"}>
                 <div className="relative">
                   <img
                     src={v.img}

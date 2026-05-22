@@ -51,24 +51,28 @@ const venues = [
 
 const stats = [
   { value: "100+", label: "Parking Space", icon: Award },
-  { value: "3", label: "Premium Space", icon: Star },
+  { value: "3", label: "Premium Venues", icon: Star },
   { value: "15,000+", label: "Events Hosted", icon: Calendar },
   { value: "2M+", label: "Happy Guests", icon: Users },
 ];
 
 const eventTypes = [
-  { img: weddingImg, label: "Event Performances", desc: "Bespoke ceremonies with cinematic grandeur" },
+  {
+    img: outdoorImg,
+    label: "Joyous Occasions",
+  },
+  {
+    img: weddingImg,
+    label: "Event Performances",
+  },
   {
     img: galaImg,
     label: "Cultural Experience",
-    desc: "Traditional celebrations with modern elegance",
   },
   {
     img: corporateImg,
     label: "Corporate Events",
-    desc: "World-class conferences and exhibitions",
   },
-  { img: outdoorImg, label: "Joyous Occassions", desc: "Spectacular events under the stars" },
 ];
 
 const testimonials = [
@@ -99,7 +103,6 @@ const attractions = [
   { name: "Old Harbour Boardwalk", km: "21 Km" },
   { name: "Celestia Vineyards", km: "35 Km" },
 ];
-
 
 /* ─── Component ───────────────────────────────── */
 function Home() {
@@ -160,10 +163,7 @@ function Home() {
           <p
             className="mt-6 text-white/60 text-sm md:text-base max-w-xl mx-auto leading-relaxed font-sans"
             style={{ animation: "fadeUp 1s ease-out 0.7s both" }}
-          >
-            Where timeless elegance meets world-class hospitality. 250,000 sq.ft. of meticulously
-            designed space for weddings, summits, galas and grand celebrations.
-          </p>
+          ></p>
 
           <div
             className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
@@ -176,7 +176,6 @@ function Home() {
               <Play className="h-4 w-4" /> Book Your Event
             </Link>
           </div>
-
         </div>
 
         {/* Scroll hint */}
@@ -212,14 +211,18 @@ function Home() {
               <span className="text-[10px] tracking-luxe uppercase text-crimson">Who we are</span>
             </div>
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl leading-[1.1]">
-              About <span className="gold-text italic">SAF Convention Centre</span>
+              About <span className="gold-text bold">SAF Convention Centre</span>
             </h2>
             <div className="mt-6 hairline-gold w-20" />
             <p className="mt-8 text-base md:text-lg text-muted-foreground leading-relaxed">
-              SAF Convention Centre stands as one of the region's premier destinations for weddings, conventions, receptions, ceremonies, school anniversary programs, exhibitions, and corporate conferences. Thoughtfully designed with sophistication and elegance, the venue is supported by a dedicated team backed by decades of hospitality expertise.
+              SAF Convention Centre stands as one of the region's premier destinations for weddings,
+              conventions, receptions, ceremonies, school anniversary programs, exhibitions, and
+              corporate conferences. Thoughtfully designed with sophistication and elegance, the
+              venue is supported by a dedicated team backed by decades of hospitality expertise.
             </p>
             <p className="mt-4 text-base text-muted-foreground leading-relaxed">
-              Combining refined architecture, world-class amenities, and exceptional service, SAF creates the perfect setting for truly memorable and unforgettable occasions.
+              Combining refined architecture, world-class amenities, and exceptional service, SAF
+              creates the perfect setting for truly memorable and unforgettable occasions.
             </p>
             <Link
               to="/about"
@@ -231,7 +234,7 @@ function Home() {
           </div>
 
           <div className="reveal-right relative">
-            <div className="absolute -inset-8 bg-gold/5 blur-3xl rounded-full" />
+            <div className="absolute -inset-8 bg-gold/5 blur-3xl rounded-full pointer-events-none" />
             <div className="relative">
               <img
                 src={heroImg}
@@ -259,7 +262,11 @@ function Home() {
       {/* ═══════ VENUES SHOWCASE ═══════ */}
       <section
         className="relative py-32 section-divider overflow-hidden"
-        style={{ backgroundImage: `url(${safHallImg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+        style={{
+          backgroundImage: `url(${safHallImg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       >
         <div className="absolute inset-0 bg-black/70" />
         <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-10">
@@ -345,16 +352,17 @@ function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
               <div className="absolute inset-0 bg-crimson/0 group-hover:bg-crimson/20 transition-colors duration-500" />
               <div className="absolute inset-x-0 bottom-0 p-6 text-white">
-                <div className="transform transition-transform duration-500 group-hover:-translate-y-14">
-                  <div className="text-[10px] tracking-luxe uppercase text-gold/80 mb-2">
-                    {c.desc}
-                  </div>
+                <div className="transform transition-transform duration-500 -translate-y-14 lg:translate-y-0 lg:group-hover:-translate-y-14 lg:group-active:-translate-y-14">
+                  <div className="text-[10px] tracking-luxe uppercase text-gold/80 mb-2"></div>
                   <div className="font-display text-2xl md:text-3xl">{c.label}</div>
-                  <div className="mt-3 h-px w-0 bg-gold group-hover:w-12 transition-all duration-500" />
+                  <div className="mt-3 h-px w-12 lg:w-0 bg-gold group-hover:w-12 group-active:w-12 transition-all duration-500" />
                 </div>
 
-                <div className="absolute bottom-6 left-6 opacity-0 translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 pointer-events-none group-hover:pointer-events-auto">
-                  <Link to="/contact" className="btn-gold px-5 py-2.5 text-xs inline-flex items-center">
+                <div className="absolute bottom-6 left-6 opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 pointer-events-auto lg:pointer-events-none lg:group-hover:pointer-events-auto">
+                  <Link
+                    to="/contact"
+                    className="btn-gold px-5 py-2.5 text-xs inline-flex items-center"
+                  >
                     Book Now <ArrowRight className="h-3.5 w-3.5 ml-2" />
                   </Link>
                 </div>
@@ -367,8 +375,8 @@ function Home() {
       {/* ═══════ MARQUEE TEXT STRIP ═══════ */}
       <section className="bg-gradient-royal py-6 overflow-hidden">
         <div className="animate-marquee whitespace-nowrap flex">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <span key={i} className="inline-flex items-center gap-12 mr-12">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <span key={i} className="inline-flex items-center gap-6 md:gap-12 mr-6 md:mr-12">
               {[
                 "Weddings",
                 "Conventions",
@@ -379,7 +387,7 @@ function Home() {
                 "Engagements",
                 "Naming Ceremonies",
                 "Baptisms",
-                "Anniverseries",
+                "Anniversaries",
                 "Seminars",
               ].map((word) => (
                 <span
@@ -466,7 +474,11 @@ function Home() {
 
       {/* ═══════ CTA SECTION ═══════ */}
       <section className="relative isolate overflow-hidden">
-        <img src={safHallImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
+        <img
+          src={safHallImg}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover -z-10"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-black/25 -z-10" />
         <div className="mx-auto max-w-4xl px-6 md:px-10 py-32 text-center text-white reveal flex flex-col items-center">
           <div className="bg-black/50 backdrop-blur-md p-10 md:p-14 rounded-3xl border border-white/10 shadow-2xl w-full max-w-3xl">
@@ -495,7 +507,6 @@ function Home() {
           </div>
         </div>
       </section>
-
     </div>
   );
 }

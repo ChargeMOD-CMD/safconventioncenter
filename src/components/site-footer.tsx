@@ -28,9 +28,6 @@ export function SiteFooter() {
           {/* Brand */}
           <div className="md:col-span-5">
             <div className="font-display text-3xl text-white">SAF Convention Center</div>
-            <div className="mt-1 text-[9px] tracking-[0.4em] uppercase text-white/40">
-              International Convention Centre
-            </div>
             <p className="mt-6 text-sm text-white/50 max-w-sm leading-relaxed">
               Elevating every event experience with style, space and exceptional service. From royal
               weddings to landmark summits, every moment is curated with cinematic precision at
@@ -82,11 +79,7 @@ export function SiteFooter() {
           <div className="md:col-span-2">
             <h4 className="text-[10px] tracking-luxe uppercase text-gold mb-6">Venues</h4>
             <ul className="space-y-3">
-              {[
-                "SAF Grand",
-                "SAF Aura",
-                "SAF Crown",
-              ].map((v) => (
+              {["SAF Grand", "SAF Aura", "SAF Crown"].map((v) => (
                 <li key={v}>
                   <Link
                     to="/venues"
@@ -132,7 +125,9 @@ export function SiteFooter() {
         {/* Bottom bar */}
         <div className="border-t border-white/10 py-6">
           <div className="mx-auto max-w-7xl px-6 md:px-10 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-white/30 tracking-wider uppercase text-center md:text-left">
-            <span className="max-w-[280px] md:max-w-none">© {new Date().getFullYear()} SAF Convention Centre · Celestia EventVerse</span>
+            <span className="max-w-[280px] md:max-w-none">
+              © {new Date().getFullYear()} SAF Convention Centre · Celestia EventVerse
+            </span>
             <div className="flex flex-wrap justify-center gap-4 md:gap-6">
               <span className="hover:text-white/60 cursor-pointer transition-colors">Privacy</span>
               <span className="hover:text-white/60 cursor-pointer transition-colors">Terms</span>

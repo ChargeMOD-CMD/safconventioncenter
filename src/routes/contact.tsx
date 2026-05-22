@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Mail, Phone, MapPin, Send, Clock, ArrowRight, Navigation } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Clock, ArrowRight, Navigation, Mountain, Train, Plane, Building, TreePine, Compass } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import heroImg from "@/assets/hero-convention.png";
 import safHallImg from "@/assets/saf-hall-interior.jpg";
-import locationMapImg from "@/assets/location-map.jpg";
+import locationMapImg from "@/assets/location-map.png";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -24,7 +24,11 @@ function Contact() {
     <div>
       {/* Hero */}
       <section className="relative isolate h-[50vh] min-h-[380px] flex items-center justify-center overflow-hidden">
-        <img src={safHallImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
+        <img
+          src={safHallImg}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover -z-10"
+        />
         <div className="absolute inset-0 bg-black/55 -z-10" />
         <div className="text-center px-6 max-w-4xl text-white reveal">
           <div className="inline-flex items-center gap-3 mb-4">
@@ -34,8 +38,8 @@ function Contact() {
             </span>
             <span className="h-px w-8 bg-gold/60" />
           </div>
-          <h1 className="font-display text-5xl md:text-7xl">
-            Begin your <span className="italic gold-text">story</span>.
+          <h1 className="font-display text-5xl md:text-7xl text-white">
+            Begin Your <span className="italic gold-text">story</span>.
           </h1>
         </div>
       </section>
@@ -198,16 +202,16 @@ function Contact() {
             </h2>
           </div>
           <div className="reveal relative bg-card border border-border overflow-hidden shadow-soft rounded-2xl">
-            <img 
-              src={locationMapImg} 
-              alt="SAF Celestia Location Map" 
+            <img
+              src={locationMapImg}
+              alt="SAF Celestia Location Map"
               className="w-full h-auto object-cover"
             />
-            
+
             <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8">
-              <a 
-                href="https://maps.google.com/?q=SAF+Convention+Centre" 
-                target="_blank" 
+              <a
+                href="https://maps.google.com/?q=SAF+Convention+Centre"
+                target="_blank"
                 rel="noreferrer"
                 className="glass-dark px-5 py-3 md:px-6 md:py-4 rounded-xl flex items-center gap-3 md:gap-4 hover:-translate-y-1 hover:shadow-glow transition-all duration-300 border border-gold/30 group"
               >
@@ -215,7 +219,9 @@ function Contact() {
                   <Navigation className="w-4 h-4 md:w-5 md:h-5 text-gold group-hover:animate-pulse" />
                 </div>
                 <div>
-                  <div className="text-[10px] md:text-xs tracking-widest uppercase text-gold/80 font-medium">Navigate</div>
+                  <div className="text-[10px] md:text-xs tracking-widest uppercase text-gold/80 font-medium">
+                    Navigate
+                  </div>
                   <div className="text-white font-display text-base md:text-lg">Direction</div>
                 </div>
               </a>

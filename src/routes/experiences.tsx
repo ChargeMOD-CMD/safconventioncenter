@@ -86,7 +86,11 @@ function Experiences() {
     <div>
       {/* Hero */}
       <section className="relative isolate h-[60vh] min-h-[450px] flex items-center justify-center overflow-hidden">
-        <img src={safHallImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
+        <img
+          src={safHallImg}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover -z-10"
+        />
         <div className="absolute inset-0 bg-black/55 -z-10" />
         <div className="text-center px-6 max-w-4xl text-white reveal">
           <div className="inline-flex items-center gap-3 mb-4">
@@ -94,7 +98,7 @@ function Experiences() {
             <span className="text-[10px] tracking-[0.5em] uppercase text-gold/90">Experiences</span>
             <span className="h-px w-8 bg-gold/60" />
           </div>
-          <h1 className="font-display text-5xl md:text-7xl">
+          <h1 className="font-display text-5xl md:text-7xl text-white">
             A choreography of <span className="italic gold-text">wonder</span>.
           </h1>
           <p className="mt-4 text-white/60 max-w-2xl mx-auto">
@@ -113,7 +117,7 @@ function Experiences() {
               className="reveal group relative overflow-hidden bg-card border border-border p-8 hover:border-gold/30 hover:shadow-soft transition-all duration-500"
             >
               <div
-                className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl ${color} rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl ${color} rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
               />
               <div className="relative">
                 <div className="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center mb-6 group-hover:bg-gold/20 transition-colors">
@@ -131,7 +135,11 @@ function Experiences() {
       {/* Process */}
       <section
         className="relative py-28 section-divider overflow-hidden"
-        style={{ backgroundImage: `url(${safHallImg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+        style={{
+          backgroundImage: `url(${safHallImg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       >
         <div className="absolute inset-0 bg-black/70" />
         <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-10">
@@ -161,7 +169,11 @@ function Experiences() {
 
       {/* CTA */}
       <section className="relative isolate overflow-hidden">
-        <img src={safHallImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
+        <img
+          src={safHallImg}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover -z-10"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-black/25 -z-10" />
         <div className="mx-auto max-w-4xl px-6 md:px-10 py-28 text-center text-white reveal flex flex-col items-center">
           <div className="bg-black/50 backdrop-blur-md p-10 md:p-14 rounded-3xl border border-white/10 shadow-2xl w-full max-w-3xl">

@@ -20,7 +20,7 @@ export function FloatingWidgets() {
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
       {/* Chat Window */}
-      <div 
+      <div
         className={`transition-all duration-500 origin-bottom-right ${
           isChatOpen ? "scale-100 opacity-100" : "scale-50 opacity-0 pointer-events-none"
         } mb-2`}
@@ -34,17 +34,19 @@ export function FloatingWidgets() {
               </div>
               <div>
                 <div className="text-white font-display text-sm leading-tight">SAF Concierge</div>
-                <div className="text-[9px] text-white/70 uppercase tracking-widest">AI Assistant</div>
+                <div className="text-[9px] text-white/70 uppercase tracking-widest">
+                  AI Assistant
+                </div>
               </div>
             </div>
-            <button 
+            <button
               onClick={() => setIsChatOpen(false)}
               className="text-white/70 hover:text-white transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
-          
+
           {/* Messages Area */}
           <div className="flex-1 p-4 overflow-y-auto flex flex-col gap-4">
             {/* AI Message */}
@@ -53,10 +55,11 @@ export function FloatingWidgets() {
                 <Bot className="w-3 h-3 text-gold" />
               </div>
               <div className="bg-white/5 border border-white/10 rounded-2xl rounded-tl-none p-3 text-sm text-white/80 leading-relaxed">
-                Welcome to SAF Convention Centre! I'm your AI Concierge. How can I assist you with your event planning today?
+                Welcome to SAF Convention Centre! I'm your AI Concierge. How can I assist you with
+                your event planning today?
               </div>
             </div>
-            
+
             {/* Suggestions */}
             <div className="flex flex-col gap-2 pl-9 mt-2">
               <button className="text-xs text-left text-gold/80 hover:text-gold border border-gold/20 hover:border-gold/50 rounded-full px-3 py-1.5 transition-colors w-fit">
@@ -67,13 +70,13 @@ export function FloatingWidgets() {
               </button>
             </div>
           </div>
-          
+
           {/* Input Area */}
           <div className="p-4 border-t border-white/10 bg-black/20">
             <div className="relative">
-              <input 
-                type="text" 
-                placeholder="Type your message..." 
+              <input
+                type="text"
+                placeholder="Type your message..."
                 className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-2.5 text-sm text-white outline-none focus:border-gold/50 transition-colors pr-10"
               />
               <button className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-gold flex items-center justify-center text-black hover:scale-105 transition-transform">
@@ -98,7 +101,9 @@ export function FloatingWidgets() {
         <button
           onClick={scrollToTop}
           className={`w-12 h-12 rounded-full glass-dark border border-white/10 flex items-center justify-center text-white/70 hover:text-gold hover:border-gold/30 shadow-soft transition-all duration-500 ${
-            showScroll ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0 pointer-events-none"
+            showScroll
+              ? "translate-y-0 opacity-100"
+              : "translate-y-10 opacity-0 pointer-events-none"
           }`}
           aria-label="Scroll to top"
         >

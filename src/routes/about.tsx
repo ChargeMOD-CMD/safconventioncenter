@@ -35,22 +35,17 @@ const values = [
   { icon: Shield, title: "Trust", desc: "5,000+ successful events and a legacy of reliability." },
 ];
 
-const milestones = [
-  { year: "2009", event: "SAF Convention Centre founded" },
-  { year: "2012", event: "Expanded to 100,000 sq.ft." },
-  { year: "2016", event: "Celestia Luxe flagship hall inaugurated" },
-  { year: "2019", event: "Crossed 250,000 sq.ft. of event space" },
-  { year: "2022", event: "Named South India's Premier Convention Centre" },
-  { year: "2025", event: "Celestia EventVerse digital experience launched" },
-];
-
 function About() {
   useScrollReveal();
   return (
     <div>
       {/* Hero Banner */}
       <section className="relative isolate h-[60vh] min-h-[450px] flex items-center justify-center overflow-hidden">
-        <img src={safHallImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
+        <img
+          src={safHallImg}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover -z-10"
+        />
         <div className="absolute inset-0 bg-black/55 -z-10" />
         <div className="text-center px-6 max-w-4xl text-white reveal">
           <div className="inline-flex items-center gap-3 mb-4">
@@ -101,7 +96,7 @@ function About() {
             </div>
           </div>
           <div className="reveal-right relative">
-            <div className="absolute -inset-8 bg-gold/5 blur-3xl rounded-full" />
+            <div className="absolute -inset-8 bg-gold/5 blur-3xl rounded-full pointer-events-none" />
             <img
               src={weddingImg}
               alt="Celestia interior"
@@ -115,7 +110,11 @@ function About() {
       {/* Our Values */}
       <section
         className="relative py-28 section-divider overflow-hidden"
-        style={{ backgroundImage: `url(${safHallImg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+        style={{
+          backgroundImage: `url(${safHallImg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       >
         <div className="absolute inset-0 bg-black/70" />
         <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-10">
@@ -148,45 +147,13 @@ function About() {
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="mx-auto max-w-4xl px-6 md:px-10 py-28">
-        <div className="flex flex-col items-center text-center mb-16 reveal">
-          <div className="inline-flex items-center gap-3 mb-4">
-            <span className="h-px w-10 bg-gold" />
-            <span className="text-[10px] tracking-luxe uppercase text-crimson">Milestones</span>
-            <span className="h-px w-10 bg-gold" />
-          </div>
-          <h2 className="font-display text-4xl md:text-5xl">
-            Our <span className="italic gold-text">Journey</span>
-          </h2>
-        </div>
-        <div className="relative">
-          <div className="absolute left-[24px] md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-1/2" />
-          {milestones.map((m, i) => (
-            <div
-              key={m.year}
-              className={`reveal relative flex flex-col md:flex-row md:items-center gap-4 md:gap-8 mb-12 ${
-                i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-              }`}
-            >
-              <div
-                className={`flex-1 pl-16 md:pl-0 ${
-                  i % 2 === 0 ? "md:text-right" : "md:text-left"
-                }`}
-              >
-                <div className="font-display text-3xl crimson-text">{m.year}</div>
-                <p className="mt-1 text-sm text-muted-foreground">{m.event}</p>
-              </div>
-              <div className="absolute left-[24px] md:static md:left-auto top-2 md:top-auto -translate-x-1/2 md:translate-x-0 z-10 w-4 h-4 rounded-full bg-gold border-4 border-background shadow-sm" />
-              <div className="hidden md:block flex-1" />
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* CTA */}
       <section className="relative isolate overflow-hidden">
-        <img src={safHallImg} alt="" className="absolute inset-0 h-full w-full object-cover -z-10" />
+        <img
+          src={safHallImg}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover -z-10"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-black/25 -z-10" />
         <div className="mx-auto max-w-4xl px-6 md:px-10 py-28 text-center text-white reveal flex flex-col items-center">
           <div className="bg-black/50 backdrop-blur-md p-10 md:p-14 rounded-3xl border border-white/10 shadow-2xl w-full max-w-3xl">

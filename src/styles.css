@@ -103,6 +103,14 @@
     font-weight: 500;
     color: var(--color-foreground);
   }
+  /* Hide default cursor on desktop devices to show custom cursor */
+  @media (hover: hover) and (pointer: fine) {
+    *,
+    *::before,
+    *::after {
+      cursor: none !important;
+    }
+  }
   ::selection {
     background: oklch(0.38 0.17 25 / 0.2);
     color: oklch(0.18 0.03 30);
@@ -420,6 +428,10 @@
   transform: translateY(-2px);
   box-shadow: 0 12px 40px oklch(0.38 0.17 25 / 0.4);
 }
+.btn-primary:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 4px 15px oklch(0.38 0.17 25 / 0.4);
+}
 
 .btn-outline {
   display: inline-flex;
@@ -440,6 +452,10 @@
   border-color: oklch(1 0 0 / 0.7);
   transform: translateY(-2px);
 }
+.btn-outline:active {
+  transform: translateY(1px) scale(0.98);
+  background: oklch(1 0 0 / 0.15);
+}
 
 .btn-gold {
   display: inline-flex;
@@ -457,6 +473,10 @@
 .btn-gold:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-glow);
+}
+.btn-gold:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 0 20px oklch(0.72 0.14 70 / 0.4);
 }
 
 /* ─── Venue card hover effect ─────────────────────── */
@@ -482,6 +502,10 @@
 .venue-card:hover {
   transform: translateY(-8px);
   box-shadow: var(--shadow-royal);
+}
+.venue-card:active {
+  transform: translateY(-2px) scale(0.99);
+  box-shadow: 0 10px 30px -15px oklch(0.25 0.1 25 / 0.4);
 }
 
 /* ─── Stats counter ───────────────────────────────── */
@@ -526,7 +550,7 @@
   }
 }
 .animate-marquee {
-  animation: marquee 30s linear infinite;
+  animation: marquee 10s linear infinite;
 }
 
 /* ─── Custom scrollbar ────────────────────────────── */

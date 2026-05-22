@@ -92,14 +92,14 @@ export function SiteHeader() {
             {/* Logo */}
             <div className="absolute left-1/2 -translate-x-1/2 flex justify-center w-max">
               <Link to="/" className="flex flex-col items-center leading-none group text-center">
-                <span className={`font-display text-lg sm:text-xl md:text-2xl transition-colors ${logoColor}`}>
+                <span
+                  className={`font-display text-lg sm:text-xl md:text-2xl transition-colors ${logoColor}`}
+                >
                   SAF Convention Center
                 </span>
                 <span
                   className={`mt-1 hidden sm:block text-[8px] tracking-[0.4em] uppercase transition-colors ${subtitleColor}`}
-                >
-                  International Convention Centre
-                </span>
+                ></span>
               </Link>
             </div>
 
@@ -172,7 +172,7 @@ export function SiteHeader() {
                       <span className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
                         {n.label}
                       </span>
-                      <ChevronRight className="h-6 w-6 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                      <ChevronRight className="h-6 w-6 opacity-0 -translate-x-4 group-hover:opacity-100 group-active:opacity-100 group-hover:translate-x-0 group-active:translate-x-0 transition-all" />
                     </Link>
                   ))}
                 </nav>
