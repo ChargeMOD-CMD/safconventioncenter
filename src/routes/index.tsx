@@ -97,11 +97,11 @@ const testimonials = [
 ];
 
 const attractions = [
-  { name: "Skyline Observatory", km: "12 Km" },
-  { name: "Royal Heritage Museum", km: "18 Km" },
-  { name: "Aurora Botanical Gardens", km: "9 Km" },
-  { name: "Old Harbour Boardwalk", km: "21 Km" },
-  { name: "Celestia Vineyards", km: "35 Km" },
+  { name: "Koyikkal Palace", km: "5 km" },
+  { name: "Aruvikkara Dam", km: "11 km" },
+  { name: "Magic Planet", km: "24 km" },
+  { name: "Akkulam glass bridge", km: "26 km" },
+  { name: "Ponmudi Hill Station", km: "35 km" },
 ];
 
 /* ─── Component ───────────────────────────────── */
