@@ -55,10 +55,10 @@ export function SiteHeader() {
           <div className="mx-auto max-w-7xl h-full flex items-center justify-between px-6 md:px-10 text-[11px] tracking-wider">
             <div className="flex items-center gap-6">
               <span className="flex items-center gap-1.5">
-                <Phone className="h-3 w-3" /> +91 98765 43210
+                <Phone className="h-3 w-3" /> +91 9400066303
               </span>
               <span className="flex items-center gap-1.5">
-                <Mail className="h-3 w-3" /> celestia@safconvention.com
+                <Mail className="h-3 w-3" /> safconventioncentre111@gmail.com
               </span>
             </div>
             <div className="flex items-center gap-1.5">
@@ -184,8 +184,8 @@ export function SiteHeader() {
                       Contact
                     </div>
                     <div className="text-sm text-white/70 space-y-1">
-                      <div>celestia@safconvention.com</div>
-                      <div>+91 98765 43210</div>
+                      <div>safconventioncentre111@gmail.com</div>
+                      <div>+91 9400066303</div>
                     </div>
                   </div>
                   <div>

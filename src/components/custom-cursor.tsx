@@ -25,9 +25,9 @@ export function CustomCursor() {
     const onMouseMove = (e: MouseEvent) => {
       dotX = e.clientX;
       dotY = e.clientY;
-      
+
       dot.style.transform = `translate3d(${dotX}px, ${dotY}px, 0) translate(-50%, -50%)`;
-      
+
       const target = e.target as HTMLElement;
       if (target.closest("a, button, input, textarea, select, [role='button'], .cursor-pointer")) {
         isHovering = true;
@@ -47,7 +47,7 @@ export function CustomCursor() {
       // Lerp for smooth trailing effect
       outlineX += (dotX - outlineX) * 0.15;
       outlineY += (dotY - outlineY) * 0.15;
-      
+
       outline.style.transform = `translate3d(${outlineX}px, ${outlineY}px, 0) translate(-50%, -50%)`;
       animationFrameId = requestAnimationFrame(animate);
     };

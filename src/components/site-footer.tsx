@@ -100,14 +100,14 @@ export function SiteFooter() {
               <li className="flex items-start gap-3">
                 <Phone className="h-4 w-4 text-gold/60 mt-0.5 shrink-0" />
                 <div>
-                  <div className="text-sm text-white/70">+91 98765 43210</div>
+                  <div className="text-sm text-white/70">+91 9400066303</div>
                   <div className="text-xs text-white/30 mt-0.5">24/7 Concierge</div>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <Mail className="h-4 w-4 text-gold/60 mt-0.5 shrink-0" />
                 <div>
-                  <div className="text-sm text-white/70">celestia@safconvention.com</div>
+                  <div className="text-sm text-white/70">safconventioncentre111@gmail.com</div>
                   <div className="text-xs text-white/30 mt-0.5">General enquiries</div>
                 </div>
               </li>

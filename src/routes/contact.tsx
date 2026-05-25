@@ -1,6 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { Mail, Phone, MapPin, Send, Clock, ArrowRight, Navigation, Mountain, Train, Plane, Building, TreePine, Compass } from "lucide-react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  Clock,
+  ArrowRight,
+  Navigation,
+  Mountain,
+  Train,
+  Plane,
+  Building,
+  TreePine,
+  Compass,
+} from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import heroImg from "@/assets/hero-convention.png";
 import safHallImg from "@/assets/saf-hall-interior.jpg";
@@ -18,7 +33,64 @@ export const Route = createFileRoute("/contact")({
 
 function Contact() {
   const [sent, setSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [dateStatus, setDateStatus] = useState<
+    "checking" | "available" | "booked" | "pending" | null
+  >(null);
+  const [errorMsg, setErrorMsg] = useState("");
   useScrollReveal();
+
+  useEffect(() => {
+    if (!selectedDate) {
+      setDateStatus(null);
+      return;
+    }
+    const checkDate = async () => {
+      setDateStatus("checking");
+      const { data, error } = await supabase
+        .from("calendar_dates")
+        .select("status")
+        .eq("date", selectedDate)
+        .single();
+
+      if (!error && data) {
+        setDateStatus(data.status === "approved" ? "booked" : data.status);
+      } else {
+        // Not found in calendar_dates means available
+        setDateStatus("available");
+      }
+    };
+    checkDate();
+  }, [selectedDate]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setErrorMsg("");
+
+    const formData = new FormData(e.currentTarget);
+    const bookingData = {
+      first_name: formData.get("fname") as string,
+      last_name: formData.get("lname") as string,
+      email: formData.get("email") as string,
+      phone: formData.get("phone") as string,
+      event_type: formData.get("type") as string,
+      event_date: formData.get("date") as string,
+      expected_guests: parseInt(formData.get("guests") as string) || null,
+      message: formData.get("msg") as string,
+    };
+
+    const { error } = await supabase.from("bookings").insert([bookingData]);
+
+    if (error) {
+      setErrorMsg("Failed to submit request. Please try again later.");
+      setIsSubmitting(false);
+    } else {
+      setSent(true);
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div>
@@ -49,11 +121,11 @@ function Contact() {
         <div className="mx-auto max-w-5xl px-6">
           <div className="glass-card shadow-royal py-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { icon: Phone, label: "Phone", value: "+91 98765 43210", sub: "24/7 Concierge" },
+              { icon: Phone, label: "Phone", value: "+91 9400066303", sub: "24/7 Concierge" },
               {
                 icon: Mail,
                 label: "Email",
-                value: "celestia@safconvention.com",
+                value: "safconventioncentre111@gmail.com",
                 sub: "General enquiries",
               },
               {
@@ -131,10 +203,7 @@ function Contact() {
           {/* Right — form */}
           <div className="reveal-right">
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setSent(true);
-              }}
+              onSubmit={handleSubmit}
               className="bg-card border border-border p-8 md:p-10 shadow-soft"
             >
               {sent ? (
@@ -153,16 +222,64 @@ function Contact() {
                   <div className="text-[10px] tracking-luxe uppercase text-crimson mb-6">
                     Send Us a Message
                   </div>
+
+                  {errorMsg && (
+                    <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-md text-red-400 text-sm">
+                      {errorMsg}
+                    </div>
+                  )}
+
                   <div className="grid sm:grid-cols-2 gap-5">
-                    <Field label="First Name" id="fname" />
-                    <Field label="Last Name" id="lname" />
+                    <Field label="First Name" id="fname" required />
+                    <Field label="Last Name" id="lname" required />
                   </div>
-                  <Field label="Email Address" id="email" type="email" />
-                  <Field label="Phone Number" id="phone" type="tel" />
-                  <Field label="Event Type" id="type" placeholder="Wedding, Conference, Gala…" />
+                  <Field label="Email Address" id="email" type="email" required />
+                  <Field label="Phone Number" id="phone" type="tel" required />
+                  <Field
+                    label="Event Type"
+                    id="type"
+                    placeholder="Wedding, Conference, Gala…"
+                    required
+                  />
                   <div className="grid sm:grid-cols-2 gap-5">
-                    <Field label="Event Date" id="date" type="date" />
-                    <Field label="Expected Guests" id="guests" placeholder="e.g. 500" />
+                    <div className="relative">
+                      <Field
+                        label="Event Date"
+                        id="date"
+                        type="date"
+                        required
+                        value={selectedDate}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          setSelectedDate(e.target.value)
+                        }
+                      />
+                      {dateStatus && (
+                        <div
+                          className={`mt-1 text-xs font-medium flex items-center gap-1 ${
+                            dateStatus === "available"
+                              ? "text-green-400"
+                              : dateStatus === "booked"
+                                ? "text-red-400"
+                                : dateStatus === "checking"
+                                  ? "text-muted-foreground"
+                                  : "text-yellow-400"
+                          }`}
+                        >
+                          {dateStatus === "checking" && (
+                            <span className="animate-pulse">Checking...</span>
+                          )}
+                          {dateStatus === "available" && <span>Available</span>}
+                          {dateStatus === "booked" && <span>Date Booked</span>}
+                          {dateStatus === "pending" && <span>Pending Review</span>}
+                        </div>
+                      )}
+                    </div>
+                    <Field
+                      label="Expected Guests"
+                      id="guests"
+                      type="number"
+                      placeholder="e.g. 500"
+                    />
                   </div>
                   <div>
                     <label
@@ -173,14 +290,23 @@ function Contact() {
                     </label>
                     <textarea
                       id="msg"
+                      name="msg"
                       rows={4}
                       className="mt-2 w-full border border-border bg-background/60 px-4 py-3 text-sm outline-none focus:border-gold transition-colors resize-none"
                       placeholder="Describe your dream event..."
                     />
                   </div>
-                  <button className="w-full btn-primary justify-center">
-                    Send Enquiry <Send className="h-4 w-4" />
+                  <button
+                    disabled={isSubmitting || dateStatus === "booked"}
+                    className="w-full btn-primary justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? "Sending..." : "Send Enquiry"} <Send className="h-4 w-4" />
                   </button>
+                  {dateStatus === "booked" && (
+                    <p className="text-xs text-red-400 text-center mt-2">
+                      The selected date is currently booked. Please choose another date.
+                    </p>
+                  )}
                 </div>
               )}
             </form>
@@ -238,11 +364,17 @@ function Field({
   id,
   type = "text",
   placeholder,
+  required = false,
+  value,
+  onChange,
 }: {
   label: string;
   id: string;
   type?: string;
   placeholder?: string;
+  required?: boolean;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
     <div>
@@ -254,9 +386,13 @@ function Field({
       </label>
       <input
         id={id}
+        name={id}
         type={type}
         placeholder={placeholder}
-        className="mt-2 w-full border border-border bg-background/60 px-4 py-3 text-sm outline-none focus:border-gold transition-colors"
+        required={required}
+        value={value}
+        onChange={onChange}
+        className="mt-2 w-full border border-border bg-background/60 px-4 py-3 text-sm outline-none focus:border-gold transition-colors rounded-md"
       />
     </div>
   );

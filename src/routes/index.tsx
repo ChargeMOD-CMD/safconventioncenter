@@ -32,7 +32,7 @@ const venues = [
   {
     img: celestiaLuxeImg,
     name: "SAF Grand",
-    pax: "1,750",
+    pax: "1,500",
     note: "Our flagship venue, SAF Grand, offers an exceptional setting for large-scale weddings, corporate events, cultural programs and prestigious gatherings. Designed with expansive seating, refined interiors, and versatile event spaces, it creates the perfect atmosphere for memorable and successful occasions.",
   },
   {
