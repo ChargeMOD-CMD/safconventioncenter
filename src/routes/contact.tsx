@@ -147,7 +147,7 @@ function Contact() {
                 </div>
                 <div>
                   <div className="text-[10px] tracking-luxe uppercase text-crimson">{label}</div>
-                  <div className="text-sm font-medium mt-0.5">{value}</div>
+                  <div className="text-sm font-medium mt-0.5 break-all">{value}</div>
                   <div className="text-xs text-muted-foreground">{sub}</div>
                 </div>
               </div>
