@@ -20,13 +20,14 @@ import {
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import heroImg from "@/assets/hero-convention.png";
 import safHallImg from "@/assets/saf-hall-interior.jpg";
+import saf01Img from "@/assets/saf01.jpg";
 import locationMapImg from "@/assets/location-map.png";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — SAF Celestia EventVerse" },
-      { name: "description", content: "Reserve your event or speak with a Celestia concierge." },
+      { title: "Contact — SAF Convention Centre" },
+      { name: "description", content: "Reserve your event or speak with a SAF concierge." },
     ],
   }),
   component: Contact,
@@ -82,9 +83,13 @@ function Contact() {
     setErrorMsg("");
 
     const formData = new FormData(e.currentTarget);
+    const fullName = formData.get("fname") as string;
+    const [first_name, ...lastNames] = fullName.trim().split(" ");
+    const last_name = lastNames.join(" ");
+
     const bookingData = {
-      first_name: formData.get("fname") as string,
-      last_name: formData.get("lname") as string,
+      first_name,
+      last_name,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
       event_type: formData.get("type") as string,
@@ -111,7 +116,7 @@ function Contact() {
       {/* Hero */}
       <section className="relative isolate h-[50vh] min-h-[380px] flex items-center justify-center overflow-hidden">
         <img
-          src={safHallImg}
+          src={saf01Img}
           alt=""
           className="absolute inset-0 h-full w-full object-cover -z-10"
         />
@@ -135,7 +140,7 @@ function Contact() {
         <div className="mx-auto max-w-5xl px-6">
           <div className="glass-card shadow-royal py-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { icon: Phone, label: "Phone", value: "+91 9400066303", sub: "24/7 Concierge" },
+              { icon: Phone, label: "Phone", value: "+91 9400066303, +91 9961483330", sub: "24/7 Concierge" },
               {
                 icon: Mail,
                 label: "Email",
@@ -145,7 +150,7 @@ function Contact() {
               {
                 icon: MapPin,
                 label: "Address",
-                value: "Star Avenue, Skyline District",
+                value: "Chullimanoor, Nedumangad, Trivandrum",
                 sub: "By appointment",
               },
               {
@@ -200,7 +205,7 @@ function Contact() {
               <div>
                 <h4 className="font-display text-lg">Do you offer custom packages?</h4>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Absolutely. Every event at Celestia is bespoke — catering, décor, entertainment
+                  Absolutely. Every event at SAF Convention Centre is bespoke — catering, décor, entertainment
                   and more.
                 </p>
               </div>
@@ -243,10 +248,7 @@ function Contact() {
                     </div>
                   )}
 
-                  <div className="grid sm:grid-cols-2 gap-5">
-                    <Field label="First Name" id="fname" required />
-                    <Field label="Last Name" id="lname" required />
-                  </div>
+                  <Field label="Full Name" id="fname" required />
                   <Field label="Email Address" id="email" type="email" required />
                   <Field label="Phone Number" id="phone" type="tel" required />
                   <Field
@@ -274,42 +276,7 @@ function Contact() {
                     />
                   </div>
 
-                  {/* Time Slot Selector */}
-                  <div>
-                    <label className="text-[11px] uppercase tracking-widest text-muted-foreground font-medium">
-                      Time Slot
-                    </label>
-                    <div className="mt-2 grid grid-cols-2 gap-3">
-                      {TIME_SLOTS.map((s) => {
-                        const booked = isSlotBooked(s.value);
-                        const active = selectedSlot === s.value;
-                        return (
-                          <button
-                            type="button"
-                            key={s.value}
-                            disabled={booked || checkingSlots}
-                            onClick={() => setSelectedSlot(s.value)}
-                            className={`text-left p-3 border rounded-md transition-colors ${
-                              active
-                                ? "border-gold bg-gold/10"
-                                : "border-border hover:border-gold/50"
-                            } ${booked ? "opacity-40 cursor-not-allowed line-through" : ""}`}
-                          >
-                            <div className="text-sm font-medium">{s.label}</div>
-                            <div className="text-xs text-muted-foreground">{s.hours}</div>
-                            {booked && (
-                              <div className="text-[10px] text-red-500 mt-1">Booked</div>
-                            )}
-                          </button>
-                        );
-                      })}
-                    </div>
-                    {selectedDate && checkingSlots && (
-                      <p className="text-xs text-muted-foreground mt-2 animate-pulse">
-                        Checking slot availability…
-                      </p>
-                    )}
-                  </div>
+
 
                   <div>
                     <label
@@ -334,7 +301,7 @@ function Contact() {
                   </button>
                   {currentSlotBooked && (
                     <p className="text-xs text-red-400 text-center mt-2">
-                      The selected slot is unavailable. Please choose another.
+                      The selected date is unavailable. Please choose another.
                     </p>
                   )}
                 </div>
@@ -360,7 +327,7 @@ function Contact() {
           <div className="reveal relative bg-card border border-border overflow-hidden shadow-soft rounded-2xl">
             <img
               src={locationMapImg}
-              alt="SAF Celestia Location Map"
+              alt="SAF Location Map"
               className="w-full h-auto object-cover"
             />
 

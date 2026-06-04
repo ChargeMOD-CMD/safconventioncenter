@@ -16,12 +16,12 @@ const buildMessage = (
 ) => {
   const slot = `${slotLabel(b.event_time_slot)} (${slotHours(b.event_time_slot)})`;
   if (status === "approved") {
-    return `Dear ${b.first_name}, your booking at SAF Convention Centre for ${b.event_type} on ${b.event_date} — ${slot} has been CONFIRMED. Our concierge will reach you shortly with next steps. — SAF Celestia EventVerse`;
+    return `Dear ${b.first_name}, your booking at SAF Convention Centre for ${b.event_type} on ${b.event_date} — ${slot} has been CONFIRMED. Our concierge will reach you shortly with next steps. — SAF Convention Centre`;
   }
   if (status === "declined") {
-    return `Dear ${b.first_name}, unfortunately your requested slot for ${b.event_type} on ${b.event_date} — ${slot} is no longer available. Please contact us to explore alternative dates. — SAF Celestia EventVerse`;
+    return `Dear ${b.first_name}, unfortunately your requested slot for ${b.event_type} on ${b.event_date} — ${slot} is no longer available. Please contact us to explore alternative dates. — SAF Convention Centre`;
   }
-  return `Dear ${b.first_name}, your booking request for ${b.event_type} on ${b.event_date} — ${slot} is being reviewed. We'll get back to you shortly. — SAF Celestia EventVerse`;
+  return `Dear ${b.first_name}, your booking request for ${b.event_type} on ${b.event_date} — ${slot} is being reviewed. We'll get back to you shortly. — SAF Convention Centre`;
 };
 
 export function whatsappLink(

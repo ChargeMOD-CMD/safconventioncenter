@@ -3,6 +3,7 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { Lock } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import heroVideoMp4 from "@/assets/hero-video.mp4";
 
 export const Route = createFileRoute("/admin/login")({
   component: Login,
@@ -50,11 +51,25 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4 relative overflow-hidden">
-      {/* Background flare */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gold/10 rounded-full blur-[100px] -z-10 pointer-events-none" />
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden">
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src={heroVideoMp4} type="video/mp4" />
+      </video>
 
-      <div className="w-full max-w-md bg-card border border-border p-8 rounded-xl shadow-royal">
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/50" />
+
+      {/* Background flare */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gold/20 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="relative z-10 w-full max-w-md bg-card/60 backdrop-blur-xl border border-white/10 p-8 rounded-xl shadow-royal">
         <div className="flex justify-center mb-6">
           <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center">
             <Lock className="w-5 h-5 text-gold" />

@@ -35,13 +35,15 @@ export function SiteFooter() {
             </p>
             <div className="mt-8 flex gap-4">
               {[
-                { icon: Instagram, label: "Instagram" },
-                { icon: Facebook, label: "Facebook" },
-                { icon: Youtube, label: "YouTube" },
-              ].map(({ icon: Icon, label }) => (
+                { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/safconventioncenter?igsh=MXlrczhnMDhxOXIx" },
+                { icon: Facebook, label: "Facebook", href: "#" },
+                { icon: Youtube, label: "YouTube", href: "#" },
+              ].map(({ icon: Icon, label, href }) => (
                 <a
                   key={label}
-                  href="#"
+                  href={href}
+                  target={href !== "#" ? "_blank" : undefined}
+                  rel={href !== "#" ? "noopener noreferrer" : undefined}
                   aria-label={label}
                   className="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/40 hover:text-gold hover:border-gold/40 transition-all duration-300"
                 >
@@ -58,7 +60,6 @@ export function SiteFooter() {
               {[
                 { to: "/", label: "Home" },
                 { to: "/venues", label: "Venues" },
-                { to: "/experiences", label: "Experiences" },
                 { to: "/about", label: "About Us" },
                 { to: "/contact", label: "Contact" },
               ].map((item) => (
@@ -100,7 +101,7 @@ export function SiteFooter() {
               <li className="flex items-start gap-3">
                 <Phone className="h-4 w-4 text-gold/60 mt-0.5 shrink-0" />
                 <div>
-                  <div className="text-sm text-white/70">+91 9400066303</div>
+                  <div className="text-sm text-white/70">+91 9400066303, +91 9961483330</div>
                   <div className="text-xs text-white/30 mt-0.5">24/7 Concierge</div>
                 </div>
               </li>
@@ -114,7 +115,7 @@ export function SiteFooter() {
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 text-gold/60 mt-0.5 shrink-0" />
                 <div>
-                  <div className="text-sm text-white/70">Star Avenue, Skyline District</div>
+                  <div className="text-sm text-white/70">Chullimanoor, Nedumangad, Trivandrum</div>
                   <div className="text-xs text-white/30 mt-0.5">By appointment</div>
                 </div>
               </li>
@@ -126,7 +127,7 @@ export function SiteFooter() {
         <div className="border-t border-white/10 py-6">
           <div className="mx-auto max-w-7xl px-6 md:px-10 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-white/30 tracking-wider uppercase text-center md:text-left">
             <span className="max-w-[280px] md:max-w-none">
-              © {new Date().getFullYear()} SAF Convention Centre · Celestia EventVerse
+              © {new Date().getFullYear()} SAF Convention Centre
             </span>
             <div className="flex flex-wrap justify-center gap-4 md:gap-6">
               <span className="hover:text-white/60 cursor-pointer transition-colors">Privacy</span>

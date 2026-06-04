@@ -25,8 +25,8 @@ export const sendBookingEmail = async (
     event_date: eventDate,
     message:
       status === "approved"
-        ? "Great news! Your booking at SAF Celestia EventVerse has been approved. A concierge will reach out with the next steps."
-        : "We regret to inform you that the requested date is no longer available at SAF Celestia EventVerse. Please contact us to find an alternative date.",
+        ? "Great news! Your booking at SAF Convention Centre has been approved. A concierge will reach out with the next steps."
+        : "We regret to inform you that the requested date is no longer available at SAF Convention Centre. Please contact us to find an alternative date.",
   };
 
   try {

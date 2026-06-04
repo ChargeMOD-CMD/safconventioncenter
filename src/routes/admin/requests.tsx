@@ -39,8 +39,7 @@ function EditBookingModal({
   onSaved: (updated: Booking) => void;
 }) {
   const [form, setForm] = useState({
-    first_name:     booking.first_name,
-    last_name:      booking.last_name,
+    full_name:      [booking.first_name, booking.last_name].filter(Boolean).join(" "),
     email:          booking.email,
     phone:          booking.phone,
     event_type:     booking.event_type,
@@ -58,9 +57,11 @@ function EditBookingModal({
     setSaving(true);
     setError("");
 
+    const [first_name, ...lastNames] = form.full_name.trim().split(" ");
+
     const payload = {
-      first_name:      form.first_name.trim(),
-      last_name:       form.last_name.trim(),
+      first_name:      first_name || "",
+      last_name:       lastNames.join(" "),
       email:           form.email.trim(),
       phone:           form.phone.trim(),
       event_type:      form.event_type.trim(),
@@ -145,9 +146,8 @@ function EditBookingModal({
               </div>
             )}
 
-            <div className="grid grid-cols-2 gap-4">
-              {field("first_name", "First Name", "text", true)}
-              {field("last_name",  "Last Name")}
+            <div className="grid grid-cols-1 gap-4">
+              {field("full_name", "Full Name", "text", true)}
             </div>
             <div className="grid grid-cols-2 gap-4">
               {field("email", "Email", "email", true)}
@@ -158,25 +158,6 @@ function EditBookingModal({
               {field("event_date", "Event Date", "date", true)}
             </div>
             <div className="grid grid-cols-2 gap-4">
-              {/* Time Slot */}
-              <div>
-                <label className="block text-[10px] uppercase tracking-widest text-white/35 font-medium mb-1.5">
-                  Time Slot
-                </label>
-                <select
-                  value={form.event_time_slot}
-                  onChange={(e) => setForm((f) => ({ ...f, event_time_slot: e.target.value as TimeSlot }))}
-                  className="w-full px-3 py-2.5 rounded-lg text-sm text-white/80 outline-none transition-colors"
-                  style={{
-                    background: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(255,255,255,0.12)",
-                  }}
-                >
-                  {TIME_SLOTS.map((s) => (
-                    <option key={s.value} value={s.value}>{s.label} ({s.hours})</option>
-                  ))}
-                </select>
-              </div>
               {field("expected_guests", "Expected Guests", "number")}
             </div>
 
@@ -367,6 +348,8 @@ function RequestsPage() {
   const [showQuickBook, setShowQuickBook]   = useState(false);
   const [filterStatus, setFilterStatus]     = useState<FilterStatus>("all");
   const [searchQuery, setSearchQuery]       = useState("");
+  const [filterMonth, setFilterMonth]       = useState("all");
+  const [filterYear, setFilterYear]         = useState("all");
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [editingBooking, setEditingBooking] = useState<Booking | null>(null);
   const [deletingBooking, setDeletingBooking] = useState<Booking | null>(null);
@@ -404,6 +387,10 @@ function RequestsPage() {
   // Filtered + searched bookings
   const filtered = bookings.filter((b) => {
     const matchesStatus = filterStatus === "all" || b.status === filterStatus;
+    const date = new Date(b.event_date);
+    const matchesMonth = filterMonth === "all" || (date.getMonth() + 1).toString() === filterMonth;
+    const matchesYear = filterYear === "all" || date.getFullYear().toString() === filterYear;
+
     const q = searchQuery.toLowerCase();
     const matchesSearch =
       !q ||
@@ -411,7 +398,8 @@ function RequestsPage() {
       b.email.toLowerCase().includes(q) ||
       b.phone.toLowerCase().includes(q) ||
       (b.event_type || "").toLowerCase().includes(q);
-    return matchesStatus && matchesSearch;
+      
+    return matchesStatus && matchesMonth && matchesYear && matchesSearch;
   });
 
   const statusColors: Record<string, string> = {
@@ -516,6 +504,34 @@ function RequestsPage() {
               className="w-full pl-9 pr-4 py-2.5 text-sm bg-white/5 border border-white/10 rounded-lg text-white/80 placeholder:text-white/25 outline-none focus:border-gold/40 transition-colors"
             />
           </div>
+
+          <select
+            value={filterMonth}
+            onChange={(e) => setFilterMonth(e.target.value)}
+            className="px-3 py-2.5 text-sm bg-white/5 border border-white/10 rounded-lg text-white/80 outline-none focus:border-gold/40 transition-colors"
+          >
+            <option value="all" className="bg-[#1c1c28]">All Months</option>
+            {Array.from({ length: 12 }, (_, i) => {
+              const d = new Date();
+              d.setMonth(i);
+              return (
+                <option key={i + 1} value={(i + 1).toString()} className="bg-[#1c1c28]">
+                  {d.toLocaleString('default', { month: 'long' })}
+                </option>
+              );
+            })}
+          </select>
+
+          <select
+            value={filterYear}
+            onChange={(e) => setFilterYear(e.target.value)}
+            className="px-3 py-2.5 text-sm bg-white/5 border border-white/10 rounded-lg text-white/80 outline-none focus:border-gold/40 transition-colors"
+          >
+            <option value="all" className="bg-[#1c1c28]">All Years</option>
+            {Array.from(new Set(bookings.map(b => new Date(b.event_date).getFullYear().toString()))).sort().map(year => (
+              <option key={year} value={year} className="bg-[#1c1c28]">{year}</option>
+            ))}
+          </select>
           <div className="flex gap-1 p-1 rounded-lg border border-white/10" style={{ background: "oklch(0.15 0.018 240)" }}>
             {(["all", "pending", "approved", "declined"] as FilterStatus[]).map((s) => (
               <button
@@ -558,7 +574,7 @@ function RequestsPage() {
                     <tr className="border-b border-white/8">
                       <th className="px-5 py-3.5 text-left text-[10px] font-medium uppercase tracking-wider text-white/30">Client</th>
                       <th className="px-5 py-3.5 text-left text-[10px] font-medium uppercase tracking-wider text-white/30">Event</th>
-                      <th className="px-5 py-3.5 text-left text-[10px] font-medium uppercase tracking-wider text-white/30 hidden md:table-cell">Date & Slot</th>
+                      <th className="px-5 py-3.5 text-left text-[10px] font-medium uppercase tracking-wider text-white/30 hidden md:table-cell">Date</th>
                       <th className="px-5 py-3.5 text-left text-[10px] font-medium uppercase tracking-wider text-white/30 hidden lg:table-cell">Guests</th>
                       <th className="px-5 py-3.5 text-left text-[10px] font-medium uppercase tracking-wider text-white/30">Status</th>
                       <th className="px-5 py-3.5 text-right text-[10px] font-medium uppercase tracking-wider text-white/30">Actions</th>
@@ -589,7 +605,6 @@ function RequestsPage() {
                         </td>
                         <td className="px-5 py-4 hidden md:table-cell">
                           <div className="text-sm text-white/70">{format(new Date(booking.event_date), "MMM dd, yyyy")}</div>
-                          <div className="text-xs text-gold/70">{slotLabel(booking.event_time_slot || "full_day")}</div>
                         </td>
                         <td className="px-5 py-4 hidden lg:table-cell">
                           <span className="text-white/50 text-sm">{booking.expected_guests || "N/A"}</span>
@@ -717,7 +732,7 @@ function RequestsPage() {
                 <DetailRow label="Phone"      value={selectedBooking.phone} />
                 <DetailRow label="Event Type" value={selectedBooking.event_type} capitalize />
                 <DetailRow label="Date"       value={format(new Date(selectedBooking.event_date), "MMMM d, yyyy")} />
-                <DetailRow label="Time Slot"  value={slotLabel(selectedBooking.event_time_slot || "full_day")} />
+
                 <DetailRow label="Guests"     value={String(selectedBooking.expected_guests || "N/A")} />
                 {selectedBooking.message && (
                   <div className="pt-2 border-t border-white/8">
@@ -829,9 +844,12 @@ function QuickBookPanel({ onCreated }: { onCreated: (b: Booking) => void }) {
     setSubmitting(true);
     setError("");
     const fd = new FormData(e.currentTarget);
+    const fullName = fd.get("full_name") as string;
+    const [first_name, ...lastNames] = fullName.trim().split(" ");
+
     const payload = {
-      first_name:      fd.get("first_name") as string,
-      last_name:       (fd.get("last_name") as string) || "",
+      first_name:      first_name || "",
+      last_name:       lastNames.join(" "),
       email:           (fd.get("email") as string) || "admin@safcc.local",
       phone:           fd.get("phone") as string,
       event_type:      fd.get("event_type") as string,
@@ -862,25 +880,13 @@ function QuickBookPanel({ onCreated }: { onCreated: (b: Booking) => void }) {
         <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-lg">{error}</div>
       )}
       <div className="grid md:grid-cols-3 gap-4">
-        <AdminField name="first_name" label="First Name" required />
-        <AdminField name="last_name"  label="Last Name" />
+        <AdminField name="full_name" label="Full Name" required />
         <AdminField name="phone"      label="Phone" required placeholder="+91…" />
         <AdminField name="email"      label="Email" type="email" />
         <AdminField name="event_type" label="Event Type" required placeholder="Wedding, Gala…" />
         <AdminField name="event_date" label="Event Date" type="date" required />
         <AdminField name="guests"     label="Guests" type="number" />
-        <div>
-          <label className="text-[10px] uppercase tracking-widest text-white/35 font-medium">Time Slot</label>
-          <select
-            value={slot}
-            onChange={(e) => setSlot(e.target.value as TimeSlot)}
-            className="mt-2 w-full border border-white/10 bg-white/5 px-3 py-2.5 text-sm rounded-lg outline-none focus:border-gold text-white/80"
-          >
-            {TIME_SLOTS.map((s) => (
-              <option key={s.value} value={s.value}>{s.label} ({s.hours})</option>
-            ))}
-          </select>
-        </div>
+
         <div className="md:col-span-1">
           <label className="text-[10px] uppercase tracking-widest text-white/35 font-medium">Notes</label>
           <textarea

@@ -5,15 +5,17 @@ import heroImg from "@/assets/hero-convention.png";
 import weddingImg from "@/assets/venue-wedding.png";
 import galaImg from "@/assets/venue-gala.png";
 import safHallImg from "@/assets/saf-hall-interior.jpg";
+import saf01Img from "@/assets/saf01.jpg";
+import safParkingImg from "@/assets/saf.jpg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — SAF Celestia EventVerse" },
+      { title: "About — SAF Convention Centre" },
       {
         name: "description",
         content:
-          "The story, philosophy and craft behind SAF Convention Centre Celestia EventVerse.",
+          "The story, philosophy and craft behind SAF Convention Centre.",
       },
     ],
   }),
@@ -42,7 +44,7 @@ function About() {
       {/* Hero Banner */}
       <section className="relative isolate h-[60vh] min-h-[450px] flex items-center justify-center overflow-hidden">
         <img
-          src={safHallImg}
+          src={saf01Img}
           alt=""
           className="absolute inset-0 h-full w-full object-cover -z-10"
         />
@@ -54,7 +56,7 @@ function About() {
             <span className="h-px w-8 bg-gold/60" />
           </div>
           <h1 className="font-display text-5xl md:text-7xl">
-            A house built for <span className="italic gold-text">unforgettable</span> nights.
+            <span className="text-white">A house built for </span><span className="italic gold-text">unforgettable</span><span className="text-white"> nights.</span>
           </h1>
         </div>
       </section>
@@ -72,7 +74,7 @@ function About() {
             </h2>
             <div className="mt-6 hairline-gold w-20" />
             <p className="mt-8 text-lg text-muted-foreground leading-relaxed">
-              SAF Celestia is the meeting point of royal hospitality and future-forward design. We
+              SAF Convention Centre is the meeting point of royal hospitality and future-forward design. We
               marry timeless craft — marble, gold leaf, hand-cut crystal — with adaptive light, AI
               orchestration and cinematic storytelling.
             </p>
@@ -99,7 +101,7 @@ function About() {
             <div className="absolute -inset-8 bg-gold/5 blur-3xl rounded-full pointer-events-none" />
             <img
               src={weddingImg}
-              alt="Celestia interior"
+              alt="SAF Convention Centre interior"
               className="relative w-full h-[520px] object-cover shadow-royal"
               loading="lazy"
             />
@@ -111,7 +113,7 @@ function About() {
       <section
         className="relative py-28 section-divider overflow-hidden"
         style={{
-          backgroundImage: `url(${safHallImg})`,
+          backgroundImage: `url(${saf01Img})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -150,7 +152,7 @@ function About() {
       {/* CTA */}
       <section className="relative isolate overflow-hidden">
         <img
-          src={safHallImg}
+          src={safParkingImg}
           alt=""
           className="absolute inset-0 h-full w-full object-cover -z-10"
         />

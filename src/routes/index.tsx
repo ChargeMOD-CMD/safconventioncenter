@@ -12,15 +12,18 @@ import celestiaLuxeImg from "@/assets/venue-celestia-luxe.jpg";
 import celestiaGrandImg from "@/assets/venue-celestia-grand.jpg";
 import celestiaCrownImg from "@/assets/venue-celestia-crown.png";
 import safHallImg from "@/assets/saf-hall-interior.jpg";
+import gulfHightsImg from "@/assets/Gulf Hights.jpg";
+import saf2Img from "@/assets/saf2.jpg";
+import wexcoLagonVistaMp4 from "@/assets/Wexco Lagon Vista.mp4";
 //home page video
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "SAF Celestia EventVerse — International Convention Centre" },
+      { title: "SAF Convention Centre — International Convention Centre" },
       {
         name: "description",
         content:
-          "SAF Celestia International Convention Centre — elevating every event with style, space and exceptional service. Weddings, summits, galas and grand celebrations.",
+          "SAF International Convention Centre — elevating every event with style, space and exceptional service. Weddings, summits, galas and grand celebrations.",
       },
     ],
   }),
@@ -83,7 +86,7 @@ const testimonials = [
     rating: 5,
   },
   {
-    text: "We celebrated our engagement at SAF Celestia and the experience was nothing short of outstanding — beautifully designed venue, seamless management, every little detail handled with care.",
+    text: "We celebrated our engagement at SAF Convention Centre and the experience was nothing short of outstanding — beautifully designed venue, seamless management, every little detail handled with care.",
     name: "Aparna S.",
     role: "Engagement Ceremony",
     rating: 5,
@@ -238,7 +241,7 @@ function Home() {
             <div className="relative">
               <img
                 src={heroImg}
-                alt="SAF Celestia Convention Centre exterior"
+                alt="SAF Convention Centre exterior"
                 className="w-full h-[520px] object-cover shadow-royal"
                 loading="lazy"
               />
@@ -472,10 +475,86 @@ function Home() {
         </div>
       </section>
 
+      {/* ═══════ OTHER PREMIUM OCCASIONS ═══════ */}
+      <section className="mx-auto max-w-7xl px-6 md:px-10 py-32 section-divider">
+        <div className="flex flex-col items-center text-center mb-16 reveal">
+          <div className="inline-flex items-center gap-3 mb-4">
+            <span className="h-px w-10 bg-gold" />
+            <span className="text-[10px] tracking-luxe uppercase text-crimson">Featured</span>
+            <span className="h-px w-10 bg-gold" />
+          </div>
+          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl">
+            Other <span className="italic gold-text">Premium</span> Occasions
+          </h2>
+          <p className="mt-4 text-muted-foreground max-w-2xl text-sm md:text-base">
+            Explore more extraordinary venues and events hosted at SAF Convention Centre.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8 stagger-children">
+          {/* Gulf Heights — Image Card */}
+          <div className="reveal venue-card group overflow-hidden bg-card border border-border">
+            <div className="relative aspect-[16/10] overflow-hidden">
+              <img
+                src={gulfHightsImg}
+                alt="Gulf Heights"
+                className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+            </div>
+            <div className="p-8">
+              <div className="inline-flex items-center gap-3 mb-3">
+                <span className="h-px w-8 bg-gold/60" />
+                <span className="text-[10px] tracking-luxe uppercase text-gold">Premium Venue</span>
+              </div>
+              <h3 className="font-display text-2xl md:text-3xl crimson-text">Gulf Heights</h3>
+              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                An iconic premium occasion space that blends luxury design with breathtaking ambience — perfect for elite gatherings, prestigious events, and unforgettable celebrations.
+              </p>
+            </div>
+          </div>
+
+          {/* Wexco Lagon Vista — Video Card */}
+          <div className="reveal venue-card group overflow-hidden bg-card border border-border">
+            <div className="relative aspect-[16/10] overflow-hidden">
+              <video
+                className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+              >
+                <source src={wexcoLagonVistaMp4} type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+              {/* Play badge */}
+              <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1.5 flex items-center gap-2">
+                <Play className="h-3 w-3 text-gold fill-gold" />
+                <span className="text-[9px] tracking-luxe uppercase text-white/80">Live Preview</span>
+              </div>
+            </div>
+            <div className="p-8">
+              <div className="inline-flex items-center gap-3 mb-3">
+                <span className="h-px w-8 bg-gold/60" />
+                <span className="text-[10px] tracking-luxe uppercase text-gold">Premium Venue</span>
+              </div>
+              <h3 className="font-display text-2xl md:text-3xl crimson-text">Wexco Lagon Vista</h3>
+              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                Experience the stunning Wexco Lagon Vista — a breathtaking lakeside venue delivering an unmatched atmosphere for weddings, galas and exclusive private events.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ═══════ CTA SECTION ═══════ */}
       <section className="relative isolate overflow-hidden">
         <img
-          src={safHallImg}
+          src={saf2Img}
           alt=""
           className="absolute inset-0 h-full w-full object-cover -z-10"
         />

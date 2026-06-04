@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VenuesRouteImport } from './routes/venues'
-import { Route as ExperiencesRouteImport } from './routes/experiences'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
@@ -24,11 +23,6 @@ import { Route as AdminCalendarRouteImport } from './routes/admin/calendar'
 const VenuesRoute = VenuesRouteImport.update({
   id: '/venues',
   path: '/venues',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ExperiencesRoute = ExperiencesRouteImport.update({
-  id: '/experiences',
-  path: '/experiences',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -82,7 +76,6 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
   '/contact': typeof ContactRoute
-  '/experiences': typeof ExperiencesRoute
   '/venues': typeof VenuesRoute
   '/admin/calendar': typeof AdminCalendarRoute
   '/admin/login': typeof AdminLoginRoute
@@ -94,7 +87,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/experiences': typeof ExperiencesRoute
   '/venues': typeof VenuesRoute
   '/admin/calendar': typeof AdminCalendarRoute
   '/admin/login': typeof AdminLoginRoute
@@ -108,7 +100,6 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
   '/contact': typeof ContactRoute
-  '/experiences': typeof ExperiencesRoute
   '/venues': typeof VenuesRoute
   '/admin/calendar': typeof AdminCalendarRoute
   '/admin/login': typeof AdminLoginRoute
@@ -123,7 +114,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/admin'
     | '/contact'
-    | '/experiences'
     | '/venues'
     | '/admin/calendar'
     | '/admin/login'
@@ -135,7 +125,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
-    | '/experiences'
     | '/venues'
     | '/admin/calendar'
     | '/admin/login'
@@ -148,7 +137,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/admin'
     | '/contact'
-    | '/experiences'
     | '/venues'
     | '/admin/calendar'
     | '/admin/login'
@@ -162,7 +150,6 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AdminRoute: typeof AdminRouteWithChildren
   ContactRoute: typeof ContactRoute
-  ExperiencesRoute: typeof ExperiencesRoute
   VenuesRoute: typeof VenuesRoute
 }
 
@@ -173,13 +160,6 @@ declare module '@tanstack/react-router' {
       path: '/venues'
       fullPath: '/venues'
       preLoaderRoute: typeof VenuesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/experiences': {
-      id: '/experiences'
-      path: '/experiences'
-      fullPath: '/experiences'
-      preLoaderRoute: typeof ExperiencesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -271,7 +251,6 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AdminRoute: AdminRouteWithChildren,
   ContactRoute: ContactRoute,
-  ExperiencesRoute: ExperiencesRoute,
   VenuesRoute: VenuesRoute,
 }
 export const routeTree = rootRouteImport

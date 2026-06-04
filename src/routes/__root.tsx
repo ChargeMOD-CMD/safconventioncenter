@@ -27,7 +27,7 @@ function NotFoundComponent() {
         <h2 className="mt-4 text-xl text-white/80">This page drifted beyond the EventVerse</h2>
         <p className="mt-2 text-sm text-white/40">The page you're looking for cannot be found.</p>
         <Link to="/" className="mt-8 btn-primary inline-flex">
-          Back to Celestia
+          Back to Home
         </Link>
       </div>
     </div>

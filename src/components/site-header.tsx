@@ -5,7 +5,6 @@ import { X, Phone, Mail, Clock, ChevronRight } from "lucide-react";
 const nav = [
   { to: "/", label: "Home" },
   { to: "/venues", label: "Venues" },
-  { to: "/experiences", label: "Experiences" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;
@@ -55,7 +54,7 @@ export function SiteHeader() {
           <div className="mx-auto max-w-7xl h-full flex items-center justify-between px-6 md:px-10 text-[11px] tracking-wider">
             <div className="flex items-center gap-6">
               <span className="flex items-center gap-1.5">
-                <Phone className="h-3 w-3" /> +91 9400066303
+                <Phone className="h-3 w-3" /> +91 9400066303, +91 9961483330
               </span>
               <span className="flex items-center gap-1.5">
                 <Mail className="h-3 w-3" /> safconventioncentre111@gmail.com
@@ -185,23 +184,23 @@ export function SiteHeader() {
                     </div>
                     <div className="text-sm text-white/70 space-y-1">
                       <div>safconventioncentre111@gmail.com</div>
-                      <div>+91 9400066303</div>
+                      <div>+91 9400066303, +91 9961483330</div>
                     </div>
                   </div>
                   <div>
                     <div className="text-[10px] tracking-luxe uppercase text-gold mb-3">
                       Location
                     </div>
-                    <div className="text-sm text-white/70">Star Avenue, Skyline District</div>
+                    <div className="text-sm text-white/70">Chullimanoor, Nedumangad, Trivandrum</div>
                   </div>
                   <div>
                     <div className="text-[10px] tracking-luxe uppercase text-gold mb-3">
                       Follow Us
                     </div>
                     <div className="flex gap-4 text-sm text-white/70">
-                      <span className="hover:text-gold cursor-pointer transition-colors">
+                      <a href="https://www.instagram.com/safconventioncenter?igsh=MXlrczhnMDhxOXIx" target="_blank" rel="noopener noreferrer" className="hover:text-gold cursor-pointer transition-colors">
                         Instagram
-                      </span>
+                      </a>
                       <span className="hover:text-gold cursor-pointer transition-colors">
                         Facebook
                       </span>

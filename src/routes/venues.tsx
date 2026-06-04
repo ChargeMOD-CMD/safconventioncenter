@@ -6,6 +6,8 @@ import celestiaLuxeImg from "@/assets/venue-celestia-luxe.jpg";
 import celestiaGrandImg from "@/assets/venue-celestia-grand.jpg";
 import celestiaCrownImg from "@/assets/venue-celestia-crown.png";
 import safHallImg from "@/assets/saf-hall-interior.jpg";
+import saf01Img from "@/assets/saf01.jpg";
+import safParkingImg from "@/assets/saf.jpg";
 
 export const Route = createFileRoute("/venues")({
   head: () => ({
@@ -52,7 +54,7 @@ function Venues() {
       {/* Hero */}
       <section className="relative isolate h-[60vh] min-h-[450px] flex items-center justify-center overflow-hidden">
         <img
-          src={safHallImg}
+          src={saf01Img}
           alt=""
           className="absolute inset-0 h-full w-full object-cover -z-10"
         />
@@ -64,10 +66,10 @@ function Venues() {
             <span className="h-px w-8 bg-gold/60" />
           </div>
           <h1 className="font-display text-5xl md:text-7xl">
-            Three Halls. <span className="italic gold-text">One Legend.</span>
+            <span className="text-white">Three Halls.</span> <span className="italic gold-text">One Legend.</span>
           </h1>
           <p className="mt-4 text-white/60 max-w-2xl mx-auto">
-            Every SAF Celestia venue is engineered with adaptive light, cinematic acoustics and
+            Every SAF venue is engineered with adaptive light, cinematic acoustics and
             concierge-grade hospitality.
           </p>
         </div>
@@ -135,7 +137,7 @@ function Venues() {
       {/* Bottom CTA */}
       <section className="relative isolate overflow-hidden">
         <img
-          src={celestiaLuxeImg}
+          src={safParkingImg}
           alt=""
           className="absolute inset-0 h-full w-full object-cover -z-10"
         />
