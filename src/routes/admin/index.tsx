@@ -302,7 +302,7 @@ function Dashboard() {
       </div>
 
       {/* Third Row */}
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-2 gap-6">
         {/* Event Types */}
         <div className="rounded-xl border p-6"
           style={{ background: cardBg, borderColor: cardBorder }}>
@@ -337,34 +337,6 @@ function Dashboard() {
               })}
             </div>
           )}
-        </div>
-
-        {/* Time Slot Distribution */}
-        <div className="rounded-xl border p-6"
-          style={{ background: cardBg, borderColor: cardBorder }}>
-          <div className="mb-5">
-            <h2 className="text-sm font-medium text-white/80">Time Slots</h2>
-            <p className="text-xs text-white/30 mt-0.5">Booking preference</p>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            {Object.entries(slotCounts).map(([slot, count], i) => {
-              const colors = ["text-blue-400", "text-purple-400", "text-orange-400", "text-gold"];
-              const bgs = ["bg-blue-500/10 border-blue-500/20", "bg-purple-500/10 border-purple-500/20", "bg-orange-500/10 border-orange-500/20", "bg-gold/10 border-gold/20"];
-              return (
-                <div key={slot} className={`rounded-lg border p-3 ${bgs[i]}`}>
-                  <div className={`text-xl font-bold ${colors[i]}`}>{count}</div>
-                  <div className="text-[10px] text-white/40 mt-0.5">{slot}</div>
-                </div>
-              );
-            })}
-          </div>
-          <div className="mt-4 pt-4 border-t border-white/8 text-center">
-            <div className="text-xs text-white/30">
-              Most popular: <span className="text-white/60 font-medium">
-                {Object.entries(slotCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || "—"}
-              </span>
-            </div>
-          </div>
         </div>
 
         {/* Recent Activity */}
