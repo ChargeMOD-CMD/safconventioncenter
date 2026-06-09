@@ -638,8 +638,49 @@ function AdminCalendar() {
                 style={{ color: tok.textMuted, background: tok.cellBg }}>
                 <ChevronLeft className="w-4 h-4" />
               </button>
-              <div className="font-display text-lg font-semibold" style={{ color: tok.text }}>
-                {format(viewMonth, "MMMM yyyy")}
+              <div className="flex items-center gap-4">
+                <div className="relative group flex items-center">
+                  <select
+                    value={viewMonth.getMonth()}
+                    onChange={(e) => {
+                      const d = new Date(viewMonth);
+                      d.setMonth(parseInt(e.target.value));
+                      setViewMonth(d);
+                    }}
+                    className="font-display text-lg font-semibold bg-transparent outline-none cursor-pointer appearance-none pr-5 relative z-10"
+                    style={{ color: tok.text }}
+                  >
+                    {Array.from({ length: 12 }, (_, i) => (
+                      <option key={i} value={i} className="text-black">
+                        {format(new Date(2000, i, 1), "MMMM")}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="w-4 h-4 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none opacity-40 group-hover:opacity-100 transition-opacity" style={{ color: tok.text }} />
+                </div>
+
+                <div className="relative group flex items-center">
+                  <select
+                    value={viewMonth.getFullYear()}
+                    onChange={(e) => {
+                      const d = new Date(viewMonth);
+                      d.setFullYear(parseInt(e.target.value));
+                      setViewMonth(d);
+                    }}
+                    className="font-display text-lg font-semibold bg-transparent outline-none cursor-pointer appearance-none pr-5 relative z-10"
+                    style={{ color: tok.text }}
+                  >
+                    {Array.from({ length: 10 }, (_, i) => {
+                      const y = new Date().getFullYear() - 4 + i; // from 4 years ago to 5 years ahead
+                      return (
+                        <option key={y} value={y} className="text-black">
+                          {y}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <ChevronDown className="w-4 h-4 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none opacity-40 group-hover:opacity-100 transition-opacity" style={{ color: tok.text }} />
+                </div>
               </div>
               <button onClick={() => setViewMonth(m => addMonths(m, 1))} className="p-2 rounded-lg transition-colors"
                 style={{ color: tok.textMuted, background: tok.cellBg }}>
