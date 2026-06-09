@@ -87,12 +87,15 @@ function Contact() {
     const [first_name, ...lastNames] = fullName.trim().split(" ");
     const last_name = lastNames.join(" ");
 
+    const eventTypeStr = formData.get("type") as string;
+    const acPref = formData.get("ac_pref") as string;
+
     const bookingData = {
       first_name,
       last_name,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
-      event_type: formData.get("type") as string,
+      event_type: `${eventTypeStr} (${acPref})`,
       event_date: formData.get("date") as string,
       event_time_slot: selectedSlot,
       expected_guests: parseInt(formData.get("guests") as string) || null,
@@ -260,12 +263,30 @@ function Contact() {
                   <Field label="Full Name" id="fname" required />
                   <Field label="Email Address" id="email" type="email" required />
                   <Field label="Phone Number" id="phone" type="tel" required />
-                  <Field
-                    label="Event Type"
-                    id="type"
-                    placeholder="Wedding, Conference, Gala…"
-                    required
-                  />
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    <Field
+                      label="Event Type"
+                      id="type"
+                      placeholder="Wedding, Conference, Gala…"
+                      required
+                    />
+                    <div>
+                      <label
+                        htmlFor="ac_pref"
+                        className="text-[11px] uppercase tracking-widest text-muted-foreground font-medium"
+                      >
+                        AC / Non-AC
+                      </label>
+                      <select
+                        id="ac_pref"
+                        name="ac_pref"
+                        className="mt-2 w-full border border-border bg-background/60 px-4 py-3 text-sm outline-none focus:border-gold transition-colors rounded-md"
+                      >
+                        <option value="AC">AC</option>
+                        <option value="Non-AC">Non-AC</option>
+                      </select>
+                    </div>
+                  </div>
                   <div className="grid sm:grid-cols-2 gap-5">
                     <Field
                       label="Event Date"

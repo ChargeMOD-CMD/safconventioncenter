@@ -865,12 +865,15 @@ function QuickBookPanel({ onCreated }: { onCreated: (b: Booking) => void }) {
     const fullName = fd.get("full_name") as string;
     const [first_name, ...lastNames] = fullName.trim().split(" ");
 
+    const type = fd.get("event_type") as string;
+    const acPref = fd.get("ac_pref") as string;
+
     const payload = {
       first_name:      first_name || "",
       last_name:       lastNames.join(" "),
       email:           (fd.get("email") as string) || "admin@safcc.local",
       phone:           fd.get("phone") as string,
-      event_type:      fd.get("event_type") as string,
+      event_type:      `${type} (${acPref})`,
       event_date:      fd.get("event_date") as string,
       event_time_slot: slot,
       expected_guests: parseInt(fd.get("guests") as string) || null,
@@ -906,6 +909,16 @@ function QuickBookPanel({ onCreated }: { onCreated: (b: Booking) => void }) {
         <AdminField name="phone"      label="Phone" required placeholder="+91…" />
         <AdminField name="email"      label="Email" type="email" />
         <AdminField name="event_type" label="Event Type" required placeholder="Wedding, Gala…" />
+        <div>
+          <label className="text-[10px] uppercase tracking-widest text-white/35 font-medium">AC / Non-AC</label>
+          <select
+            name="ac_pref"
+            className="mt-2 w-full border border-white/10 bg-white/5 px-3 py-2.5 text-sm rounded-lg outline-none focus:border-gold transition-colors text-white/80"
+          >
+            <option value="AC" className="bg-[#1c1c28]">AC</option>
+            <option value="Non-AC" className="bg-[#1c1c28]">Non-AC</option>
+          </select>
+        </div>
         <AdminField name="event_date" label="Event Date" type="date" required />
         <AdminField name="guests"     label="Guests" type="number" />
 
