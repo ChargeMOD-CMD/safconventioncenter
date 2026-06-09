@@ -106,20 +106,7 @@ export function FloatingWidgets() {
             )}
           </div>
 
-          {/* Input Area */}
-          <div className="p-4 border-t border-white/10 bg-black/20">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Type your message..."
-                disabled
-                className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-2.5 text-sm text-white/50 outline-none pr-10 cursor-not-allowed"
-              />
-              <button disabled className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/30 cursor-not-allowed">
-                <Send className="w-3.5 h-3.5 ml-0.5" />
-              </button>
-            </div>
-          </div>
+
         </div>
       </div>
 
