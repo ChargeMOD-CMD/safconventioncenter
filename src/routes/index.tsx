@@ -342,9 +342,10 @@ function Home() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 stagger-children">
           {eventTypes.map((c) => (
-            <div
+            <Link
               key={c.label}
-              className="relative overflow-hidden aspect-[3/4] group venue-card reveal"
+              to="/contact"
+              className="relative overflow-hidden aspect-[3/4] group venue-card reveal block cursor-pointer"
             >
               <img
                 src={c.img}
@@ -362,15 +363,12 @@ function Home() {
                 </div>
 
                 <div className="absolute bottom-6 left-6 opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 pointer-events-auto lg:pointer-events-none lg:group-hover:pointer-events-auto">
-                  <Link
-                    to="/contact"
-                    className="btn-gold px-5 py-2.5 text-xs inline-flex items-center"
-                  >
+                  <div className="btn-gold px-5 py-2.5 text-xs inline-flex items-center">
                     Book Now <ArrowRight className="h-3.5 w-3.5 ml-2" />
-                  </Link>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
