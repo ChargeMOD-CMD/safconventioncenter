@@ -4,6 +4,7 @@ import { ArrowUp, MessageSquare, X, Send, Bot } from "lucide-react";
 export function FloatingWidgets() {
   const [showScroll, setShowScroll] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatStep, setChatStep] = useState<"initial" | "location">("initial");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,7 +40,7 @@ export function FloatingWidgets() {
               </div>
             </div>
             <button
-              onClick={() => setIsChatOpen(false)}
+              onClick={() => { setIsChatOpen(false); setTimeout(() => setChatStep("initial"), 300); }}
               className="text-white/70 hover:text-white transition-colors"
             >
               <X className="w-4 h-4" />
@@ -54,20 +55,55 @@ export function FloatingWidgets() {
                 <Bot className="w-3 h-3 text-gold" />
               </div>
               <div className="bg-white/5 border border-white/10 rounded-2xl rounded-tl-none p-3 text-sm text-white/80 leading-relaxed">
-                Welcome to SAF Convention Centre! I'm your AI Concierge. How can I assist you with
-                your event planning today?
+                Welcome to SAF Convention Centre! ✨<br />
+                I'm your AI Concierge. Ready to explore our luxurious venues and make your event memorable? 🎉
               </div>
             </div>
 
-            {/* Suggestions */}
-            <div className="flex flex-col gap-2 pl-9 mt-2">
-              <button className="text-xs text-left text-gold/80 hover:text-gold border border-gold/20 hover:border-gold/50 rounded-full px-3 py-1.5 transition-colors w-fit">
-                What are your venue capacities?
-              </button>
-              <button className="text-xs text-left text-gold/80 hover:text-gold border border-gold/20 hover:border-gold/50 rounded-full px-3 py-1.5 transition-colors w-fit">
-                Do you offer catering?
-              </button>
-            </div>
+            {chatStep === "initial" && (
+              <div className="flex flex-col gap-2 pl-9 mt-2">
+                <button
+                  onClick={() => setChatStep("location")}
+                  className="text-xs font-semibold bg-gold text-black hover:bg-gold/90 rounded-full px-5 py-2 transition-colors w-fit shadow-glow"
+                >
+                  Get Started
+                </button>
+              </div>
+            )}
+
+            {chatStep === "location" && (
+              <>
+                {/* User Message */}
+                <div className="flex justify-end gap-3 mt-2">
+                  <div className="bg-gold/10 border border-gold/20 rounded-2xl rounded-tr-none p-3 text-sm text-gold leading-relaxed">
+                    Get Started
+                  </div>
+                </div>
+
+                {/* AI Location Info */}
+                <div className="flex gap-3 mt-2">
+                  <div className="w-6 h-6 rounded-full bg-gold/20 flex shrink-0 items-center justify-center mt-1">
+                    <Bot className="w-3 h-3 text-gold" />
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-2xl rounded-tl-none p-4 text-sm text-white/80 leading-relaxed w-full">
+                    <h3 className="text-white font-semibold text-base mb-1.5 flex items-center gap-2">
+                      Location & Navigate 🗺️
+                    </h3>
+                    <p className="text-white/60 mb-4 text-[13px]">
+                      Chullimanoor, Nedumangad, Trivandrum
+                    </p>
+                    <a
+                      href="https://maps.app.goo.gl/d5CAAM5qDc7fvPDBA"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center w-full text-[13px] font-bold bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-lg px-4 py-2.5 transition-colors"
+                    >
+                      Get Direction 📍
+                    </a>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Input Area */}
@@ -76,9 +112,10 @@ export function FloatingWidgets() {
               <input
                 type="text"
                 placeholder="Type your message..."
-                className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-2.5 text-sm text-white outline-none focus:border-gold/50 transition-colors pr-10"
+                disabled
+                className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-2.5 text-sm text-white/50 outline-none pr-10 cursor-not-allowed"
               />
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-gold flex items-center justify-center text-black hover:scale-105 transition-transform">
+              <button disabled className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/30 cursor-not-allowed">
                 <Send className="w-3.5 h-3.5 ml-0.5" />
               </button>
             </div>
@@ -102,7 +139,14 @@ export function FloatingWidgets() {
 
         {/* Chatbot Button */}
         <button
-          onClick={() => setIsChatOpen(!isChatOpen)}
+          onClick={() => {
+            if (isChatOpen) {
+              setIsChatOpen(false);
+              setTimeout(() => setChatStep("initial"), 300);
+            } else {
+              setIsChatOpen(true);
+            }
+          }}
           className="w-12 h-12 rounded-full bg-gradient-gold text-black flex items-center justify-center shadow-glow hover:scale-110 transition-transform"
           aria-label="Open AI Chat"
         >
