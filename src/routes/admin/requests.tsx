@@ -149,8 +149,7 @@ function EditBookingModal({
             <div className="grid grid-cols-1 gap-4">
               {field("full_name", "Full Name", "text", true)}
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              {field("email", "Email", "email", true)}
+            <div className="grid grid-cols-1 gap-4">
               {field("phone", "Phone", "tel",   true)}
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -907,7 +906,6 @@ function QuickBookPanel({ onCreated }: { onCreated: (b: Booking) => void }) {
       <div className="grid md:grid-cols-3 gap-4">
         <AdminField name="full_name" label="Full Name" required />
         <AdminField name="phone"      label="Phone" required placeholder="+91…" />
-        <AdminField name="email"      label="Email" type="email" />
         <AdminField name="event_type" label="Event Type" required placeholder="Wedding, Gala…" />
         <div>
           <label className="text-[10px] uppercase tracking-widest text-white/35 font-medium">AC / Non-AC</label>

@@ -93,7 +93,7 @@ function Contact() {
     const bookingData = {
       first_name,
       last_name,
-      email: formData.get("email") as string,
+      email: (formData.get("email") as string) || "no-email@saf.com",
       phone: formData.get("phone") as string,
       event_type: `${eventTypeStr} (${acPref})`,
       event_date: formData.get("date") as string,
@@ -261,7 +261,6 @@ function Contact() {
                   )}
 
                   <Field label="Full Name" id="fname" required />
-                  <Field label="Email Address" id="email" type="email" required />
                   <Field label="Phone Number" id="phone" type="tel" required />
                   <div className="grid sm:grid-cols-2 gap-5">
                     <Field
