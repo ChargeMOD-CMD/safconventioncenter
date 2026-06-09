@@ -122,7 +122,7 @@ function Dashboard() {
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <KpiCard
           label="Total Bookings"
           value={total}
@@ -147,15 +147,6 @@ function Dashboard() {
           bg="bg-yellow-500/10 border-yellow-500/20"
           suffix=""
           pulse={pending > 0}
-        />
-        <KpiCard
-          label="Est. Revenue"
-          value={revenueEst}
-          icon={<TrendingUp className="w-5 h-5" />}
-          color="text-gold"
-          bg="bg-gold/10 border-gold/20"
-          prefix="₹"
-          isCurrency
         />
       </div>
 
