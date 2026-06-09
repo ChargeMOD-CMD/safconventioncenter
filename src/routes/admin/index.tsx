@@ -360,6 +360,11 @@ function Dashboard() {
         </div>
       </div>
 
+      {/* Fourth Row - Reports */}
+      <div className="grid lg:grid-cols-2 gap-6">
+        <ACReport bookings={bookings} />
+      </div>
+
       {/* Quick Actions */}
       {pending > 0 && (
         <div className="rounded-xl border border-yellow-500/20 p-5 flex items-center justify-between"
@@ -382,6 +387,67 @@ function Dashboard() {
             Review <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
+      )}
+    </div>
+  );
+}
+
+function ACReport({ bookings }: { bookings: Booking[] }) {
+  const [year, setYear] = useState<string>("all");
+  const [month, setMonth] = useState<string>("all");
+
+  const filtered = bookings.filter(b => {
+    // Only count approved bookings for the report
+    if (b.status !== "approved") return false;
+    const d = new Date(b.event_date);
+    if (year !== "all" && d.getFullYear().toString() !== year) return false;
+    if (month !== "all" && (d.getMonth() + 1).toString() !== month) return false;
+    return true;
+  });
+
+  const acCount = filtered.filter(b => (b.event_type || "").includes("(AC)")).length;
+  const nonAcCount = filtered.filter(b => (b.event_type || "").includes("(Non-AC)")).length;
+  const otherCount = filtered.length - acCount - nonAcCount;
+
+  const years = Array.from(new Set(bookings.map((b) => new Date(b.event_date).getFullYear().toString()))).sort();
+
+  return (
+    <div className="rounded-xl border p-6" style={{ background: "oklch(0.15 0.018 240)", borderColor: "rgba(255,255,255,0.08)" }}>
+      <div className="flex items-center justify-between mb-5">
+        <div>
+          <h2 className="text-sm font-medium text-white/80">AC vs Non-AC Bookings</h2>
+          <p className="text-xs text-white/30 mt-0.5">Approved bookings report</p>
+        </div>
+        <div className="flex gap-2">
+          <select value={month} onChange={e => setMonth(e.target.value)} className="bg-white/5 border border-white/10 text-xs rounded-md px-2 py-1.5 outline-none text-white/80 cursor-pointer">
+            <option value="all" className="bg-[#1c1c28]">All Months</option>
+            {Array.from({length: 12}, (_, i) => (
+              <option key={i+1} value={(i+1).toString()} className="bg-[#1c1c28]">{new Date(2000, i).toLocaleString('default', {month: 'short'})}</option>
+            ))}
+          </select>
+          <select value={year} onChange={e => setYear(e.target.value)} className="bg-white/5 border border-white/10 text-xs rounded-md px-2 py-1.5 outline-none text-white/80 cursor-pointer">
+            <option value="all" className="bg-[#1c1c28]">All Years</option>
+            {years.map(y => (
+              <option key={y} value={y} className="bg-[#1c1c28]">{y}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div className="rounded-lg bg-cyan-500/10 border border-cyan-500/20 p-4 text-center">
+          <div className="text-2xl font-bold text-cyan-400">{acCount}</div>
+          <div className="text-[10px] text-cyan-400/60 mt-1 uppercase tracking-wider font-medium">AC Hall</div>
+        </div>
+        <div className="rounded-lg bg-orange-500/10 border border-orange-500/20 p-4 text-center">
+          <div className="text-2xl font-bold text-orange-400">{nonAcCount}</div>
+          <div className="text-[10px] text-orange-400/60 mt-1 uppercase tracking-wider font-medium">Non-AC Hall</div>
+        </div>
+      </div>
+      {otherCount > 0 && (
+         <div className="text-center text-[10px] text-white/30 mt-4 uppercase tracking-wider">
+           + {otherCount} unspecified bookings
+         </div>
       )}
     </div>
   );
