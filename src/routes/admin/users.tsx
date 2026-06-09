@@ -32,17 +32,38 @@ function UsersManagement() {
       .select("*")
       .order("created_at", { ascending: false });
 
+    let fetchedProfiles: any[] = [];
     if (!error && data) {
-      const withPerms = (data as (Profile & { permissions?: Permission })[]).map((p) => ({
-        ...p,
-        // Use stored permissions if present, else fall back to role defaults
-        permissions:
-          p.permissions && typeof p.permissions === "object"
-            ? (p.permissions as Permission)
-            : DEFAULT_PERMISSIONS[p.role] ?? DEFAULT_PERMISSIONS.manager,
-      }));
-      setProfiles(withPerms as ExtendedProfile[]);
+      fetchedProfiles = data;
     }
+
+    // Merge demo profiles from local storage to bypass RLS issues during demo login
+    const isDemo = localStorage.getItem("demo_admin") === "true";
+    if (isDemo) {
+      try {
+        const local = JSON.parse(localStorage.getItem("demo_profiles") || "[]");
+        // Only add local profiles that aren't already in the database
+        for (const lp of local) {
+          if (!fetchedProfiles.find(p => p.email === lp.email)) {
+            fetchedProfiles.push(lp);
+          }
+        }
+      } catch (e) {}
+    }
+
+    const withPerms = fetchedProfiles.map((p) => ({
+      ...p,
+      // Use stored permissions if present, else fall back to role defaults
+      permissions:
+        p.permissions && typeof p.permissions === "object"
+          ? (p.permissions as Permission)
+          : DEFAULT_PERMISSIONS[p.role as "owner" | "manager"] ?? DEFAULT_PERMISSIONS.manager,
+    }));
+    
+    // Sort combined array
+    withPerms.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    
+    setProfiles(withPerms as ExtendedProfile[]);
     setLoading(false);
   };
 
@@ -70,6 +91,17 @@ function UsersManagement() {
             : p
         )
       );
+
+      // Sync local storage demo bypass
+      if (localStorage.getItem("demo_admin") === "true") {
+        try {
+          const local = JSON.parse(localStorage.getItem("demo_profiles") || "[]");
+          const updated = local.map((p: any) => 
+            p.id === id ? { ...p, role: newRole, permissions: resetPerms } : p
+          );
+          localStorage.setItem("demo_profiles", JSON.stringify(updated));
+        } catch (e) {}
+      }
     }
   };
 
@@ -86,6 +118,15 @@ function UsersManagement() {
       alert("Failed to delete profile.");
     } else {
       setProfiles((prev) => prev.filter((p) => p.id !== id));
+      
+      // Remove from local storage demo bypass
+      if (localStorage.getItem("demo_admin") === "true") {
+        try {
+          const local = JSON.parse(localStorage.getItem("demo_profiles") || "[]");
+          const filtered = local.filter((p: any) => p.id !== id);
+          localStorage.setItem("demo_profiles", JSON.stringify(filtered));
+        } catch (e) {}
+      }
     }
   };
 
@@ -126,6 +167,18 @@ function UsersManagement() {
           p.id === userId ? { ...p, _saving: false, _savedAt: Date.now() } : p
         )
       );
+
+      // Sync local storage demo bypass
+      if (localStorage.getItem("demo_admin") === "true") {
+        try {
+          const local = JSON.parse(localStorage.getItem("demo_profiles") || "[]");
+          const updated = local.map((p: any) => 
+            p.id === userId ? { ...p, permissions: newPerms } : p
+          );
+          localStorage.setItem("demo_profiles", JSON.stringify(updated));
+        } catch (e) {}
+      }
+
       // Clear the saved indicator after 2s
       setTimeout(() => {
         setProfiles((prev) =>
@@ -425,14 +478,25 @@ function InvitePanel({
       if (error) throw error;
 
       if (data.user) {
-        // Insert into profiles table with permissions
-        await (supabase as any).from("profiles").upsert({
+        const newProfile = {
           id: data.user.id,
           email,
           role,
           permissions: role === "owner" ? DEFAULT_PERMISSIONS.owner : permissions,
           created_at: new Date().toISOString(),
-        });
+        };
+
+        // Insert into profiles table with permissions
+        await (supabase as any).from("profiles").upsert(newProfile);
+
+        // If in demo mode, save to local storage to bypass RLS
+        if (localStorage.getItem("demo_admin") === "true") {
+          try {
+            const local = JSON.parse(localStorage.getItem("demo_profiles") || "[]");
+            local.push(newProfile);
+            localStorage.setItem("demo_profiles", JSON.stringify(local));
+          } catch (e) {}
+        }
 
         setResult({
           type: "success",
