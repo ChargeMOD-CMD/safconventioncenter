@@ -290,8 +290,8 @@ function Contact() {
                         <option value="SAF Grand">SAF Grand</option>
                         <option value="SAF Aura">SAF Aura</option>
                         <option value="SAF Crown">SAF Crown</option>
-                        <option value="Gulf Heights">Gulf Heights</option>
-                        <option value="Wexco Lagon Vista">Wexco Lagon Vista</option>
+                        {/* <option value="Gulf Heights">Gulf Heights</option>
+                        <option value="Wexco Lagon Vista">Wexco Lagon Vista</option> */}
                       </select>
                     </div>
                     <div>

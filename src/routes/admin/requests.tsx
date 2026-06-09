@@ -185,8 +185,8 @@ function EditBookingModal({
                   <option value="SAF Grand" className="bg-[#1c1c28]">SAF Grand</option>
                   <option value="SAF Aura" className="bg-[#1c1c28]">SAF Aura</option>
                   <option value="SAF Crown" className="bg-[#1c1c28]">SAF Crown</option>
-                  <option value="Gulf Heights" className="bg-[#1c1c28]">Gulf Heights</option>
-                  <option value="Wexco Lagon Vista" className="bg-[#1c1c28]">Wexco Lagon Vista</option>
+                  {/* <option value="Gulf Heights" className="bg-[#1c1c28]">Gulf Heights</option>
+                  <option value="Wexco Lagon Vista" className="bg-[#1c1c28]">Wexco Lagon Vista</option> */}
                 </select>
               </div>
               <div>
@@ -976,8 +976,8 @@ function QuickBookPanel({ onCreated }: { onCreated: (b: Booking) => void }) {
             <option value="SAF Grand" className="bg-[#1c1c28]">SAF Grand</option>
             <option value="SAF Aura" className="bg-[#1c1c28]">SAF Aura</option>
             <option value="SAF Crown" className="bg-[#1c1c28]">SAF Crown</option>
-            <option value="Gulf Heights" className="bg-[#1c1c28]">Gulf Heights</option>
-            <option value="Wexco Lagon Vista" className="bg-[#1c1c28]">Wexco Lagon Vista</option>
+            {/* <option value="Gulf Heights" className="bg-[#1c1c28]">Gulf Heights</option>
+            <option value="Wexco Lagon Vista" className="bg-[#1c1c28]">Wexco Lagon Vista</option> */}
           </select>
         </div>
         <div>
