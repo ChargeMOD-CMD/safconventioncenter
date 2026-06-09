@@ -496,7 +496,7 @@ function InvitePanel({
         if (localStorage.getItem("demo_admin") === "true") {
           try {
             const local = JSON.parse(localStorage.getItem("demo_profiles") || "[]");
-            local.push(newProfile);
+            local.push({ ...newProfile, _demo_password: password });
             localStorage.setItem("demo_profiles", JSON.stringify(local));
           } catch (e) {}
         }

@@ -28,22 +28,35 @@ function Login() {
     setLoading(true);
     setError("");
 
-    // Demo bypass
+    // Demo bypass for hardcoded owner
     if (email === "admin@safconventiongroup.com" && password === "wny3a64@dxu76#") {
       localStorage.setItem("demo_admin", "true");
+      localStorage.setItem("demo_logged_in_email", email);
       router.navigate({ to: "/admin" });
-      // Force reload to apply demo state across hooks
       setTimeout(() => window.location.reload(), 100);
       return;
     }
 
-    const { error } = await supabase.auth.signInWithPassword({
+    // Extended Demo bypass for dynamically created local users
+    try {
+      const demoUsers = JSON.parse(localStorage.getItem("demo_profiles") || "[]");
+      const matchedUser = demoUsers.find((u: any) => u.email === email && u._demo_password === password);
+      if (matchedUser) {
+        localStorage.setItem("demo_admin", "true");
+        localStorage.setItem("demo_logged_in_email", email);
+        router.navigate({ to: "/admin" });
+        setTimeout(() => window.location.reload(), 100);
+        return;
+      }
+    } catch (e) {}
+
+    const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    if (error) {
-      setError(error.message);
+    if (signInError) {
+      setError(signInError.message);
       setLoading(false);
     } else {
       router.navigate({ to: "/admin" });

@@ -104,19 +104,36 @@ export function useAuth() {
   };
 
   if (isDemo) {
+    const loggedInEmail = localStorage.getItem("demo_logged_in_email") || "admin@safconventiongroup.com";
+    
+    // Attempt to load from demo_profiles if it's a dynamically created user
+    let role: "owner" | "manager" = "owner";
+    let perms = DEFAULT_PERMISSIONS.owner;
+    
+    if (loggedInEmail !== "admin@safconventiongroup.com") {
+      try {
+        const local = JSON.parse(localStorage.getItem("demo_profiles") || "[]");
+        const matched = local.find((p: any) => p.email === loggedInEmail);
+        if (matched) {
+          role = matched.role as "owner" | "manager";
+          perms = matched.permissions || (role === "owner" ? DEFAULT_PERMISSIONS.owner : DEFAULT_PERMISSIONS.manager);
+        }
+      } catch(e) {}
+    }
+
     return {
-      user: { id: "demo-user" } as any,
+      user: { id: "demo-user-" + loggedInEmail } as any,
       profile: {
-        id: "demo-user",
-        email: "admin@safconventiongroup.com",
-        role: "owner" as const,
+        id: "demo-user-" + loggedInEmail,
+        email: loggedInEmail,
+        role: role,
         created_at: new Date().toISOString(),
       },
-      permissions: DEFAULT_PERMISSIONS.owner,
+      permissions: perms,
       loading: false,
       logout,
-      isOwner: true,
-      can: (_perm: keyof Permission) => true,
+      isOwner: role === "owner",
+      can: (perm: keyof Permission) => role === "owner" ? true : (perms?.[perm] ?? false),
     };
   }
 
