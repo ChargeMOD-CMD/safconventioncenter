@@ -75,13 +75,14 @@ function UsersManagement() {
 
     // When role changes, reset permissions to role defaults
     const resetPerms = DEFAULT_PERMISSIONS[newRole];
+    const isDemo = localStorage.getItem("demo_admin") === "true";
 
     const { error } = await (supabase as any)
       .from("profiles")
       .update({ role: newRole, permissions: resetPerms })
       .eq("id", id);
 
-    if (error) {
+    if (error && !isDemo) {
       alert("Failed to update role.");
     } else {
       setProfiles((prev) =>
@@ -93,7 +94,7 @@ function UsersManagement() {
       );
 
       // Sync local storage demo bypass
-      if (localStorage.getItem("demo_admin") === "true") {
+      if (isDemo) {
         try {
           const local = JSON.parse(localStorage.getItem("demo_profiles") || "[]");
           const updated = local.map((p: any) => 
@@ -112,15 +113,16 @@ function UsersManagement() {
     }
     if (!confirm("Are you sure you want to remove this user? They will lose admin access.")) return;
 
+    const isDemo = localStorage.getItem("demo_admin") === "true";
     const { error } = await (supabase as any).from("profiles").delete().eq("id", id);
 
-    if (error) {
+    if (error && !isDemo) {
       alert("Failed to delete profile.");
     } else {
       setProfiles((prev) => prev.filter((p) => p.id !== id));
       
       // Remove from local storage demo bypass
-      if (localStorage.getItem("demo_admin") === "true") {
+      if (isDemo) {
         try {
           const local = JSON.parse(localStorage.getItem("demo_profiles") || "[]");
           const filtered = local.filter((p: any) => p.id !== id);
@@ -145,13 +147,14 @@ function UsersManagement() {
       prev.map((p) => (p.id === userId ? { ...p, permissions: newPerms, _saving: true } : p))
     );
 
+    const isDemo = localStorage.getItem("demo_admin") === "true";
     // Persist to Supabase — stores permissions as a JSONB column on profiles
     const { error } = await (supabase as any)
       .from("profiles")
       .update({ permissions: newPerms })
       .eq("id", userId);
 
-    if (error) {
+    if (error && !isDemo) {
       // Roll back on failure
       setProfiles((prev) =>
         prev.map((p) =>
@@ -169,7 +172,7 @@ function UsersManagement() {
       );
 
       // Sync local storage demo bypass
-      if (localStorage.getItem("demo_admin") === "true") {
+      if (isDemo) {
         try {
           const local = JSON.parse(localStorage.getItem("demo_profiles") || "[]");
           const updated = local.map((p: any) => 
