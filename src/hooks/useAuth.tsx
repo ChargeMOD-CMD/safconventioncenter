@@ -108,7 +108,7 @@ export function useAuth() {
       user: { id: "demo-user" } as any,
       profile: {
         id: "demo-user",
-        email: "admin@example.com",
+        email: "admin@safconventiongroup.com",
         role: "owner" as const,
         created_at: new Date().toISOString(),
       },

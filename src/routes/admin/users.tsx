@@ -387,25 +387,36 @@ function InvitePanel({
   onInvited: () => void;
 }) {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [role, setRole] = useState<"manager" | "owner">("manager");
+  const [permissions, setPermissions] = useState<Permission>(DEFAULT_PERMISSIONS.manager);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{ type: "success" | "error"; message: string } | null>(null);
-  const [tempPassword, setTempPassword] = useState("");
+
+  const generatePassword = () => {
+    const generatedPass = Math.random().toString(36).slice(-8) + "SAF@" + Math.floor(Math.random() * 90 + 10);
+    setPassword(generatedPass);
+  };
+
+  const handlePermissionToggle = (perm: keyof Permission) => {
+    setPermissions((prev) => ({ ...prev, [perm]: !prev[perm] }));
+  };
 
   const handleInvite = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!password) {
+      setResult({ type: "error", message: "Please enter or generate a password." });
+      return;
+    }
+    
     setLoading(true);
     setResult(null);
-
-    // Generate a temp password
-    const generatedPass = Math.random().toString(36).slice(-8) + "SAF@" + Math.floor(Math.random() * 90 + 10);
-    setTempPassword(generatedPass);
 
     try {
       // Sign up the user via Supabase auth
       const { data, error } = await supabase.auth.signUp({
         email,
-        password: generatedPass,
+        password,
         options: {
           data: { role },
         },
@@ -414,30 +425,38 @@ function InvitePanel({
       if (error) throw error;
 
       if (data.user) {
-        // Insert into profiles table
+        // Insert into profiles table with permissions
         await (supabase as any).from("profiles").upsert({
           id: data.user.id,
           email,
           role,
+          permissions: role === "owner" ? DEFAULT_PERMISSIONS.owner : permissions,
           created_at: new Date().toISOString(),
         });
 
         setResult({
           type: "success",
-          message: `User ${email} invited as ${role}. Share the temp password below.`,
+          message: `User ${email} created successfully as ${role}.`,
         });
+        setEmail("");
+        setPassword("");
         onInvited();
       }
     } catch (err: any) {
-      setResult({ type: "error", message: err.message || "Failed to invite user." });
-      setTempPassword("");
+      setResult({ type: "error", message: err.message || "Failed to create user." });
     } finally {
       setLoading(false);
     }
   };
 
-  const copyPassword = () => {
-    navigator.clipboard.writeText(tempPassword);
+  const PERM_LABELS: Record<keyof Permission, { label: string; desc: string }> = {
+    view_bookings:   { label: "View Bookings",      desc: "Can see all requests" },
+    manage_bookings: { label: "Manage Requests",    desc: "Approve / decline status" },
+    edit_requests:   { label: "Edit Requests",      desc: "Edit booking details" },
+    delete_requests: { label: "Delete Requests",    desc: "Permanently delete" },
+    view_calendar:   { label: "View Calendar",      desc: "See the calendar" },
+    manage_calendar: { label: "Manage Calendar",    desc: "Mark dates booked/available" },
+    manage_users:    { label: "Manage Users",       desc: "Invite/remove members" },
   };
 
   return (
@@ -445,8 +464,8 @@ function InvitePanel({
       style={{ background: "oklch(0.15 0.018 240)" }}>
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h2 className="text-base font-medium text-white">Invite New User</h2>
-          <p className="text-xs text-white/35 mt-0.5">Add a team member to the admin portal</p>
+          <h2 className="text-base font-medium text-white">Create New User</h2>
+          <p className="text-xs text-white/35 mt-0.5">Add a team member and specify permissions</p>
         </div>
         <button onClick={onClose} className="p-1 rounded text-white/30 hover:text-white transition-colors">
           <X className="w-4 h-4" />
@@ -465,42 +484,46 @@ function InvitePanel({
         </div>
       )}
 
-      {result?.type === "success" && tempPassword && (
-        <div className="mb-5 p-4 rounded-lg border border-gold/20 bg-gold/5">
-          <p className="text-xs text-gold/70 mb-2 uppercase tracking-wider">Temporary Password</p>
-          <div className="flex items-center gap-2">
-            <code className="flex-1 text-sm text-white/80 font-mono bg-black/30 px-3 py-2 rounded">
-              {tempPassword}
-            </code>
-            <button
-              onClick={copyPassword}
-              className="p-2 bg-gold/15 text-gold hover:bg-gold/25 rounded-lg transition-colors"
-              title="Copy password"
-            >
-              <Copy className="w-4 h-4" />
-            </button>
+      <form onSubmit={handleInvite} className="space-y-6">
+        <div className="grid md:grid-cols-2 gap-4">
+          <div>
+            <label className="text-[10px] uppercase tracking-widest text-white/35 font-medium block mb-2">
+              Email Address
+            </label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/25 pointer-events-none" />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                placeholder="colleague@example.com"
+                className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-sm text-white/80 placeholder:text-white/25 outline-none focus:border-gold transition-colors"
+              />
+            </div>
           </div>
-          <p className="text-[10px] text-white/30 mt-2">
-            Share this with the user. Ask them to change it after first login.
-          </p>
-        </div>
-      )}
 
-      <form onSubmit={handleInvite} className="space-y-4">
-        <div>
-          <label className="text-[10px] uppercase tracking-widest text-white/35 font-medium block mb-2">
-            Email Address
-          </label>
-          <div className="relative">
-            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/25 pointer-events-none" />
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              placeholder="colleague@example.com"
-              className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-sm text-white/80 placeholder:text-white/25 outline-none focus:border-gold transition-colors"
-            />
+          <div>
+            <label className="text-[10px] uppercase tracking-widest text-white/35 font-medium block mb-2">
+              Password
+            </label>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="Enter or generate password"
+                className="flex-1 px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-sm text-white/80 placeholder:text-white/25 outline-none focus:border-gold transition-colors"
+              />
+              <button
+                type="button"
+                onClick={generatePassword}
+                className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-medium text-white/70 transition-colors whitespace-nowrap"
+              >
+                Generate
+              </button>
+            </div>
           </div>
         </div>
 
@@ -524,20 +547,61 @@ function InvitePanel({
                 <div className="text-[10px] mt-0.5 opacity-70">
                   {r === "owner"
                     ? "Full access including users"
-                    : "Manage bookings & calendar"}
+                    : "Customizable permissions below"}
                 </div>
               </button>
             ))}
           </div>
         </div>
 
+        {/* Permissions Selection */}
+        {role === "manager" && (
+          <div>
+            <label className="text-[10px] uppercase tracking-widest text-white/35 font-medium block mb-3">
+              Specify Permissions
+            </label>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {(Object.keys(PERM_LABELS) as (keyof Permission)[]).map((perm) => {
+                const active = permissions[perm];
+                const { label, desc } = PERM_LABELS[perm];
+                return (
+                  <button
+                    key={perm}
+                    type="button"
+                    onClick={() => handlePermissionToggle(perm)}
+                    className={`flex items-start gap-3 p-3 rounded-lg border text-left transition-all duration-200 cursor-pointer ${
+                      active
+                        ? "border-gold/30 bg-gold/10"
+                        : "border-white/8 bg-white/3 hover:border-white/20"
+                    }`}
+                  >
+                    <div
+                      className={`mt-0.5 w-4 h-4 rounded flex items-center justify-center shrink-0 border transition-colors ${
+                        active ? "bg-gold border-gold" : "bg-transparent border-white/25"
+                      }`}
+                    >
+                      {active && <Check className="w-2.5 h-2.5 text-black" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className={`text-xs font-medium ${active ? "text-gold" : "text-white/60"}`}>
+                        {label}
+                      </div>
+                      <div className="text-[10px] text-white/30 mt-0.5 leading-relaxed">{desc}</div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         <button
           type="submit"
           disabled={loading}
-          className="w-full flex items-center justify-center gap-2 py-2.5 bg-gold text-black rounded-lg text-sm font-medium hover:bg-gold/90 disabled:opacity-50 transition-colors"
+          className="w-full flex items-center justify-center gap-2 py-3 bg-gold text-black rounded-lg text-sm font-medium hover:bg-gold/90 disabled:opacity-50 transition-colors"
         >
           <UserPlus className="w-4 h-4" />
-          {loading ? "Inviting…" : "Send Invitation"}
+          {loading ? "Creating User…" : "Create User"}
         </button>
       </form>
     </div>
