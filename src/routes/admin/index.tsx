@@ -58,11 +58,41 @@ function Dashboard() {
     );
   }
 
+  // ─── Global Filters ──────────────────────────────────────
+  const [yearFilter, setYearFilter] = useState<string>("all");
+  const [monthFilter, setMonthFilter] = useState<string>("all");
+  const [venueFilter, setVenueFilter] = useState<string>("all");
+  const [typeFilter, setTypeFilter] = useState<string>("all");
+
+  // Extract unique years and event types for dropdowns
+  const availableYears = Array.from(new Set(bookings.map((b) => new Date(b.event_date).getFullYear().toString()))).sort();
+  const availableTypes = Array.from(new Set(bookings.map((b) => {
+    const withoutAc = (b.event_type || "Other").replace(/ \((AC|Non-AC)\)$/, "");
+    const match = withoutAc.match(/ - (.+)$/);
+    return match ? withoutAc.replace(/ - (.+)$/, "").trim() : withoutAc.trim();
+  }))).filter(Boolean).sort();
+
+  const filteredBookings = bookings.filter(b => {
+    const d = new Date(b.event_date);
+    if (yearFilter !== "all" && d.getFullYear().toString() !== yearFilter) return false;
+    if (monthFilter !== "all" && (d.getMonth() + 1).toString() !== monthFilter) return false;
+    
+    const withoutAc = (b.event_type || "Other").replace(/ \((AC|Non-AC)\)$/, "");
+    const match = withoutAc.match(/ - (.+)$/);
+    const bVenue = match ? match[1].trim() : "Any Venue";
+    const bType = match ? withoutAc.replace(/ - (.+)$/, "").trim() : withoutAc.trim();
+
+    if (venueFilter !== "all" && bVenue !== venueFilter) return false;
+    if (typeFilter !== "all" && bType !== typeFilter) return false;
+    
+    return true;
+  });
+
   // ─── Stats ───────────────────────────────────────────────
-  const total = bookings.length;
-  const approved = bookings.filter((b) => b.status === "approved").length;
-  const pending = bookings.filter((b) => b.status === "pending").length;
-  const declined = bookings.filter((b) => b.status === "declined").length;
+  const total = filteredBookings.length;
+  const approved = filteredBookings.filter((b) => b.status === "approved").length;
+  const pending = filteredBookings.filter((b) => b.status === "pending").length;
+  const declined = filteredBookings.filter((b) => b.status === "declined").length;
 
   // Revenue estimate (rough: avg ₹2.5L per approved booking)
   const revenueEst = approved * 250000;
@@ -72,13 +102,15 @@ function Dashboard() {
   const dailyCounts = last14.map((day) => ({
     label: format(day, "dd"),
     fullLabel: format(day, "MMM d"),
-    count: bookings.filter((b) => isSameDay(parseISO(b.created_at), day)).length,
+    count: filteredBookings.filter((b) => isSameDay(parseISO(b.created_at), day)).length,
   }));
   const maxCount = Math.max(...dailyCounts.map((d) => d.count), 1);
 
   // ─── Event type breakdown ────────────────────────────────
-  const typeCounts = bookings.reduce<Record<string, number>>((acc, b) => {
-    const type = (b.event_type || "Other").trim();
+  const typeCounts = filteredBookings.reduce<Record<string, number>>((acc, b) => {
+    const withoutAc = (b.event_type || "Other").replace(/ \((AC|Non-AC)\)$/, "");
+    const match = withoutAc.match(/ - (.+)$/);
+    const type = match ? withoutAc.replace(/ - (.+)$/, "").trim() : withoutAc.trim();
     acc[type] = (acc[type] || 0) + 1;
     return acc;
   }, {});
@@ -88,14 +120,14 @@ function Dashboard() {
 
   // ─── Slot breakdown ──────────────────────────────────────
   const slotCounts = {
-    Morning: bookings.filter((b) => b.event_time_slot === "morning").length,
-    Afternoon: bookings.filter((b) => b.event_time_slot === "afternoon").length,
-    Evening: bookings.filter((b) => b.event_time_slot === "evening").length,
-    "Full Day": bookings.filter((b) => b.event_time_slot === "full_day").length,
+    Morning: filteredBookings.filter((b) => b.event_time_slot === "morning").length,
+    Afternoon: filteredBookings.filter((b) => b.event_time_slot === "afternoon").length,
+    Evening: filteredBookings.filter((b) => b.event_time_slot === "evening").length,
+    "Full Day": filteredBookings.filter((b) => b.event_time_slot === "full_day").length,
   };
 
   // ─── Recent bookings ─────────────────────────────────────
-  const recent = bookings.slice(0, 5);
+  const recent = filteredBookings.slice(0, 5);
 
   const statusColors: Record<string, string> = {
     approved: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
@@ -119,6 +151,35 @@ function Dashboard() {
             {format(new Date(), "EEEE, MMMM d, yyyy")}
           </p>
         </div>
+      </div>
+
+      {/* Global Filters */}
+      <div className="flex flex-wrap items-center gap-3 bg-white/5 border border-white/10 p-4 rounded-xl">
+        <span className="text-xs text-white/50 font-medium uppercase tracking-wider mr-2 hidden sm:inline-block">Filters:</span>
+        <select value={monthFilter} onChange={e => setMonthFilter(e.target.value)} className="bg-[#1c1c28] border border-white/10 text-xs rounded-md px-3 py-2 outline-none text-white/80 cursor-pointer">
+          <option value="all">All Months</option>
+          {Array.from({length: 12}, (_, i) => (
+            <option key={i+1} value={(i+1).toString()}>{new Date(2000, i).toLocaleString('default', {month: 'long'})}</option>
+          ))}
+        </select>
+        <select value={yearFilter} onChange={e => setYearFilter(e.target.value)} className="bg-[#1c1c28] border border-white/10 text-xs rounded-md px-3 py-2 outline-none text-white/80 cursor-pointer">
+          <option value="all">All Years</option>
+          {availableYears.map(y => (
+            <option key={y} value={y}>{y}</option>
+          ))}
+        </select>
+        <select value={venueFilter} onChange={e => setVenueFilter(e.target.value)} className="bg-[#1c1c28] border border-white/10 text-xs rounded-md px-3 py-2 outline-none text-white/80 cursor-pointer">
+          <option value="all">All Venues</option>
+          <option value="SAF Grand">SAF Grand</option>
+          <option value="SAF Aura">SAF Aura</option>
+          <option value="SAF Crown">SAF Crown</option>
+        </select>
+        <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)} className="bg-[#1c1c28] border border-white/10 text-xs rounded-md px-3 py-2 outline-none text-white/80 cursor-pointer max-w-[150px] sm:max-w-none">
+          <option value="all">All Event Types</option>
+          {availableTypes.map(t => (
+            <option key={t} value={t}>{t}</option>
+          ))}
+        </select>
       </div>
 
       {/* KPI Cards */}
@@ -353,7 +414,7 @@ function Dashboard() {
 
       {/* Fourth Row - Reports */}
       <div className="grid lg:grid-cols-2 gap-6">
-        <ACReport bookings={bookings} />
+        <ACReport bookings={filteredBookings} />
       </div>
 
       {/* Quick Actions */}
@@ -384,23 +445,11 @@ function Dashboard() {
 }
 
 function ACReport({ bookings }: { bookings: Booking[] }) {
-  const [year, setYear] = useState<string>("all");
-  const [month, setMonth] = useState<string>("all");
-
-  const filtered = bookings.filter(b => {
-    // Only count approved bookings for the report
-    if (b.status !== "approved") return false;
-    const d = new Date(b.event_date);
-    if (year !== "all" && d.getFullYear().toString() !== year) return false;
-    if (month !== "all" && (d.getMonth() + 1).toString() !== month) return false;
-    return true;
-  });
+  const filtered = bookings.filter(b => b.status === "approved");
 
   const acCount = filtered.filter(b => (b.event_type || "").includes("(AC)")).length;
   const nonAcCount = filtered.filter(b => (b.event_type || "").includes("(Non-AC)")).length;
   const otherCount = filtered.length - acCount - nonAcCount;
-
-  const years = Array.from(new Set(bookings.map((b) => new Date(b.event_date).getFullYear().toString()))).sort();
 
   return (
     <div className="rounded-xl border p-6" style={{ background: "oklch(0.15 0.018 240)", borderColor: "rgba(255,255,255,0.08)" }}>
@@ -408,20 +457,6 @@ function ACReport({ bookings }: { bookings: Booking[] }) {
         <div>
           <h2 className="text-sm font-medium text-white/80">AC vs Non-AC Bookings</h2>
           <p className="text-xs text-white/30 mt-0.5">Approved bookings report</p>
-        </div>
-        <div className="flex gap-2">
-          <select value={month} onChange={e => setMonth(e.target.value)} className="bg-white/5 border border-white/10 text-xs rounded-md px-2 py-1.5 outline-none text-white/80 cursor-pointer">
-            <option value="all" className="bg-[#1c1c28]">All Months</option>
-            {Array.from({length: 12}, (_, i) => (
-              <option key={i+1} value={(i+1).toString()} className="bg-[#1c1c28]">{new Date(2000, i).toLocaleString('default', {month: 'short'})}</option>
-            ))}
-          </select>
-          <select value={year} onChange={e => setYear(e.target.value)} className="bg-white/5 border border-white/10 text-xs rounded-md px-2 py-1.5 outline-none text-white/80 cursor-pointer">
-            <option value="all" className="bg-[#1c1c28]">All Years</option>
-            {years.map(y => (
-              <option key={y} value={y} className="bg-[#1c1c28]">{y}</option>
-            ))}
-          </select>
         </div>
       </div>
 
