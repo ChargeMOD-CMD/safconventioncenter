@@ -29,7 +29,7 @@ function Login() {
     setError("");
 
     // Demo bypass
-    if (email === "admin@example.com" && password === "admin123") {
+    if (email === "admin@safconventiongroup.com" && password === "wny3a64@dxu76#") {
       localStorage.setItem("demo_admin", "true");
       router.navigate({ to: "/admin" });
       // Force reload to apply demo state across hooks
