@@ -40,10 +40,15 @@ function Login() {
     // Extended Demo bypass for dynamically created local users
     try {
       const demoUsers = JSON.parse(localStorage.getItem("demo_profiles") || "[]");
-      const matchedUser = demoUsers.find((u: any) => u.email === email && u._demo_password === password);
+      const cleanEmail = email.trim().toLowerCase();
+      const cleanPassword = password.trim();
+      const matchedUser = demoUsers.find((u: any) => 
+        (u.email || "").toLowerCase().trim() === cleanEmail && 
+        u._demo_password === cleanPassword
+      );
       if (matchedUser) {
         localStorage.setItem("demo_admin", "true");
-        localStorage.setItem("demo_logged_in_email", email);
+        localStorage.setItem("demo_logged_in_email", cleanEmail);
         router.navigate({ to: "/admin" });
         setTimeout(() => window.location.reload(), 100);
         return;
