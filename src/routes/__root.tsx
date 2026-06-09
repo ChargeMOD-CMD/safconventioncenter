@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   ScrollRestoration,
 } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
@@ -64,17 +65,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const routerState = useRouterState();
+  const isAdminRoute = routerState.location.pathname.startsWith("/admin");
+
   return (
     <QueryClientProvider client={queryClient}>
       <CustomCursor />
       <SplashScreen />
-      <SiteHeader />
+      {!isAdminRoute && <SiteHeader />}
       <main>
         <ScrollRestoration />
         <Outlet />
       </main>
-      <SiteFooter />
-      <FloatingWidgets />
+      {!isAdminRoute && <SiteFooter />}
+      {!isAdminRoute && <FloatingWidgets />}
     </QueryClientProvider>
   );
 }
