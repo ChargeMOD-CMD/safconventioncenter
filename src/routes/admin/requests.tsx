@@ -39,13 +39,17 @@ function EditBookingModal({
   onSaved: (updated: Booking) => void;
 }) {
   const existingAcPref = booking.event_type.match(/\((AC|Non-AC)\)$/)?.[1] || "AC";
-  const existingEventType = booking.event_type.replace(/ \((AC|Non-AC)\)$/, "");
+  const withoutAc = booking.event_type.replace(/ \((AC|Non-AC)\)$/, "");
+  const hasVenueMatch = withoutAc.match(/ - (.+)$/);
+  const existingVenue = hasVenueMatch ? hasVenueMatch[1] : "Any Venue";
+  const existingEventType = hasVenueMatch ? withoutAc.replace(/ - (.+)$/, "") : withoutAc;
 
   const [form, setForm] = useState({
     full_name:      [booking.first_name, booking.last_name].filter(Boolean).join(" "),
     email:          booking.email,
     phone:          booking.phone,
     event_type:     existingEventType,
+    venue:          existingVenue,
     ac_pref:        existingAcPref,
     event_date:     booking.event_date,
     event_time_slot: booking.event_time_slot as TimeSlot,
@@ -63,12 +67,16 @@ function EditBookingModal({
 
     const [first_name, ...lastNames] = form.full_name.trim().split(" ");
 
+    const eventTypeFormatted = form.venue && form.venue !== "Any Venue"
+      ? `${form.event_type.trim()} - ${form.venue} (${form.ac_pref})`
+      : `${form.event_type.trim()} (${form.ac_pref})`;
+
     const payload = {
       first_name:      first_name || "",
       last_name:       lastNames.join(" "),
       email:           form.email.trim(),
       phone:           form.phone.trim(),
-      event_type:      `${form.event_type.trim()} (${form.ac_pref})`,
+      event_type:      eventTypeFormatted,
       event_date:      form.event_date,
       event_time_slot: form.event_time_slot,
       expected_guests: form.expected_guests ? parseInt(form.expected_guests) : null,
@@ -156,8 +164,31 @@ function EditBookingModal({
             <div className="grid grid-cols-1 gap-4">
               {field("phone", "Phone", "tel",   true)}
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {field("event_type", "Event Type", "text", true)}
+              <div>
+                <label className="block text-[10px] uppercase tracking-widest text-white/35 font-medium mb-1.5">
+                  Venue
+                </label>
+                <select
+                  value={form.venue}
+                  onChange={(e) => setForm((f) => ({ ...f, venue: e.target.value }))}
+                  className="w-full px-3 py-2.5 rounded-lg text-sm text-white/80 outline-none transition-colors cursor-pointer"
+                  style={{
+                    background: "rgba(255,255,255,0.05)",
+                    border: "1px solid rgba(255,255,255,0.12)",
+                  }}
+                  onFocus={(e) => (e.currentTarget.style.borderColor = "#D4AF37")}
+                  onBlur={(e)  => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)")}
+                >
+                  <option value="Any Venue" className="bg-[#1c1c28]">Any Venue</option>
+                  <option value="SAF Grand" className="bg-[#1c1c28]">SAF Grand</option>
+                  <option value="SAF Aura" className="bg-[#1c1c28]">SAF Aura</option>
+                  <option value="SAF Crown" className="bg-[#1c1c28]">SAF Crown</option>
+                  <option value="Gulf Heights" className="bg-[#1c1c28]">Gulf Heights</option>
+                  <option value="Wexco Lagon Vista" className="bg-[#1c1c28]">Wexco Lagon Vista</option>
+                </select>
+              </div>
               <div>
                 <label className="block text-[10px] uppercase tracking-widest text-white/35 font-medium mb-1.5">
                   AC / Non-AC
@@ -889,13 +920,18 @@ function QuickBookPanel({ onCreated }: { onCreated: (b: Booking) => void }) {
 
     const type = fd.get("event_type") as string;
     const acPref = fd.get("ac_pref") as string;
+    const venue = fd.get("venue") as string;
+
+    const eventTypeFormatted = venue && venue !== "Any Venue"
+      ? `${type.trim()} - ${venue} (${acPref})`
+      : `${type.trim()} (${acPref})`;
 
     const payload = {
       first_name:      first_name || "",
       last_name:       lastNames.join(" "),
       email:           (fd.get("email") as string) || "admin@safcc.local",
       phone:           fd.get("phone") as string,
-      event_type:      `${type} (${acPref})`,
+      event_type:      eventTypeFormatted,
       event_date:      fd.get("event_date") as string,
       event_time_slot: slot,
       expected_guests: parseInt(fd.get("guests") as string) || null,
@@ -930,6 +966,20 @@ function QuickBookPanel({ onCreated }: { onCreated: (b: Booking) => void }) {
         <AdminField name="full_name" label="Full Name" required />
         <AdminField name="phone"      label="Phone" required placeholder="+91…" />
         <AdminField name="event_type" label="Event Type" required placeholder="Wedding, Gala…" />
+        <div>
+          <label className="text-[10px] uppercase tracking-widest text-white/35 font-medium">Venue</label>
+          <select
+            name="venue"
+            className="mt-2 w-full border border-white/10 bg-white/5 px-3 py-2.5 text-sm rounded-lg outline-none focus:border-gold transition-colors text-white/80"
+          >
+            <option value="Any Venue" className="bg-[#1c1c28]">Any Venue</option>
+            <option value="SAF Grand" className="bg-[#1c1c28]">SAF Grand</option>
+            <option value="SAF Aura" className="bg-[#1c1c28]">SAF Aura</option>
+            <option value="SAF Crown" className="bg-[#1c1c28]">SAF Crown</option>
+            <option value="Gulf Heights" className="bg-[#1c1c28]">Gulf Heights</option>
+            <option value="Wexco Lagon Vista" className="bg-[#1c1c28]">Wexco Lagon Vista</option>
+          </select>
+        </div>
         <div>
           <label className="text-[10px] uppercase tracking-widest text-white/35 font-medium">AC / Non-AC</label>
           <select

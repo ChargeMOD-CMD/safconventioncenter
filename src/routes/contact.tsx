@@ -89,13 +89,18 @@ function Contact() {
 
     const eventTypeStr = formData.get("type") as string;
     const acPref = formData.get("ac_pref") as string;
+    const venue = formData.get("venue") as string;
+
+    const eventTypeFormatted = venue && venue !== "Any Venue"
+      ? `${eventTypeStr} - ${venue} (${acPref})`
+      : `${eventTypeStr} (${acPref})`;
 
     const bookingData = {
       first_name,
       last_name,
       email: (formData.get("email") as string) || "no-email@saf.com",
       phone: formData.get("phone") as string,
-      event_type: `${eventTypeStr} (${acPref})`,
+      event_type: eventTypeFormatted,
       event_date: formData.get("date") as string,
       event_time_slot: selectedSlot,
       expected_guests: parseInt(formData.get("guests") as string) || null,
@@ -262,13 +267,33 @@ function Contact() {
 
                   <Field label="Full Name" id="fname" required />
                   <Field label="Phone Number" id="phone" type="tel" required />
-                  <div className="grid sm:grid-cols-2 gap-5">
+                  <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-5">
                     <Field
                       label="Event Type"
                       id="type"
                       placeholder="Wedding, Conference, Gala…"
                       required
                     />
+                    <div>
+                      <label
+                        htmlFor="venue"
+                        className="text-[11px] uppercase tracking-widest text-muted-foreground font-medium"
+                      >
+                        Venue
+                      </label>
+                      <select
+                        id="venue"
+                        name="venue"
+                        className="mt-2 w-full border border-border bg-background/60 px-4 py-3 text-sm outline-none focus:border-gold transition-colors rounded-md"
+                      >
+                        <option value="Any Venue">Any Venue</option>
+                        <option value="SAF Grand">SAF Grand</option>
+                        <option value="SAF Aura">SAF Aura</option>
+                        <option value="SAF Crown">SAF Crown</option>
+                        <option value="Gulf Heights">Gulf Heights</option>
+                        <option value="Wexco Lagon Vista">Wexco Lagon Vista</option>
+                      </select>
+                    </div>
                     <div>
                       <label
                         htmlFor="ac_pref"
