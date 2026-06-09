@@ -485,7 +485,7 @@ function Home() {
             Other <span className="italic gold-text">Premium</span> Occasions
           </h2>
           <p className="mt-4 text-muted-foreground max-w-2xl text-sm md:text-base">
-            Explore more extraordinary venues and events hosted at SAF Convention Centre.
+            Opening Shortly
           </p>
         </div>
 
@@ -567,7 +567,7 @@ function Home() {
               <span className="h-px w-8 bg-white/30" />
             </div>
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-balance leading-[1.1] text-white drop-shadow-md">
-              Reserve a night that will be remembered
+              Reserve a Day that will be remembered
               <span className="italic gold-text"> for a lifetime.</span>
             </h2>
             <p className="mt-6 text-white/90 max-w-xl mx-auto leading-relaxed">
