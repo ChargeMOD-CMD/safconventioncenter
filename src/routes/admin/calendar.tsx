@@ -44,6 +44,7 @@ import {
 } from "lucide-react";
 import { sendBookingEmail } from "@/lib/email";
 import { type TimeSlot } from "@/lib/supabase";
+import { QuickBookPanel } from "@/components/admin/QuickBookPanel";
 
 export const Route = createFileRoute("/admin/calendar")({
   component: AdminCalendar,
@@ -781,7 +782,7 @@ function AdminCalendar() {
                   </span>
                 </div>
                 {panelOpen && (
-                  <button onClick={() => setPanelOpen(false)} className="p-1 rounded text-white/30 hover:text-white transition-colors">
+                  <button onClick={() => { setPanelOpen(false); setShowQuickBook(false); }} className="p-1 rounded text-white/30 hover:text-white transition-colors">
                     <X className="w-3.5 h-3.5" />
                   </button>
                 )}
@@ -927,6 +928,36 @@ function AdminCalendar() {
                   )}
                   {saving && <p className="text-[11px] text-center animate-pulse" style={{ color: tok.textMuted }}>Saving…</p>}
                 </div>
+                
+                {!showQuickBook && !selectedStatus && (
+                  <div className="mt-6 pt-4 border-t border-white/10">
+                    <button
+                      onClick={() => setShowQuickBook(true)}
+                      className="w-full py-3 bg-gold text-black rounded-xl text-sm font-bold shadow-glow hover:bg-gold/90 transition-colors"
+                    >
+                      Book Now
+                    </button>
+                  </div>
+                )}
+                
+                {showQuickBook && (
+                  <div className="mt-6 pt-6 border-t border-white/10">
+                    <div className="flex justify-between items-center mb-4">
+                      <h3 className="text-white font-medium text-sm">New Booking</h3>
+                      <button onClick={() => setShowQuickBook(false)} className="text-white/40 hover:text-white transition-colors">
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                    <QuickBookPanel
+                      defaultDate={format(selectedDate, "yyyy-MM-dd")}
+                      onCreated={(b) => {
+                        setBookings((prev) => [b, ...prev]);
+                        setShowQuickBook(false);
+                        fetchAll(); // Refresh the grid so the booking appears
+                      }}
+                    />
+                  </div>
+                )}
               </div>
             )}
           </div>
