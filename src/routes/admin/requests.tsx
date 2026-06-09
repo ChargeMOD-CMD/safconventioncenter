@@ -38,11 +38,15 @@ function EditBookingModal({
   onClose: () => void;
   onSaved: (updated: Booking) => void;
 }) {
+  const existingAcPref = booking.event_type.match(/\((AC|Non-AC)\)$/)?.[1] || "AC";
+  const existingEventType = booking.event_type.replace(/ \((AC|Non-AC)\)$/, "");
+
   const [form, setForm] = useState({
     full_name:      [booking.first_name, booking.last_name].filter(Boolean).join(" "),
     email:          booking.email,
     phone:          booking.phone,
-    event_type:     booking.event_type,
+    event_type:     existingEventType,
+    ac_pref:        existingAcPref,
     event_date:     booking.event_date,
     event_time_slot: booking.event_time_slot as TimeSlot,
     expected_guests: booking.expected_guests?.toString() ?? "",
@@ -64,7 +68,7 @@ function EditBookingModal({
       last_name:       lastNames.join(" "),
       email:           form.email.trim(),
       phone:           form.phone.trim(),
-      event_type:      form.event_type.trim(),
+      event_type:      `${form.event_type.trim()} (${form.ac_pref})`,
       event_date:      form.event_date,
       event_time_slot: form.event_time_slot,
       expected_guests: form.expected_guests ? parseInt(form.expected_guests) : null,
@@ -154,9 +158,28 @@ function EditBookingModal({
             </div>
             <div className="grid grid-cols-2 gap-4">
               {field("event_type", "Event Type", "text", true)}
-              {field("event_date", "Event Date", "date", true)}
+              <div>
+                <label className="block text-[10px] uppercase tracking-widest text-white/35 font-medium mb-1.5">
+                  AC / Non-AC
+                </label>
+                <select
+                  value={form.ac_pref}
+                  onChange={(e) => setForm((f) => ({ ...f, ac_pref: e.target.value }))}
+                  className="w-full px-3 py-2.5 rounded-lg text-sm text-white/80 outline-none transition-colors cursor-pointer"
+                  style={{
+                    background: "rgba(255,255,255,0.05)",
+                    border: "1px solid rgba(255,255,255,0.12)",
+                  }}
+                  onFocus={(e) => (e.currentTarget.style.borderColor = "#D4AF37")}
+                  onBlur={(e)  => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)")}
+                >
+                  <option value="AC" className="bg-[#1c1c28]">AC</option>
+                  <option value="Non-AC" className="bg-[#1c1c28]">Non-AC</option>
+                </select>
+              </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
+              {field("event_date", "Event Date", "date", true)}
               {field("expected_guests", "Expected Guests", "number")}
             </div>
 
