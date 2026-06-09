@@ -40,6 +40,7 @@ export type CalendarDate = {
   date: string;
   status: BookingStatus;
   note: string | null;
+  booking_id: string | null;
   updated_by: string | null;
   updated_at: string;
 };

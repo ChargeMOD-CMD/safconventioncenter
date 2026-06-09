@@ -99,13 +99,22 @@ function Contact() {
       message: formData.get("msg") as string,
     };
 
-    const { error } = await supabase.from("bookings").insert([bookingData]);
+    const { data: bookingData2, error } = await supabase.from("bookings").insert([bookingData]).select("id, event_date").single();
 
     if (error) {
       console.error("Booking insert failed:", error);
       setErrorMsg(error.message || "Failed to submit request. Please try again.");
       setIsSubmitting(false);
     } else {
+      // Mark the date as Pending on the calendar so admin can see the new request
+      if (bookingData2) {
+        await (supabase as any)
+          .from("calendar_dates")
+          .upsert(
+            { date: bookingData2.event_date, status: "pending", booking_id: bookingData2.id },
+            { onConflict: "date" }
+          );
+      }
       setSent(true);
       setIsSubmitting(false);
     }

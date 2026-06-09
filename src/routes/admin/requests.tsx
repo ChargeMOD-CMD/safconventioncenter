@@ -373,12 +373,30 @@ function RequestsPage() {
       .eq("id", id);
     if (error) { alert("Failed to update booking status."); return; }
 
-    setBookings((prev) => prev.map((b) => (b.id === id ? { ...b, status: newStatus } : b)));
+    const updatedBookings = bookings.map((b) => (b.id === id ? { ...b, status: newStatus } : b));
+    setBookings(updatedBookings);
     if (selectedBooking?.id === id)
       setSelectedBooking((prev) => (prev ? { ...prev, status: newStatus } : prev));
 
     const booking = bookings.find((b) => b.id === id);
     if (booking) {
+      // Recalculate calendar status from ALL bookings on this date
+      // Priority: approved > pending > declined → clear if all declined
+      const sameDateBookings = updatedBookings.filter(b => b.event_date === booking.event_date);
+      const hasApproved  = sameDateBookings.some(b => b.status === "approved");
+      const hasPending   = sameDateBookings.some(b => b.status === "pending");
+      const allDeclined  = sameDateBookings.every(b => b.status === "declined");
+
+      if (allDeclined) {
+        // Remove calendar entry — date is fully free
+        await (supabase as any).from("calendar_dates").delete().eq("date", booking.event_date);
+      } else {
+        const calStatus = hasApproved ? "approved" : hasPending ? "pending" : "declined";
+        await (supabase as any)
+          .from("calendar_dates")
+          .upsert({ date: booking.event_date, status: calStatus, booking_id: id }, { onConflict: "date" });
+      }
+
       await sendBookingEmail(booking.email, booking.first_name, newStatus, booking.event_date);
       window.open(whatsappLink(booking, newStatus), "_blank");
     }
@@ -866,6 +884,10 @@ function QuickBookPanel({ onCreated }: { onCreated: (b: Booking) => void }) {
       setSubmitting(false);
       return;
     }
+    // Sync calendar so the new approved date appears as Booked immediately
+    await (supabase as any)
+      .from("calendar_dates")
+      .upsert({ date: payload.event_date, status: "approved", booking_id: (data as any).id }, { onConflict: "date" });
     onCreated(data as Booking);
   };
 
