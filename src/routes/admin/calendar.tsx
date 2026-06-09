@@ -375,17 +375,16 @@ function BookingCard({
 
           {/* Contact + Actions */}
           <div className="flex gap-2">
-            <a href={whatsappLink(booking, booking.status === "approved" ? "approved" : booking.status === "declined" ? "declined" : "pending")}
-              target="_blank" rel="noreferrer"
+            <button onClick={(e) => { e.stopPropagation(); window.open(whatsappLink(booking, booking.status === "approved" ? "approved" : booking.status === "declined" ? "declined" : "pending"), '_blank'); }}
               className="flex-1 flex items-center justify-center gap-1 py-2 rounded-lg text-[11px] font-medium transition-colors"
               style={{ background: "rgba(52,211,153,0.10)", border: "1px solid rgba(52,211,153,0.20)", color: "#34d399" }}>
               <MessageCircle className="w-3 h-3" /> WhatsApp
-            </a>
-            <a href={smsLink(booking, booking.status === "approved" ? "approved" : booking.status === "declined" ? "declined" : "pending")}
+            </button>
+            <button onClick={(e) => { e.stopPropagation(); window.open(smsLink(booking, booking.status === "approved" ? "approved" : booking.status === "declined" ? "declined" : "pending"), '_self'); }}
               className="flex-1 flex items-center justify-center gap-1 py-2 rounded-lg text-[11px] font-medium transition-colors"
               style={{ background: "rgba(96,165,250,0.10)", border: "1px solid rgba(96,165,250,0.20)", color: "#60a5fa" }}>
               <Phone className="w-3 h-3" /> Call
-            </a>
+            </button>
           </div>
           <div className="flex gap-2">
             {canEdit && (
