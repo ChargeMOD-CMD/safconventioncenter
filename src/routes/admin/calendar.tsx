@@ -135,7 +135,7 @@ function EditBookingModal({
   const inputStyle = { background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.80)" };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
       style={{ background: "rgba(0,0,0,0.70)", backdropFilter: "blur(6px)" }}>
       <div className="w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl"
         style={{ background: "oklch(0.13 0.02 240)", border: "1px solid rgba(255,255,255,0.10)" }}>
@@ -243,8 +243,8 @@ function DeleteConfirmDialog({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(6px)" }}>
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+      style={{ background: "rgba(0,0,0,0.70)", backdropFilter: "blur(6px)" }}>
       <div className="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl"
         style={{ background: "oklch(0.13 0.02 240)", border: "1px solid rgba(239,68,68,0.25)" }}>
         <div className="p-6">
@@ -389,14 +389,14 @@ function BookingCard({
           </div>
           <div className="flex gap-2">
             {canEdit && (
-              <button onClick={() => onEdit(booking)} disabled={saving}
+              <button onClick={(e) => { e.stopPropagation(); onEdit(booking); }} disabled={saving}
                 className="flex-1 flex items-center justify-center gap-1 py-2 rounded-lg text-[11px] font-medium transition-colors disabled:opacity-50"
                 style={{ background: "rgba(212,175,55,0.12)", border: "1px solid rgba(212,175,55,0.25)", color: "#D4AF37" }}>
                 <Pencil className="w-3 h-3" /> Edit
               </button>
             )}
             {canDelete && (
-              <button onClick={() => onDelete(booking)} disabled={saving}
+              <button onClick={(e) => { e.stopPropagation(); onDelete(booking); }} disabled={saving}
                 className="flex-1 flex items-center justify-center gap-1 py-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 rounded-lg text-[11px] font-medium transition-colors disabled:opacity-50">
                 <Trash2 className="w-3 h-3" /> Delete
               </button>
