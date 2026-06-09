@@ -426,6 +426,7 @@ function AdminCalendar() {
   const [editingBooking, setEditingBooking]   = useState<Booking | null>(null);
   const [deletingBooking, setDeletingBooking] = useState<Booking | null>(null);
   const [panelOpen, setPanelOpen] = useState(false);
+  const [showQuickBook, setShowQuickBook] = useState(false);
 
   // Theme tokens
   const tok: Record<string, string> = {
