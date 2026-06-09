@@ -29,6 +29,12 @@ function Dashboard() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // ─── Global Filters ──────────────────────────────────────
+  const [yearFilter, setYearFilter] = useState<string>("all");
+  const [monthFilter, setMonthFilter] = useState<string>("all");
+  const [venueFilter, setVenueFilter] = useState<string>("all");
+  const [typeFilter, setTypeFilter] = useState<string>("all");
+
   useEffect(() => {
     const fetchBookings = async () => {
       setLoading(true);
@@ -57,12 +63,6 @@ function Dashboard() {
       </div>
     );
   }
-
-  // ─── Global Filters ──────────────────────────────────────
-  const [yearFilter, setYearFilter] = useState<string>("all");
-  const [monthFilter, setMonthFilter] = useState<string>("all");
-  const [venueFilter, setVenueFilter] = useState<string>("all");
-  const [typeFilter, setTypeFilter] = useState<string>("all");
 
   // Extract unique years and event types for dropdowns
   const availableYears = Array.from(new Set(bookings.map((b) => new Date(b.event_date).getFullYear().toString()))).sort();
